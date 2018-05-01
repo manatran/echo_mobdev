@@ -1,6 +1,6 @@
 # Echo  |  Let it resonate
 
-## RESTful API using Express.js and Mongoose.js with React and React Native frontend
+## Node.js RESTful API with React and React Native
 
 This project was created for the Mobile Development II course, and is part of the New Media Development curriculum at Artevelde University College, Ghent.
 
