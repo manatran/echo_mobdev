@@ -31,7 +31,7 @@ class PostsList extends Component {
   }
 
   componentDidMount() {
-    fetch('/api/v1/posts')
+    fetch('/api/v1/artists')
       .then( response => response.json())
       .then( item => this.setState({ posts: item })); 
   }
@@ -44,9 +44,9 @@ class PostsList extends Component {
           {this.state.posts.map((element, i) => (
             <div className="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-3" key={i}>
               <Card className={classes.card} key={ element._id }>
-                <CardMedia
+								<CardMedia
                   className={classes.media}
-                  image="https://material-components-web.appspot.com/images/16-9.jpg"
+                  image={(element.images[0]) ? element.images[0].url : `https://api.adorable.io/avatars/285/echo.png`}
                   title="Contemplative Reptile"
                 />
                 <CardContent>
@@ -54,12 +54,12 @@ class PostsList extends Component {
                     { element.title }
                   </Typography>
                   <Typography component="p">
-                    { element.synopsis }
+                    { element.artist_name }
                   </Typography>
                 </CardContent>
                 <CardActions>
                   <Button size="small" color="primary">
-                    { (element._category) ? element._category.name : 'Uncategorized' }
+                    { element.release_date }
                   </Button>
                 </CardActions>
               </Card>

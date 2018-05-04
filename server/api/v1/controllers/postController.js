@@ -1,14 +1,13 @@
 const async = require('async');
 
 const Post = require('../models/post');
-const Category = require('../models/category');
 const errorHandler = require('../utilities/errorHandler');
 
 /*
 Get all posts
 */
 exports.get_posts = function(req, res, next) {
-  const query = Post.find().populate('_category').populate('blogs');
+  const query = Post.find();
   query.sort( { created_at: -1 } );
   query.exec((err, posts) => {
     if (err) return errorHandler.handleAPIError(500, err.message || 'Some error occurred while retrieving posts', next);
@@ -24,7 +23,7 @@ Get a certain post
 */
 exports.get_post = function(req, res, next) {
   const id = req.params.postId;
-  const query = Post.findById(id).populate('_category').populate('blogs');
+  const query = Post.findById(id);
   query.exec((err, post) => {
     if (err) return errorHandler.handleAPIError(500, `Could not get the post with id: ${id}`, next);
     if (!post) {
@@ -38,19 +37,15 @@ exports.get_post = function(req, res, next) {
 Create a Post
 */
 exports.post_create_get = function(req, res, next) {
-  async.parallel({
-    categories: function(callback) {
-      Category.find(callback).sort( { created_at: -1} );
-    },
-  }, function(err, results) {
+  async.parallel({}, function(err, results) {
     if (err) { return next(err); }
-    res.json( { title: 'Create Post', categories: results.categories });
+    res.json( { title: 'Create Post'});
   });
 }
 
 exports.post_create_post = function(req, res, next) {
-  if(!req.body || !req.body.title || !req.body.synopsis || !req.body.body || !req.body._category) {
-    return errorHandler.handleAPIError(400, `Post must have a title, synopsis, body and _category`, next);
+  if(!req.body || !req.body.title || !req.body.synopsis || !req.body.body ) {
+    return errorHandler.handleAPIError(400, `Post must have a title, synopsis, body`, next);
   }
 
   const post = new Post(req.body);
@@ -67,20 +62,20 @@ exports.post_update_get = function(req, res, next) {
   async.parallel({
     post: function(callback) {
       const id = req.params.postId;
-      Post.findById(id, callback).populate('_category');
+      Post.findById(id, callback);
     },
     categories: function(callback) {
       Category.find(callback).sort( { created_at: -1} );
     },
   }, function(err, results) {
     if (err) { return next(err); }
-    res.json( { post: results.post, categories: results.categories });
+    res.json( { post: results.post});
   });
 }
 
 exports.post_update_put = function(req, res, next) {
-  if(!req.body || !req.body.title || !req.body.synopsis || !req.body.body || !req.body._category) {
-    return errorHandler.handleAPIError(400, `Post must have a title, synopsis, body and _category`, next);
+  if(!req.body || !req.body.title || !req.body.synopsis || !req.body.body ) {
+    return errorHandler.handleAPIError(400, `Post must have a title, synopsis, body`, next);
   }
 
   const id = req.params.postId;
@@ -89,7 +84,6 @@ exports.post_update_put = function(req, res, next) {
     title: req.body.title,
     synopsis: req.body.synopsis,
     body: req.body.body,
-    _category: req.body._category,
   }, {new: true})
     .then(post => {
       if(!post) {

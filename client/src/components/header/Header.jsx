@@ -89,7 +89,7 @@ class Header extends Component {
             <IconMenu />
           </IconButton>
           <Typography variant="title" color="inherit" className={classes.flex}>
-            Mobile Development II
+            Echo
           </Typography>
           <div>
             <IconButton

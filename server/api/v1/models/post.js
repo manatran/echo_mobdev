@@ -9,9 +9,7 @@ const PostSchema = new Schema(
     created_at: { type: Date, default: Date.now },
     updated_at: { type: Date, default: Date.now },
     deleted_at: { type: Date, required: false },
-    published_at: { type: Date, required: false },
-    _blog: { type: Schema.Types.ObjectId, ref: 'Blog', required: false },
-    _category: { type: Schema.Types.ObjectId, ref: 'Category', required: false }
+    published_at: { type: Date, required: false }
   },
   {
     toJSON: { virtuals: true },
@@ -20,10 +18,5 @@ const PostSchema = new Schema(
 );
 
 PostSchema.virtual('id').get(() => this._id );
-PostSchema.virtual('blogs', {
-  ref: 'Blog',
-  localField: '_id',
-  foreignField: 'posts'
-});
 
 module.exports = mongoose.model('Post', PostSchema);
