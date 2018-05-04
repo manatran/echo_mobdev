@@ -1,5 +1,8 @@
 const errorHandler = require('../utilities/errorHandler');
 const Post = require('../models/post');
+const Artist = require('../models/artist');
+const Album = require('../models/album');
+const Song = require('../models/song');
 const request = require('request');
 const rp = require('request-promise');
 const config = require('../../../config/config');
@@ -41,24 +44,20 @@ exports.searchArtist = function (req, res, next) {
 							"images": currentArtist.images
 						}
 						artists.push(artist)
-						//verify that album is not yet in db
-						request(
-							{
-								method: 'GET',
-								uri: `https://localhost:8080/api/v1/artists/${artist.spotify_id}`,
-								rejectUnauthorized: false,
-							},
-							(error, response) => {
-								if (!error && response && response.statusCode == 404) {
-									request({
-										method: 'POST',
-										uri: 'https://localhost:8080/api/v1/artists',
-										rejectUnauthorized: false,
-										body: artist,
-										json: true
-									})
-								}
-							})
+						//verify that artist is not yet in db
+						const query = Artist.findOne({'spotify_id': artist.spotify_id})
+						query.exec((err, artistResult) => {
+							if (err) return errorHandler.handleAPIError(500, `Could not get the artist with id: ${artist.spotify_id}`, next);
+							if (!artistResult) {
+								request({
+									method: 'POST',
+									uri: 'https://localhost:8080/api/v1/artists',
+									rejectUnauthorized: false,
+									body: artist,
+									json: true
+								})
+							}
+						});
 					}
 					res.json(artists)
 				} else {
@@ -96,23 +95,19 @@ exports.searchAlbum = function (req, res, next) {
 						}
 						albums.push(album)
 						//verify that album is not yet in db
-						request(
-							{
-								method: 'GET',
-								uri: `https://localhost:8080/api/v1/albums/${album.spotify_id}`,
-								rejectUnauthorized: false,
-							},
-							(error, response, body) => {
-								if (!error && response && response.statusCode == 404) {
-									request({
-										method: 'POST',
-										uri: 'https://localhost:8080/api/v1/albums',
-										rejectUnauthorized: false,
-										body: album,
-										json: true
-									})
-								}
-							})
+						const query = Album.findOne({'spotify_id': album.spotify_id})
+						query.exec((err, albumResult) => {
+							if (err) return errorHandler.handleAPIError(500, `Could not get the album with id: ${album.spotify_id}`, next);
+							if (!albumResult) {
+								request({
+									method: 'POST',
+									uri: 'https://localhost:8080/api/v1/albums',
+									rejectUnauthorized: false,
+									body: album,
+									json: true
+								})
+							}
+						});
 					}
 					res.json(albums)
 				} else {
@@ -153,23 +148,19 @@ exports.searchSong = function (req, res, next) {
 						}
 						songs.push(song)
 						//verify that song is not yet in db
-						request(
-							{
-								method: 'GET',
-								uri: `https://localhost:8080/api/v1/songs/${song.spotify_id}`,
-								rejectUnauthorized: false,
-							},
-							(error, response, body) => {
-								if (!error && response && response.statusCode == 404) {
-									request({
-										method: 'POST',
-										uri: 'https://localhost:8080/api/v1/songs',
-										rejectUnauthorized: false,
-										body: song,
-										json: true
-									})
-								}
-							})
+						const query = Song.findOne({'spotify_id': song.spotify_id})
+						query.exec((err, songResult) => {
+							if (err) return errorHandler.handleAPIError(500, `Could not get the song with id: ${song.spotify_id}`, next);
+							if (!songResult) {
+								request({
+									method: 'POST',
+									uri: 'https://localhost:8080/api/v1/songs',
+									rejectUnauthorized: false,
+									body: song,
+									json: true
+								})
+							}
+						});
 					}
 					res.json(songs)
 				} else {
