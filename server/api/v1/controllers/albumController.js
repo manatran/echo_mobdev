@@ -44,7 +44,7 @@ exports.album_create_get = function(req, res, next) {
 }
 
 exports.album_create_album = function(req, res, next) {
-  if(!req.body || !req.body.title || !req.body.spotify_id || !req.body.artist_id || !req.body.artist_name) {
+  if(!req.body || !req.body.title || !req.body.spotify_id || !req.body.artist || !req.body.artist_name) {
     return errorHandler.handleAPIError(400, `Required fields not met`, next);
   }
 
@@ -80,7 +80,7 @@ exports.album_update_put = function(req, res, next) {
   Album.findByIdAndUpdate(id, {
 		spotify_id: req.body.spotify_id,
 		title: req.body.title,
-		artist_id: req.body.artist_id,
+		artist: req.body.artist,
 		artist_name: req.body.artist_name,
 		images: req.body.images,
 		release_date: req.body.release_date,

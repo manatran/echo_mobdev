@@ -5,9 +5,9 @@ const SongSchema = new Schema(
   {
     spotify_id: { type: String, required: true, max: 128 },
 		title: { type: String, required: true, max: 128 },
-		album_id: { type: String, max: 128 },
-		album_name: { type: String, max: 128 },
-		artist_id: { type: String, max: 128 },
+		album: { type: String, max: 128 },
+		album_name: {type: String, max: 128},
+		artist: { type: String, max: 128 },
 		artist_name: { type: String, max: 128 },
 		explicit: { type: Boolean },
 		duration: { type: Number },

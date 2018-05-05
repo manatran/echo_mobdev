@@ -1,20 +1,42 @@
 const async = require('async');
 
 const Song = require('../models/song');
+const Album = require('../models/album');
 const errorHandler = require('../utilities/errorHandler');
 
 /*
 Get all songs
 */
 exports.get_songs = function(req, res, next) {
-  const query = Song.find();
-  query.sort( { created_at: -1 } );
-  query.exec((err, songs) => {
+	const query = Song
+	.aggregate([
+		{$project: { 
+			"spotify_id": "$spotify_id",
+			"title": "$title",
+			"album": "$album",
+			"artist": "$artist",
+			"artist_name": "$artist_name",
+			"explicit": "$explicit",
+			"duration": "$duration",
+			"popularity": "$popularity"
+		 }},
+		{$lookup: {from: 'albums', localField: 'album', foreignField: 'spotify_id', as: 'album'} },
+		{$project: {			
+			"spotify_id": 1,
+			"title": 1,
+			"artist": 1,
+			"artist_name": 1,
+			"explicit": 1,
+			"duration": 1,
+			"popularity": 1,
+			album: {"$arrayElemAt": ['$album', 0]}}},
+	])
+	.exec((err, songs) => {
     if (err) return errorHandler.handleAPIError(500, err.message || 'Some error occurred while retrieving songs', next);
     if (!songs) {
       return errorHandler.handleAPIError(404, `Songs not found`, next);
-    }
-    return res.json(songs);
+		}
+    return res.send(songs);
   });
 }
 
@@ -23,7 +45,7 @@ Get a certain song
 */
 exports.get_song = function(req, res, next) {
   const id = req.params.songId;
-  const query = Song.findOne({'spotify_id': id});
+  const query = Song.findOne({'spotify_id': id})
   query.exec((err, song) => {
     if (err) return errorHandler.handleAPIError(500, `Could not get the song with id: ${id}`, next);
     if (!song) {
@@ -80,9 +102,9 @@ exports.song_update_put = function(req, res, next) {
   Song.findByIdAndUpdate(id, {
 		spotify_id: req.body.spotify_id,
 		title: req.body.title,
-		album_id: req.body.album_id,
+		album: req.body.album_id,
 		album_name: req.body.album_name,
-		artist_id: req.body.artist_id,
+		artist: req.body.artist_id,
 		artist_name: req.body.artist_name,
 		explicit: req.body.explicit,
 		duration: req.body.duration,

@@ -31,9 +31,9 @@ class PostsList extends Component {
   }
 
   componentDidMount() {
-    fetch('/api/v1/artists')
+    fetch('/api/v1/songs')
       .then( response => response.json())
-      .then( item => this.setState({ posts: item })); 
+      .then( item => this.setState({ posts: item }));
   }
 
   render() {
@@ -46,7 +46,7 @@ class PostsList extends Component {
               <Card className={classes.card} key={ element._id }>
 								<CardMedia
                   className={classes.media}
-                  image={(element.images[0]) ? element.images[0].url : `https://api.adorable.io/avatars/285/echo.png`}
+                  image={(element.album && element.album.images[0]) ? element.album.images[0].url : `https://api.adorable.io/avatars/285/echo.png`}
                   title="Contemplative Reptile"
                 />
                 <CardContent>

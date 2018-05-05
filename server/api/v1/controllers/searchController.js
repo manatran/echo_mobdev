@@ -88,7 +88,7 @@ exports.searchAlbum = function (req, res, next) {
 						let album = {
 							"spotify_id": currentAlbum.id,
 							"title": currentAlbum.name,
-							"artist_id": currentAlbum.artists[0].id,
+							"artist": currentAlbum.artists[0].id,
 							"artist_name": currentAlbum.artists[0].name,
 							"images": currentAlbum.images,
 							"release_date": currentAlbum.release_date
