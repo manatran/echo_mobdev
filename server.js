@@ -18,13 +18,10 @@ const routes = require('./server/config/routes'),
 /*
 Settings
 */
-const key = fs.readFileSync('encryption/private.key'),
-	cert = fs.readFileSync('encryption/mydomain.crt'),
-	ca = fs.readFileSync('encryption/mydomain.crt');
 var httpsOptions = {
-	key: key,
-	cert: cert,
-	ca: ca
+	key: fs.readFileSync('encryption/private.key'),
+	cert: fs.readFileSync('encryption/mydomain.crt'),
+	ca: fs.readFileSync('encryption/mydomain.crt')
 };
 const server = https.Server(httpsOptions, app),
 	hostName = 'localhost',

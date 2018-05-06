@@ -27,8 +27,14 @@ class PostsList extends Component {
     
     this.state = {
       posts: null
-    }
-  }
+		}
+	}
+	
+	millisToMinutesAndSeconds(millis) {
+		var minutes = Math.floor(millis / 60000);
+		var seconds = ((millis % 60000) / 1000).toFixed(0);
+		return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+	}
 
   componentDidMount() {
     fetch('/api/v1/songs')
@@ -40,7 +46,7 @@ class PostsList extends Component {
     const { classes } = this.props;
     if(this.state.posts) {
       return (
-        <div className="row">
+        <div className="row" style={{paddingTop: '16px'}}>
           {this.state.posts.map((element, i) => (
             <div className="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-3" key={i}>
               <Card className={classes.card} key={ element._id }>
@@ -50,18 +56,16 @@ class PostsList extends Component {
                   title="Contemplative Reptile"
                 />
                 <CardContent>
-                  <Typography gutterBottom variant="headline" component="h2">
+                  <Typography gutterBottom variant="headline" component="h3">
                     { element.title }
                   </Typography>
                   <Typography component="p">
                     { element.artist_name }
                   </Typography>
+									<Typography component="p">
+                    { this.millisToMinutesAndSeconds(element.duration)}
+                  </Typography>
                 </CardContent>
-                <CardActions>
-                  <Button size="small" color="primary">
-                    { element.release_date }
-                  </Button>
-                </CardActions>
               </Card>
             </div>
           ))}

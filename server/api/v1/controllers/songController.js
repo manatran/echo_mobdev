@@ -45,13 +45,36 @@ Get a certain song
 */
 exports.get_song = function(req, res, next) {
   const id = req.params.songId;
-  const query = Song.findOne({'spotify_id': id})
+  const query = Song.aggregate([
+		{$match: {'spotify_id': id}},
+		{$project: { 
+			"spotify_id": "$spotify_id",
+			"title": "$title",
+			"album": "$album",
+			"artist": "$artist",
+			"artist_name": "$artist_name",
+			"explicit": "$explicit",
+			"duration": "$duration",
+			"popularity": "$popularity"
+		 }},
+		{$lookup: {from: 'albums', localField: 'album', foreignField: 'spotify_id', as: 'album'} },
+		{$project: {			
+			"spotify_id": 1,
+			"title": 1,
+			"artist": 1,
+			"artist_name": 1,
+			"explicit": 1,
+			"duration": 1,
+			"popularity": 1,
+			album: {"$arrayElemAt": ['$album', 0]}
+		}}
+	])
   query.exec((err, song) => {
     if (err) return errorHandler.handleAPIError(500, `Could not get the song with id: ${id}`, next);
     if (!song) {
       return errorHandler.handleAPIError(404, `Song not found with id: ${id}`, next);
     }
-    return res.json(song);
+    return res.json(song[0]);
   });
 }
 
