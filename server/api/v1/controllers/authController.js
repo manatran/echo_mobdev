@@ -29,7 +29,7 @@ exports.user_auth_local_post = function(req, res, next) {
     res.status(200).json({
       user: {
         id: user.id,
-        email: user.email
+        username: user.username
       },
       token: `${token}`,
       strategy: 'local'
@@ -52,7 +52,7 @@ exports.user_auth_facebook_post = function(req, res, next) {
     res.status(200).json({
       user: {
         id: user.id,
-        email: user.email
+        username: user.username
       },
       token: `${token}`,
       strategy: 'facebook-token'

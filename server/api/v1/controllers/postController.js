@@ -7,7 +7,7 @@ const errorHandler = require('../utilities/errorHandler');
 Get all posts
 */
 exports.get_posts = function(req, res, next) {
-  const query = Post.find();
+  const query = Post.find().populate('author');
   query.sort( { created_at: -1 } );
   query.exec((err, posts) => {
     if (err) return errorHandler.handleAPIError(500, err.message || 'Some error occurred while retrieving posts', next);
@@ -44,8 +44,9 @@ exports.post_create_get = function(req, res, next) {
 }
 
 exports.post_create_post = function(req, res, next) {
-  if(!req.body || !req.body.title || !req.body.synopsis || !req.body.body ) {
-    return errorHandler.handleAPIError(400, `Post must have a title, synopsis, body`, next);
+	console.log(req.body.type)
+  if(!req.body || !req.body.type || !req.body.author || !req.body.spotify_id ) {
+    return errorHandler.handleAPIError(400, `Post must have a type, spotify_id, author`, next);
   }
 
   const post = new Post(req.body);

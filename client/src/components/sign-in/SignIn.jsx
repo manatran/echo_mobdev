@@ -36,7 +36,7 @@ Validation
 const validate = values => {
   const errors = {}
   const requiredFields = [
-    'email',
+    'username',
     'password'
   ]
   requiredFields.forEach(field => {
@@ -44,12 +44,6 @@ const validate = values => {
       errors[field] = 'Required';
     }
   })
-  if (
-    values.email &&
-    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-  ) {
-    errors.email = 'Invalid email address';
-  }
   return errors;
 }
 
@@ -79,9 +73,10 @@ class SignIn extends Component {
         <div className="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-6">
           <form onSubmit={ handleSubmit(this.submit) } className="row">
             <div className="col-12">
-              <Field name="email" 
+              <Field name="username" 
                       component={TextField}
-                      placeholder="Email"
+											type="text"
+                      placeholder="Username"
                       fullWidth={true}
               />
             </div>

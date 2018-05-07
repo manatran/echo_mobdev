@@ -6,10 +6,9 @@ const config = require('../../../config/config');
 
 const UserSchema = mongoose.Schema(
   {
-    email: { 
+    username: { 
       type: String, required: true,
-      trim: true, unique: true,
-      match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+      trim: true, unique: true
     },
     localProvider: {
       password: { 
