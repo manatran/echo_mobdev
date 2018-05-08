@@ -31,7 +31,7 @@ import PostCreatePage from '../../pages/post-create-page/PostCreatePage';
 import PostsTablePage from '../../pages/posts-table-page/PostsTablePage';
 
 class Main extends Component {
-  render() {    
+  render() {
     return (
       <div>
         <Offcanvas />

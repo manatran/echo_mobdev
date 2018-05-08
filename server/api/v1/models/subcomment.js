@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const CommentSchema = new Schema(
+const SubcommentSchema = new Schema(
 	{
-		post_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Post', required: true },
+		parent_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Comment', required: true },
 		author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 		content: {type: String, max: 512, required: true},
 		likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
@@ -18,6 +18,6 @@ const CommentSchema = new Schema(
 	}
 );
 
-CommentSchema.virtual('id').get(() => this._id);
+SubcommentSchema.virtual('id').get(() => this._id);
 
-module.exports = mongoose.model('Comment', CommentSchema);
+module.exports = mongoose.model('Subcomment', SubcommentSchema);
