@@ -45,8 +45,7 @@ exports.searchArtist = function (req, res, next) {
 						}
 						artists.push(artist)
 						//verify that artist is not yet in db
-						const query = Artist.findOne({'spotify_id': artist.spotify_id})
-						query.exec((err, artistResult) => {
+						const query = Artist.findOne({'spotify_id': artist.spotify_id}).exec((err, artistResult) => {
 							if (err) return errorHandler.handleAPIError(500, `Could not get the artist with id: ${artist.spotify_id}`, next);
 							if (!artistResult) {
 								request({
@@ -74,7 +73,7 @@ exports.searchAlbum = function (req, res, next) {
 			// use the access token to access the Spotify Web API
 			var token = body.access_token;
 			var options = {
-				url: 'https://api.spotify.com/v1/search?q=' + req.params.term.replace(' ', '%20') + '&type=album',
+				url: 'https://api.spotify.com/v1/search?q=' + req.params.term.replace(' ', '%20') + '&type=album&limit=5',
 				headers: {
 					'Authorization': 'Bearer ' + token
 				},
@@ -95,8 +94,7 @@ exports.searchAlbum = function (req, res, next) {
 						}
 						albums.push(album)
 						//verify that album is not yet in db
-						const query = Album.findOne({'spotify_id': album.spotify_id})
-						query.exec((err, albumResult) => {
+						const query = Album.findOne({'spotify_id': album.spotify_id}).exec((err, albumResult) => {
 							if (err) return errorHandler.handleAPIError(500, `Could not get the album with id: ${album.spotify_id}`, next);
 							if (!albumResult) {
 								request({
@@ -124,7 +122,7 @@ exports.searchSong = function (req, res, next) {
 			// use the access token to access the Spotify Web API
 			var token = body.access_token;
 			var options = {
-				url: 'https://api.spotify.com/v1/search?q=' + req.params.term.replace(' ', '%20') + '&type=track',
+				url: 'https://api.spotify.com/v1/search?q=' + req.params.term.replace(' ', '%20') + '&type=track&limit=15',
 				headers: {
 					'Authorization': 'Bearer ' + token
 				},
@@ -135,6 +133,13 @@ exports.searchSong = function (req, res, next) {
 					let songs = [];
 					for (let i = 0; i < body.tracks.items.length; i++) {
 						let currentTrack = body.tracks.items[i];
+						//seed albums into database
+						request({
+							method: 'GET',
+							uri: `https://localhost:8080/api/v1/search/album/${currentTrack.album.name} ${currentTrack.artists[0].name}` ,
+							rejectUnauthorized: false,
+							json: true
+						})
 						let song = {
 							"spotify_id": currentTrack.id,
 							"title": currentTrack.name,
@@ -148,8 +153,7 @@ exports.searchSong = function (req, res, next) {
 						}
 						songs.push(song)
 						//verify that song is not yet in db
-						const query = Song.findOne({'spotify_id': song.spotify_id})
-						query.exec((err, songResult) => {
+						const query = Song.findOne({'spotify_id': song.spotify_id}).exec((err, songResult) => {
 							if (err) return errorHandler.handleAPIError(500, `Could not get the song with id: ${song.spotify_id}`, next);
 							if (!songResult) {
 								request({

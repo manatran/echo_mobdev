@@ -44,20 +44,19 @@ router.get('/songs', songController.get_songs);
 router.get('/songs/:songId', songController.get_song);
 router.post('/songs', songController.song_create_song);
 router.get('/songs/:songId/update', songController.song_update_get);
-router.put('/songs/:songId', songController.song_update_put);
-router.delete('/songs/:songId', songController.song_delete_delete);
-router.patch('/songs/:songId/softdelete', songController.song_softdelete_patch);
-router.patch('/songs/:songId/softundelete', songController.song_softundelete_patch);
+router.put('/songs/:songId', auth.authenticateJwt(), songController.song_update_put);
+router.delete('/songs/:songId', auth.authenticateJwt(), songController.song_delete_delete);
+router.patch('/songs/:songId/softdelete', auth.authenticateJwt(), songController.song_softdelete_patch);
+router.patch('/songs/:songId/softundelete', auth.authenticateJwt(), songController.song_softundelete_patch);
 
 router.get('/posts', postController.get_posts);
 router.get('/posts/:postId', postController.get_post);
-router.get('/posts/vm/create', postController.post_create_get);
-router.post('/posts', postController.post_create_post);
-router.get('/posts/:postId/update', postController.post_update_get);
-router.put('/posts/:postId', postController.post_update_put);
-router.delete('/posts/:postId', postController.post_delete_delete);
-router.patch('/posts/:postId/softdelete', postController.post_softdelete_patch);
-router.patch('/posts/:postId/softundelete', postController.post_softundelete_patch);
+router.post('/posts', auth.authenticateJwt(), postController.post_create_post);
+router.get('/posts/:postId/update', auth.authenticateJwt(), postController.post_update_get);
+router.put('/posts/:postId', auth.authenticateJwt(), postController.post_update_put);
+router.delete('/posts/:postId', auth.authenticateJwt(), postController.post_delete_delete);
+router.patch('/posts/:postId/softdelete', auth.authenticateJwt(), postController.post_softdelete_patch);
+router.patch('/posts/:postId/softundelete', auth.authenticateJwt(), postController.post_softundelete_patch);
 
 
 router.post('/signup', authController.user_create_post);

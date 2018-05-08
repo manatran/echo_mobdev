@@ -19,9 +19,8 @@ const routes = require('./server/config/routes'),
 Settings
 */
 var httpsOptions = {
-	key: fs.readFileSync('encryption/private.key'),
-	cert: fs.readFileSync('encryption/mydomain.crt'),
-	ca: fs.readFileSync('encryption/mydomain.crt')
+	key: fs.readFileSync('encryption/cert.key'),
+    cert: fs.readFileSync('encryption/cert.pem')
 };
 const server = https.Server(httpsOptions, app),
 	hostName = 'localhost',

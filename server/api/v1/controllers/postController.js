@@ -23,7 +23,7 @@ Get a certain post
 */
 exports.get_post = function(req, res, next) {
   const id = req.params.postId;
-  const query = Post.findById(id);
+  const query = Post.findById(id).populate('author');
   query.exec((err, post) => {
     if (err) return errorHandler.handleAPIError(500, `Could not get the post with id: ${id}`, next);
     if (!post) {

@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const SongSchema = new Schema(
   {
-    spotify_id: { type: String, required: true, max: 128 },
+    spotify_id: { type: String, required: true, max: 128, unique: true },
 		title: { type: String, required: true, max: 128 },
 		album: { type: String, max: 128 },
 		album_name: {type: String, max: 128},

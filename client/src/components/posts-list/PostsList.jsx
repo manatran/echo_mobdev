@@ -52,7 +52,7 @@ class PostsList extends Component {
               <Card className={classes.card} key={ element._id }>
 								<CardMedia
                   className={classes.media}
-                  image={(element.album && element.album.images[0]) ? element.album.images[0].url : `https://api.adorable.io/avatars/285/echo.png`}
+                  image={(element.album && element.album.images[0]) ? element.album.images[0].url : `https://api.adorable.io/avatars/128/${element.title}.png`}
                   title="Contemplative Reptile"
                 />
                 <CardContent>
