@@ -1,5 +1,5 @@
 const async = require('async');
-
+const mongoose = require('mongoose');
 const Post = require('../models/post');
 const errorHandler = require('../utilities/errorHandler');
 
@@ -7,7 +7,63 @@ const errorHandler = require('../utilities/errorHandler');
 Get all posts
 */
 exports.get_posts = function (req, res, next) {
-	const query = Post.find().populate('author');
+	const query = Post.aggregate([
+		{
+			$project: {
+				"content": "$content",
+				"author": "$author",
+				"type": "$type",
+				"likes": "$likes",
+				"created_at": "$created_at",
+				"updated_at": "$updated_at",
+				"deleted_at": "$deleted_at"
+			}
+		},
+		{$facet: {
+			"albums": [
+				{$match: {"type": "album"}},
+          {$lookup: {
+            from: "albums",
+            localField: "content",
+            foreignField: "spotify_id",
+            as: "content"
+          }},
+			],
+			"artists": [
+				{$match:{"type": "artist"}},
+          {$lookup: {
+            from: "artists",
+            localField: "content",
+            foreignField: "spotify_id",
+            as: "content"
+          }},
+			],
+			"songs": [
+				{$match:{"type": "song"}},
+          {$lookup: {
+            from: "songs",
+            localField: "content",
+            foreignField: "spotify_id",
+            as: "content"
+          }},
+			],
+		}},
+		{$project: {all: {$setUnion: ["$albums", "$artists", "$songs"]}}},
+		{$unwind: "$all"},
+		{$replaceRoot: { newRoot: "$all" }},
+		{ $lookup: { from: 'users', localField: 'author', foreignField: '_id', as: 'author' } },
+		{
+			$project: {
+				"author": { "$arrayElemAt": ['$author', 0] },
+				"type": 1,
+				"likes": 1,
+				"created_at": 1,
+				"updated_at": 1,
+				"deleted_at": 1,
+				"content": { "$arrayElemAt": ['$content', 0] }
+			}
+		},
+	]);
 	query.sort({ created_at: -1 });
 	query.exec((err, posts) => {
 		if (err) return errorHandler.handleAPIError(500, err.message || 'Some error occurred while retrieving posts', next);
@@ -23,26 +79,76 @@ Get a certain post
 */
 exports.get_post = function (req, res, next) {
 	const id = req.params.postId;
-	const query = Post.findById(id).populate('author');
+	const query = Post.aggregate([
+		{$match: {"_id": mongoose.Types.ObjectId(req.params.postId)}},
+		{
+			$project: {
+				"content": "$content",
+				"author": "$author",
+				"type": "$type",
+				"likes": "$likes",
+				"created_at": "$created_at",
+				"updated_at": "$updated_at",
+				"deleted_at": "$deleted_at"
+			}
+		},
+		{$facet: {
+			"albums": [
+				{$match: {"type": "album"}},
+          {$lookup: {
+            from: "albums",
+            localField: "content",
+            foreignField: "spotify_id",
+            as: "content"
+          }},
+			],
+			"artists": [
+				{$match:{"type": "artist"}},
+          {$lookup: {
+            from: "artists",
+            localField: "content",
+            foreignField: "spotify_id",
+            as: "content"
+          }},
+			],
+			"songs": [
+				{$match:{"type": "song"}},
+          {$lookup: {
+            from: "songs",
+            localField: "content",
+            foreignField: "spotify_id",
+            as: "content"
+          }},
+			],
+		}},
+		{$project: {all: {$setUnion: ["$albums", "$artists", "$songs"]}}},
+		{$unwind: "$all"},
+		{$replaceRoot: { newRoot: "$all" }},
+		{ $lookup: { from: 'users', localField: 'author', foreignField: '_id', as: 'author' } },
+		{
+			$project: {
+				"author": { "$arrayElemAt": ['$author', 0] },
+				"type": 1,
+				"likes": 1,
+				"created_at": 1,
+				"updated_at": 1,
+				"deleted_at": 1,
+				"content": { "$arrayElemAt": ['$content', 0] }
+			}
+		},
+	]);
 	query.exec((err, post) => {
 		if (err) return errorHandler.handleAPIError(500, `Could not get the post with id: ${id}`, next);
 		if (!post) {
 			return errorHandler.handleAPIError(404, `Post not found with id: ${id}`, next);
 		}
-		return res.json(post);
+		return res.json(post[0]);
 	});
 }
 
 /*
 Create a Post
 */
-exports.post_create_get = function (req, res, next) {
-	async.parallel({}, function (err, results) {
-		if (err) { return next(err); }
-		res.json({ title: 'Create Post' });
-	});
-}
-
 exports.post_create_post = function (req, res, next) {
 	console.log(req.body.type)
 	if (!req.body || !req.body.type || !req.body.author || !req.body.spotify_id) {

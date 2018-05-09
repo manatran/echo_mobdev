@@ -36,13 +36,6 @@ exports.get_album = function (req, res, next) {
 /*
 Create a Album
 */
-exports.album_create_get = function (req, res, next) {
-	async.parallel({}, function (err, results) {
-		if (err) { return next(err); }
-		res.json({ title: 'Create Album' });
-	});
-}
-
 exports.album_create_album = function (req, res, next) {
 	if (!req.body || !req.body.title || !req.body.spotify_id || !req.body.artist || !req.body.artist_name) {
 		return errorHandler.handleAPIError(400, `Required fields not met`, next);

@@ -52,18 +52,23 @@ class PostsList extends Component {
 							<Card className={classes.card} key={element._id}>
 								<CardMedia
 									className={classes.media}
-									image={(element.album && element.album.images[0]) ? element.album.images[0].url : `https://api.adorable.io/avatars/128/${element.title}.png`}
+									image={(element.content && element.content.images[0]) ? element.content.images[0].url : `https://api.adorable.io/avatars/128/${element.title}.png`}
 									title="Contemplative Reptile"
 								/>
 								<CardContent>
 									<Typography gutterBottom variant="headline" component="h3">
-										{element.title}
+										{element.content.title}
 									</Typography>
 									<Typography component="p">
-										{element.artist_name}
+										{element.content.artist_name}
 									</Typography>
+									{element.type === "song" &&
 									<Typography component="p">
 										{this.millisToMinutesAndSeconds(element.duration)}
+									</Typography>
+									}
+									<Typography component="p">
+										{element.author.username}
 									</Typography>
 								</CardContent>
 							</Card>

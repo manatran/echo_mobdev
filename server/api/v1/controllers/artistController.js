@@ -36,13 +36,6 @@ exports.get_artist = function (req, res, next) {
 /*
 Create a Artist
 */
-exports.artist_create_get = function (req, res, next) {
-	async.parallel({}, function (err, results) {
-		if (err) { return next(err); }
-		res.json({ title: 'Create Artist' });
-	});
-}
-
 exports.artist_create_artist = function (req, res, next) {
 	if (!req.body || !req.body.title || !req.body.spotify_id) {
 		return errorHandler.handleAPIError(400, `Required fields not met`, next);

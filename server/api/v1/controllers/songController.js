@@ -19,7 +19,10 @@ exports.get_songs = function (req, res, next) {
 					"artist_name": "$artist_name",
 					"explicit": "$explicit",
 					"duration": "$duration",
-					"popularity": "$popularity"
+					"popularity": "$popularity",
+					"created_at": "$created_at",
+					"updated_at": "$updated_at",
+					"deleted_at": "$deleted_at"
 				}
 			},
 			{ $lookup: { from: 'albums', localField: 'album', foreignField: 'spotify_id', as: 'album' } },
@@ -32,7 +35,10 @@ exports.get_songs = function (req, res, next) {
 					"explicit": 1,
 					"duration": 1,
 					"popularity": 1,
-					album: { "$arrayElemAt": ['$album', 0] }
+					album: { "$arrayElemAt": ['$album', 0] },
+					"created_at": 1,
+					"updated_at": 1,
+					"deleted_at": 1
 				}
 			},
 		])
@@ -61,7 +67,10 @@ exports.get_song = function (req, res, next) {
 				"artist_name": "$artist_name",
 				"explicit": "$explicit",
 				"duration": "$duration",
-				"popularity": "$popularity"
+				"popularity": "$popularity",
+				"created_at": "$created_at",
+				"updated_at": "$updated_at",
+				"deleted_at": "$deleted_at"
 			}
 		},
 		{ $lookup: { from: 'albums', localField: 'album', foreignField: 'spotify_id', as: 'album' } },
@@ -74,7 +83,10 @@ exports.get_song = function (req, res, next) {
 				"explicit": 1,
 				"duration": 1,
 				"popularity": 1,
-				album: { "$arrayElemAt": ['$album', 0] }
+				album: { "$arrayElemAt": ['$album', 0] },
+				"created_at": 1,
+				"updated_at": 1,
+				"deleted_at": 1
 			}
 		}
 	])
@@ -90,13 +102,6 @@ exports.get_song = function (req, res, next) {
 /*
 Create a Song
 */
-exports.song_create_get = function (req, res, next) {
-	async.parallel({}, function (err, results) {
-		if (err) { return next(err); }
-		res.json({ title: 'Create Song' });
-	});
-}
-
 exports.song_create_song = function (req, res, next) {
 	if (!req.body || !req.body.title || !req.body.spotify_id) {
 		return errorHandler.handleAPIError(400, `Required fields not met`, next);
