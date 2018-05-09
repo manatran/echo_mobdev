@@ -18,6 +18,10 @@ const styles = {
 	media: {
 		height: 200,
 	},
+	i: {
+		paddingRight:8 + 'px',
+		fontSize: 8
+	}
 };
 
 class PostsList extends Component {
@@ -39,7 +43,12 @@ class PostsList extends Component {
 	componentDidMount() {
 		fetch('/api/v1/posts')
 			.then(response => response.json())
-			.then(item => this.setState({ posts: item }));
+			.then((item) => {
+				let posts = item;
+				posts.sort(function(a,b) {return (a.created_at > b.created_at) ? 1 : ((b.created_at > a.created_at) ? -1 : 0);} ); 
+
+				this.setState({ posts: posts })
+			});
 	}
 
 	render() {
@@ -56,19 +65,33 @@ class PostsList extends Component {
 									title="Contemplative Reptile"
 								/>
 								<CardContent>
-									<Typography gutterBottom variant="headline" component="h3">
+									<Typography gutterBottom variant="headline" component="h2">
+									{(() => {
+											switch (element.type) {
+												case 'song':
+													return <i class="fas fa-music" styles={styles.i} />
+												case 'artist':
+													return <i class="fas fa-users" styles={styles.i} />
+												case 'album':
+													return <i class="fas fa-dot-circle" styles={styles.i} />
+												default:
+													null
+											}
+										})()}
 										{element.content.title}
 									</Typography>
-									<Typography component="p">
-										{element.content.artist_name}
-									</Typography>
+									{element.type !== "song" &&
+										<Typography variant="headline" component="p">
+											{element.content.artist_name}
+										</Typography>
+									}
 									{element.type === "song" &&
-									<Typography component="p">
-										{this.millisToMinutesAndSeconds(element.content.duration)}
-									</Typography>
+										<Typography component="p">
+											{element.content.artist_name}
+										</Typography>
 									}
 									<Typography component="p">
-										{(element.author && element.author.username)?element.author.username:''}
+										{(element.author && element.author.username) ? element.author.username : ''}
 									</Typography>
 								</CardContent>
 							</Card>

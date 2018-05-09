@@ -15,6 +15,8 @@ const searchController = require('./controllers/searchController');
 const commentController = require('./controllers/commentController');
 const subcommentController = require('./controllers/subcommentController');
 const playlistController = require('./controllers/playlistController');
+const chatController = require('./controllers/chatController');
+const messageController = require('./controllers/messageController');
 /*
 Routes
 */
@@ -64,11 +66,26 @@ router.patch('/subcomments/:subcommentId/softundelete', auth.authenticateJwt(), 
 router.get('/playlists', playlistController.get_playlists);
 router.get('/playlists/:playlistId', playlistController.get_playlist);
 router.post('/playlists', playlistController.playlist_create_playlist);
-router.get('/playlists/:playlistId/update', playlistController.playlist_update_get);
 router.put('/playlists/:playlistId', playlistController.playlist_update_put);
 router.delete('/playlists/:playlistId', playlistController.playlist_delete_delete);
 router.patch('/playlists/:playlistId/softdelete', playlistController.playlist_softdelete_patch);
 router.patch('/playlists/:playlistId/softundelete', playlistController.playlist_softundelete_patch);
+
+router.get('/chats', chatController.get_chats);
+router.get('/chats/:chatId', chatController.get_chat);
+router.post('/chats', chatController.chat_create_chat);
+router.put('/chats/:chatId', chatController.chat_update_put);
+router.delete('/chats/:chatId', chatController.chat_delete_delete);
+router.patch('/chats/:chatId/softdelete', chatController.chat_softdelete_patch);
+router.patch('/chats/:chatId/softundelete', chatController.chat_softundelete_patch);
+
+router.get('/messages', chatController.get_chats);
+router.get('/messages/:chatId', chatController.get_chat);
+router.post('/messages', chatController.chat_create_chat);
+router.put('/messages/:messageId', chatController.chat_update_put);
+router.delete('/messages/:messageId', chatController.chat_delete_delete);
+router.patch('/messages/:messageId/softdelete', chatController.chat_softdelete_patch);
+router.patch('/messages/:messageId/softundelete', chatController.chat_softundelete_patch);
 
 router.get('/posts', postController.get_posts);
 router.get('/posts/:postId', postController.get_post);

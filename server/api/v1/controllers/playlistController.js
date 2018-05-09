@@ -1,4 +1,5 @@
 const async = require('async');
+const mongoose = require('mongoose');
 
 const Playlist = require('../models/playlist');
 const errorHandler = require('../utilities/errorHandler');
@@ -7,8 +8,53 @@ const errorHandler = require('../utilities/errorHandler');
 Get all playlists
 */
 exports.get_playlists = function (req, res, next) {
-	const query = Playlist.find();
-	query.sort({ created_at: -1 });
+	const query = Playlist.aggregate([
+		{
+			$lookup: {
+				from: 'songs',
+				localField: 'songs',
+				foreignField: 'spotify_id',
+				as: 'songs'
+			}
+		},
+			{
+				$unwind: {
+					path: "$songs",
+					preserveNullAndEmptyArrays: true
+				}
+			},
+			{
+				$lookup: {
+					from: 'albums',
+					localField: 'songs.album',
+					foreignField: 'spotify_id',
+					as: 'album'
+				}
+			},
+			{
+				$group: {
+					_id: "$_id",
+					author: { $first: "$author" },
+					type: { $first: "$type" },
+					likes: { $first: "$likes" },
+					songs: {
+						$push: {
+							spotify_id: "$songs.spotify_id",
+							title: "$songs.title",
+							artist_name: "$songs.artist_name",
+							explicit: "$songs.explicit",
+							duration: "$songs.duration",
+							popularity: "$songs.popularity",
+							album_name: "$songs.album_name",
+							images: { "$arrayElemAt": ['$album.images', 0] },
+							"created_at": "$created_at",
+							"updated_at": "$updated_at",
+							"deleted_at": "$deleted_at"
+						}
+					}
+				}
+			}
+	]);
 	query.exec((err, playlists) => {
 		if (err) return errorHandler.handleAPIError(500, err.message || 'Some error occurred while retrieving playlists', next);
 		if (!playlists) {
@@ -23,13 +69,60 @@ Get a certain playlist
 */
 exports.get_playlist = function (req, res, next) {
 	const id = req.params.playlistId;
-	const query = Playlist.findById(id).populate('author');
+	const query = Playlist.aggregate([
+		{ $match: {spotify_id: mongoose.Schema.Types.ObjectId(id)}},
+		{
+			$lookup: {
+				from: 'songs',
+				localField: 'songs',
+				foreignField: 'spotify_id',
+				as: 'songs'
+			}
+		},
+			{
+				$unwind: {
+					path: "$songs",
+					preserveNullAndEmptyArrays: true
+				}
+			},
+			{
+				$lookup: {
+					from: 'albums',
+					localField: 'songs.album',
+					foreignField: 'spotify_id',
+					as: 'album'
+				}
+			},
+			{
+				$group: {
+					_id: "$_id",
+					author: { $first: "$author" },
+					type: { $first: "$type" },
+					likes: { $first: "$likes" },
+					songs: {
+						$push: {
+							spotify_id: "$songs.spotify_id",
+							title: "$songs.title",
+							artist_name: "$songs.artist_name",
+							explicit: "$songs.explicit",
+							duration: "$songs.duration",
+							popularity: "$songs.popularity",
+							album_name: "$songs.album_name",
+							images: { "$arrayElemAt": ['$album.images', 0] },
+							"created_at": "$created_at",
+							"updated_at": "$updated_at",
+							"deleted_at": "$deleted_at"
+						}
+					}
+				}
+			}
+	])
 	query.exec((err, playlist) => {
 		if (err) return errorHandler.handleAPIError(500, `Could not get the playlist with id: ${id}`, next);
 		if (!playlist) {
 			return errorHandler.handleAPIError(404, `Playlist not found with id: ${id}`, next);
 		}
-		return res.json(playlist);
+		return res.json(playlist[0]);
 	});
 }
 
@@ -52,21 +145,6 @@ exports.playlist_create_playlist = function (req, res, next) {
 /*
 Update a Playlist
 */
-exports.playlist_update_get = function (req, res, next) {
-	async.parallel({
-		playlist: function (callback) {
-			const id = req.params.playlistId;
-			Playlist.findById(id, callback);
-		},
-		categories: function (callback) {
-			Category.find(callback).sort({ created_at: -1 });
-		},
-	}, function (err, results) {
-		if (err) { return next(err); }
-		res.json({ playlist: results.playlist });
-	});
-}
-
 exports.playlist_update_put = function (req, res, next) {
 	if (!req.body || !req.body.title || !req.body.type || !req.body.author) {
 		return errorHandler.handleAPIError(400, `Playlist must have a title, synopsis, body`, next);

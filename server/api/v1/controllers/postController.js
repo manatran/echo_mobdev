@@ -77,6 +77,7 @@ exports.get_posts = function (req, res, next) {
 								$push: {
 									spotify_id: "$content.spotify_id",
 									title: "$content.title",
+									artist_name: "$content.artist_name",
 									explicit: "$content.explicit",
 									duration: "$content.duration",
 									popularity: "$content.popularity",
@@ -194,6 +195,7 @@ exports.get_post = function (req, res, next) {
 								$push: {
 									spotify_id: "$content.spotify_id",
 									title: "$content.title",
+									artist_name: "$content.artist_name",
 									explicit: "$content.explicit",
 									duration: "$content.duration",
 									popularity: "$content.popularity",

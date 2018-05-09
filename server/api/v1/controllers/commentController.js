@@ -36,13 +36,6 @@ exports.get_comments_by_post = function (req, res, next) {
 /*
 Create a Comment
 */
-exports.comment_create_get = function (req, res, next) {
-	async.parallel({}, function (err, results) {
-		if (err) { return next(err); }
-		res.json({ title: 'Create Comment' });
-	});
-}
-
 exports.comment_create_comment = function (req, res, next) {
 	console.log(req.body.type)
 	if (!req.body || !req.body.post_id || !req.body.author || !req.body.content) {
