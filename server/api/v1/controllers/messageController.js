@@ -38,8 +38,8 @@ Create a Message
 */
 exports.message_create_message = function (req, res, next) {
 	console.log(req.body.type)
-	if (!req.body || !req.body.title || !req.members) {
-		return errorHandler.handleAPIError(400, `Message must have a title, members`, next);
+	if (!req.body || !req.body.conversation_id || !req.body.author || !req.body.content) {
+		return errorHandler.handleAPIError(400, `Message must have a conversation, author, content`, next);
 	}
 
 	const message = new Message(req.body);
@@ -53,8 +53,8 @@ exports.message_create_message = function (req, res, next) {
 Update a Message
 */
 exports.message_update_put = function (req, res, next) {
-	if (!req.body || !req.body.title || !req.members) {
-		return errorHandler.handleAPIError(400, `Message must have a title, members`, next);
+	if (!req.body || !req.body.conversation_id || !req.body.author || !req.body.content) {
+		return errorHandler.handleAPIError(400, `Message must have a conversation, author, content`, next);
 	}
 
 	const id = req.params.messageId;
