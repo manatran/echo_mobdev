@@ -58,7 +58,7 @@ exports.album_delete_delete = function (req, res, next) {
 			if (!album) {
 				return errorHandler.handleAPIError(404, `Album not found with id: ${id}`, next);
 			}
-			res.status(200).json({ action: 'DELETE', message: `Album width id: ${id} deleted successfully!` });
+			res.status(200).json({ action: 'DELETE', message: `Album with id: ${id} deleted successfully!` });
 		}).catch(err => {
 			if (err.kind === 'ObjectId' || err.name === 'NotFound') {
 				return errorHandler.handleAPIError(404, `Album not found with id: ${id}`, next);

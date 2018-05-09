@@ -92,7 +92,7 @@ exports.subcomment_delete_delete = function (req, res, next) {
 			if (!subcomment) {
 				return errorHandler.handleAPIError(404, `Subcomment not found with id: ${id}`, next);
 			}
-			res.status(200).json({ action: 'DELETE', message: `Subcomment width id: ${id} deleted successfully!` });
+			res.status(200).json({ action: 'DELETE', message: `Subcomment with id: ${id} deleted successfully!` });
 		}).catch(err => {
 			if (err.kind === 'ObjectId' || err.name === 'NotFound') {
 				return errorHandler.handleAPIError(404, `Subcomment not found with id: ${id}`, next);

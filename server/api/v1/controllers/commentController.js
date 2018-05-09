@@ -94,7 +94,7 @@ exports.comment_delete_delete = function (req, res, next) {
 			if (!comment) {
 				return errorHandler.handleAPIError(404, `Comment not found with id: ${id}`, next);
 			}
-			res.status(200).json({ action: 'DELETE', message: `Comment width id: ${id} deleted successfully!` });
+			res.status(200).json({ action: 'DELETE', message: `Comment with id: ${id} deleted successfully!` });
 		}).catch(err => {
 			if (err.kind === 'ObjectId' || err.name === 'NotFound') {
 				return errorHandler.handleAPIError(404, `Comment not found with id: ${id}`, next);

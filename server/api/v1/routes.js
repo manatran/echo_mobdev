@@ -73,9 +73,9 @@ router.patch('/playlists/:playlistId/softundelete', playlistController.playlist_
 router.get('/posts', postController.get_posts);
 router.get('/posts/:postId', postController.get_post);
 router.post('/posts', postController.post_create_post);
-router.delete('/posts/:postId', auth.authenticateJwt(), postController.post_delete_delete);
-router.patch('/posts/:postId/softdelete', auth.authenticateJwt(), postController.post_softdelete_patch);
-router.patch('/posts/:postId/softundelete', auth.authenticateJwt(), postController.post_softundelete_patch);
+router.delete('/posts/:postId', postController.post_delete_delete);
+router.patch('/posts/:postId/softdelete', postController.post_softdelete_patch);
+router.patch('/posts/:postId/softundelete', postController.post_softundelete_patch);
 
 
 router.post('/signup', authController.user_create_post);

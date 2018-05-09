@@ -102,7 +102,7 @@ exports.playlist_delete_delete = function (req, res, next) {
 			if (!playlist) {
 				return errorHandler.handleAPIError(404, `Playlist not found with id: ${id}`, next);
 			}
-			res.status(200).json({ action: 'DELETE', message: `Playlist width id: ${id} deleted successfully!` });
+			res.status(200).json({ action: 'DELETE', message: `Playlist with id: ${id} deleted successfully!` });
 		}).catch(err => {
 			if (err.kind === 'ObjectId' || err.name === 'NotFound') {
 				return errorHandler.handleAPIError(404, `Playlist not found with id: ${id}`, next);
