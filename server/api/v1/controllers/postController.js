@@ -19,50 +19,94 @@ exports.get_posts = function (req, res, next) {
 				"deleted_at": "$deleted_at"
 			}
 		},
-		{$facet: {
-			"albums": [
-				{$match: {"type": "album"}},
-          {$lookup: {
-            from: "albums",
-            localField: "content",
-            foreignField: "spotify_id",
-            as: "content"
-          }},
-			],
-			"artists": [
-				{$match:{"type": "artist"}},
-          {$lookup: {
-            from: "artists",
-            localField: "content",
-            foreignField: "spotify_id",
-            as: "content"
-          }},
-			],
-			"songs": [
-				{$match:{"type": "song"}},
-          {$lookup: {
-            from: "songs",
-            localField: "content",
-            foreignField: "spotify_id",
-            as: "content"
-          }},
-			],
-		}},
-		{$project: {all: {$setUnion: ["$albums", "$artists", "$songs"]}}},
-		{$unwind: "$all"},
-		{$replaceRoot: { newRoot: "$all" }},
+		{
+			$facet: {
+				"albums": [
+					{ $match: { "type": "album" } },
+					{
+						$lookup: {
+							from: "albums",
+							localField: "content",
+							foreignField: "spotify_id",
+							as: "content"
+						}
+					},
+				],
+				"artists": [
+					{ $match: { "type": "artist" } },
+					{
+						$lookup: {
+							from: "artists",
+							localField: "content",
+							foreignField: "spotify_id",
+							as: "content"
+						}
+					},
+				],
+				"songs": [
+					{ $match: { "type": "song" } },
+					{
+						$lookup: {
+							from: "songs",
+							localField: "content",
+							foreignField: "spotify_id",
+							as: "content"
+						}
+					},
+					{
+						$unwind: {
+							path: "$content",
+							preserveNullAndEmptyArrays: true
+						}
+					},
+					{
+						$lookup: {
+							from: 'albums',
+							localField: 'content.album',
+							foreignField: 'spotify_id',
+							as: 'album'
+						}
+					},
+					{
+						$group: {
+							_id: "$_id",
+							author: { $first: "$author" },
+							type: { $first: "$type" },
+							likes: { $first: "$likes" },
+							content: {
+								$push: {
+									spotify_id: "$content.spotify_id",
+									title: "$content.title",
+									explicit: "$content.explicit",
+									duration: "$content.duration",
+									popularity: "$content.popularity",
+									album_name: "$content.album_name",
+									images: { "$arrayElemAt": ['$album.images', 0] },
+									"created_at": "$created_at",
+									"updated_at": "$updated_at",
+									"deleted_at": "$deleted_at"
+								}
+							}
+						}
+					}
+				],
+			}
+		},
+		{ $project: { all: { $setUnion: ["$albums", "$artists", "$songs"] } } },
+		{ $unwind: "$all" },
+		{ $replaceRoot: { newRoot: "$all" } },
 		{ $lookup: { from: 'users', localField: 'author', foreignField: '_id', as: 'author' } },
 		{
 			$project: {
 				"author": { "$arrayElemAt": ['$author', 0] },
 				"type": 1,
+				"content": { "$arrayElemAt": ['$content', 0] },
 				"likes": 1,
 				"created_at": 1,
 				"updated_at": 1,
 				"deleted_at": 1,
-				"content": { "$arrayElemAt": ['$content', 0] }
 			}
-		},
+		}
 	]);
 	query.sort({ created_at: -1 });
 	query.exec((err, posts) => {
@@ -80,7 +124,7 @@ Get a certain post
 exports.get_post = function (req, res, next) {
 	const id = req.params.postId;
 	const query = Post.aggregate([
-		{$match: {"_id": mongoose.Types.ObjectId(req.params.postId)}},
+		{ $match: { "_id": mongoose.Types.ObjectId(req.params.postId) } },
 		{
 			$project: {
 				"content": "$content",
@@ -92,38 +136,82 @@ exports.get_post = function (req, res, next) {
 				"deleted_at": "$deleted_at"
 			}
 		},
-		{$facet: {
-			"albums": [
-				{$match: {"type": "album"}},
-          {$lookup: {
-            from: "albums",
-            localField: "content",
-            foreignField: "spotify_id",
-            as: "content"
-          }},
-			],
-			"artists": [
-				{$match:{"type": "artist"}},
-          {$lookup: {
-            from: "artists",
-            localField: "content",
-            foreignField: "spotify_id",
-            as: "content"
-          }},
-			],
-			"songs": [
-				{$match:{"type": "song"}},
-          {$lookup: {
-            from: "songs",
-            localField: "content",
-            foreignField: "spotify_id",
-            as: "content"
-          }},
-			],
-		}},
-		{$project: {all: {$setUnion: ["$albums", "$artists", "$songs"]}}},
-		{$unwind: "$all"},
-		{$replaceRoot: { newRoot: "$all" }},
+		{
+			$facet: {
+				"albums": [
+					{ $match: { "type": "album" } },
+					{
+						$lookup: {
+							from: "albums",
+							localField: "content",
+							foreignField: "spotify_id",
+							as: "content"
+						}
+					},
+				],
+				"artists": [
+					{ $match: { "type": "artist" } },
+					{
+						$lookup: {
+							from: "artists",
+							localField: "content",
+							foreignField: "spotify_id",
+							as: "content"
+						}
+					},
+				],
+				"songs": [
+					{ $match: { "type": "song" } },
+					{
+						$lookup: {
+							from: "songs",
+							localField: "content",
+							foreignField: "spotify_id",
+							as: "content"
+						}
+					},
+					{
+						$unwind: {
+							path: "$content",
+							preserveNullAndEmptyArrays: true
+						}
+					},
+					{
+						$lookup: {
+							from: 'albums',
+							localField: 'content.album',
+							foreignField: 'spotify_id',
+							as: 'album'
+						}
+					},
+					{
+						$group: {
+							_id: "$_id",
+							author: { $first: "$author" },
+							type: { $first: "$type" },
+							likes: { $first: "$likes" },
+							content: {
+								$push: {
+									spotify_id: "$content.spotify_id",
+									title: "$content.title",
+									explicit: "$content.explicit",
+									duration: "$content.duration",
+									popularity: "$content.popularity",
+									album_name: "$content.album_name",
+									images: { "$arrayElemAt": ['$album.images', 0] },
+									"created_at": "$created_at",
+									"updated_at": "$updated_at",
+									"deleted_at": "$deleted_at"
+								}
+							}
+						}
+					}
+				],
+			}
+		},
+		{ $project: { all: { $setUnion: ["$albums", "$artists", "$songs"] } } },
+		{ $unwind: "$all" },
+		{ $replaceRoot: { newRoot: "$all" } },
 		{ $lookup: { from: 'users', localField: 'author', foreignField: '_id', as: 'author' } },
 		{
 			$project: {
@@ -151,8 +239,8 @@ Create a Post
 */
 exports.post_create_post = function (req, res, next) {
 	console.log(req.body.type)
-	if (!req.body || !req.body.type || !req.body.author || !req.body.spotify_id) {
-		return errorHandler.handleAPIError(400, `Post must have a type, spotify_id, author`, next);
+	if (!req.body || !req.body.type || !req.body.author || !req.body.content) {
+		return errorHandler.handleAPIError(400, `Post must have a type, content, author`, next);
 	}
 
 	const post = new Post(req.body);
