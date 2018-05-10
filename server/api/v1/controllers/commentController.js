@@ -23,7 +23,7 @@ Get a certain comment
 */
 exports.get_comments_by_post = function (req, res, next) {
 	const id = req.params.postId;
-	const query = Comment.findBy({'post_id': id}).populate('author');
+	const query = Comment.find({'post_id': id}).populate('author');
 	query.exec((err, comment) => {
 		if (err) return errorHandler.handleAPIError(500, `Could not get the comment with id: ${id}`, next);
 		if (!comment) {

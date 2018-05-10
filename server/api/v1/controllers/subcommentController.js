@@ -23,7 +23,7 @@ Get a certain subcomment
 */
 exports.get_subcomments_by_parent = function (req, res, next) {
 	const id = req.params.parentId;
-	const query = Subcomment.findBy({'parent_id': id}).populate('author');
+	const query = Subcomment.find({'parent_id': id}).populate('author');
 	query.exec((err, subcomment) => {
 		if (err) return errorHandler.handleAPIError(500, `Could not get the subcomment with id: ${id}`, next);
 		if (!subcomment) {
@@ -36,13 +36,6 @@ exports.get_subcomments_by_parent = function (req, res, next) {
 /*
 Create a Subcomment
 */
-exports.subcomment_create_get = function (req, res, next) {
-	async.parallel({}, function (err, results) {
-		if (err) { return next(err); }
-		res.json({ title: 'Create Subcomment' });
-	});
-}
-
 exports.subcomment_create_subcomment = function (req, res, next) {
 	console.log(req.body.type)
 	if (!req.body || !req.body.parent_id || !req.body.author || !req.body.content) {

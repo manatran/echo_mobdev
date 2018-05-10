@@ -103,22 +103,50 @@ html.dark, html.dark body, html.dark #root {
 .dark .post .author{
 	color:#4D9FB4;
 }
-.dark .post .actions span{
+.dark .actions span{
 	color:#A7A7A7;
 	border-right: solid 1px #202020;
 }
-.dark .post .actions span:last-of-type{
+.dark .actions span:last-of-type{
 	border-right:none;
 }
-.dark .post .actions span:hover{
+.dark .actions span:hover{
 	color:#F16667;
 }
-.dark .post .actions span:hover i{
+.dark .actions span:hover i{
   color: #F16667;
 	-webkit-text-fill-color: #F16667;
 	-webkit-text-stroke-color: #F16667;
 }
-.dark .post .actions i{
+.dark .actions i{
 	-webkit-text-fill-color: transparent;
   -webkit-text-stroke-color: #A7A7A7;
+}
+.dark .actions span:hover{
+	background-color: #202020;
+}
+.dark .post.detail:hover{
+	background-color: #303030;
+}
+
+.dark .comment-form textarea{
+	background-color: #303030;
+	color:#eee;
+	border-left-color: #F16667;
+}
+.dark .comment-form button{
+	color: #F16667;
+}
+.dark .comment{
+	border-left-color: #4D9FB4;
+}
+.dark .subcomment{
+	border-left-color:#202020; 
+}
+.dark .comment, .dark .subcomment{
+	color:#eee;
+}
+
+.dark .spinner > div {
+	background-color: #4D9FB4;
 }

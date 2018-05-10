@@ -22,11 +22,9 @@ class PostPage extends Component {
 
   render() {
     return (
-      <div>
-        <div className="c-max">
-          <PostDetail postId={ this.props.match.params.id }/>
-        </div>
-      </div>
+      <main>
+        <PostDetail postId={ this.props.match.params.id }/>
+      </main>
     )
   }
 }

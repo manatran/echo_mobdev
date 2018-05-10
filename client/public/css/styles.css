@@ -26,6 +26,12 @@ ul{
 	background-color: white;
 	box-shadow: 0 0 3px rgba(0,0,0,0.3);
 }
+.card.light{
+	text-align: center;
+  font-size: 12px;
+	color: #A7A7A7;
+	padding:8px;
+}
 h2{
 	margin:0;
 	font-size: 16px;
@@ -323,12 +329,38 @@ aside i{
 .post .author{
 	color:#F16667;
 }
-.post .timestamp::before{
+.timestamp::before{
 	content:'●';
 	margin:0 8px;
 }
+h2 .timestamp{
+	color:#6D6D6D;
+	font-size: 14px;
+	font-weight: 300;
+}
+.comment-thread{
+	padding:8px 16px;
+	box-sizing: border-box;
+}
+.comment{
+	box-sizing: border-box;
+	padding-left: 16px;
+	border-left:solid 3px #F16667;
+}
+.comment p{
+	margin:8px 0;
+}
+.subcomment-thread{
+	padding:8px 16px 8px 24px;
+	box-sizing: border-box;
+}
+.subcomment{
+	margin:8px 0;
+	padding-left: 16px;
+	border-left:solid 3px #ccc;
+}
 
-.post .actions{
+.actions{
 	width:100%;
 	display: flex;
 	flex-direction: row;
@@ -336,7 +368,7 @@ aside i{
 	align-items: center;
 	box-sizing: border-box;
 }
-.post .actions span{
+.actions span{
 	display:flex;
 	flex-direction: row;
 	align-items: center;
@@ -347,29 +379,30 @@ aside i{
 	cursor: pointer;
 	border-right: solid 1px #ccc;
 	padding:8px 0;
+	transition: .2s;
 }
-.post .actions span:last-of-type{
+.actions span:last-of-type{
 	border-right:none;
 }
-.post .actions span:hover{
+.actions span:hover{
 	color:#4D9FB4;
 }
-.post .actions span:hover i{
+.actions span:hover i{
   color: #4D9FB4;
 	-webkit-text-fill-color: #4D9FB4;
 	-webkit-text-stroke-color: #4D9FB4;
 }
-.post .actions i{
+.actions i{
 	margin-right: 8px;
 	-webkit-text-fill-color: transparent;
   -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-color: #A7A7A7;
 }
-
-.error-page .card{
-	text-align: center;
-	font-size: 12px;
-	color: #A7A7A7;
+.actions span:hover{
+	background-color: #eee;
+}
+.post.detail:hover{
+	background-color: white;
 }
 .error-page a{
 	display: block;
@@ -379,4 +412,84 @@ aside i{
 .error-page a:hover{
 	font-size: 14px;
 	color:#F16667;
+}
+
+.comment-form form{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-start;
+}
+.comment-form textarea{
+	box-sizing: border-box;
+	min-height: 64px;
+	width: 90%;
+	padding:16px;
+	border:none;
+	outline: none;
+	border-radius: 8px;
+	border-left:solid 3px #4D9FB4;
+}
+.comment-form button{
+	cursor: pointer;
+	width:10%;
+	background-color:transparent;
+	border: none;
+	outline: none;
+	color: #4D9FB4;
+}
+
+
+.spinner {
+  margin: 100px auto;
+  width: 50px;
+  height: 40px;
+  text-align: center;
+  font-size: 10px;
+}
+
+.spinner > div {
+  background-color: #F16667;
+  height: 100%;
+  width: 6px;
+	display: inline-block;
+	margin:0 1px;
+  
+  -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+  animation: sk-stretchdelay 1.2s infinite ease-in-out;
+}
+
+.spinner .rect2 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+
+.spinner .rect3 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+.spinner .rect4 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+
+.spinner .rect5 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+
+@-webkit-keyframes sk-stretchdelay {
+  0%, 40%, 100% { -webkit-transform: scaleY(0.4) }  
+  20% { -webkit-transform: scaleY(1.0) }
+}
+
+@keyframes sk-stretchdelay {
+  0%, 40%, 100% { 
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  }  20% { 
+    transform: scaleY(1.0);
+    -webkit-transform: scaleY(1.0);
+  }
 }
