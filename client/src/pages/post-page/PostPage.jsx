@@ -24,7 +24,7 @@ class PostPage extends Component {
     return (
       <div>
         <div className="c-max">
-              <PostDetail postId={ this.props.match.params.id }/>
+          <PostDetail postId={ this.props.match.params.id }/>
         </div>
       </div>
     )

@@ -73,6 +73,9 @@ exports.get_posts = function (req, res, next) {
 							author: { $first: "$author" },
 							type: { $first: "$type" },
 							likes: { $first: "$likes" },
+							"created_at": { $first: "$created_at" },
+							"updated_at": { $first: "$updated_at" },
+							"deleted_at": { $first: "$deleted_at" },
 							content: {
 								$push: {
 									spotify_id: "$content.spotify_id",
@@ -83,9 +86,6 @@ exports.get_posts = function (req, res, next) {
 									popularity: "$content.popularity",
 									album_name: "$content.album_name",
 									images: { "$arrayElemAt": ['$album.images', 0] },
-									"created_at": "$created_at",
-									"updated_at": "$updated_at",
-									"deleted_at": "$deleted_at"
 								}
 							}
 						}
@@ -191,6 +191,9 @@ exports.get_post = function (req, res, next) {
 							author: { $first: "$author" },
 							type: { $first: "$type" },
 							likes: { $first: "$likes" },
+							"created_at": { $first: "$created_at" },
+							"updated_at": { $first: "$updated_at" },
+							"deleted_at": { $first: "$deleted_at" },
 							content: {
 								$push: {
 									spotify_id: "$content.spotify_id",
@@ -201,9 +204,6 @@ exports.get_post = function (req, res, next) {
 									popularity: "$content.popularity",
 									album_name: "$content.album_name",
 									images: { "$arrayElemAt": ['$album.images', 0] },
-									"created_at": "$created_at",
-									"updated_at": "$updated_at",
-									"deleted_at": "$deleted_at"
 								}
 							}
 						}

@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+/* Comoponents */
+import PostsList from '../../components/posts-list/PostsList';
+
 /*
 Component styles
 */
@@ -12,9 +15,9 @@ class HomePage extends Component {
 
   render() {
     return (
-      <div>
-        Home Page
-      </div>
+      <main>
+        <PostsList />
+      </main>
     )
   }
 }

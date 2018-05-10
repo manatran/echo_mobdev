@@ -37,167 +37,191 @@ Styles
 */
 const drawerWidth = 320;
 const styles = theme => ({
-  drawerPaper: {
-    width: drawerWidth,
-  },
-  toolbar: theme.mixins.toolbar,
+	drawerPaper: {
+		width: drawerWidth,
+	},
+	toolbar: theme.mixins.toolbar,
 });
 
 class Offcanvas extends Component {
 
-  constructor(props) {
-    super(props);
+	constructor(props) {
+		super(props);
 
-    this.state = {
-      backofficeLists: {
-        postsOpen: false
-      }
-    };
-  }
+		this.state = {
+			backofficeLists: {
+				postsOpen: false
+			}
+		};
+	}
 
-  toggleBackofficeLists = (list) => {
-    this.setState(prevState => {
-      const backofficeListsUpdate = prevState.backofficeLists;
-      backofficeListsUpdate[list] = !backofficeListsUpdate[list];
-      return {
-        backofficeLists: backofficeListsUpdate
-      }
-    });
-  }
+	toggleBackofficeLists = (list) => {
+		this.setState(prevState => {
+			const backofficeListsUpdate = prevState.backofficeLists;
+			backofficeListsUpdate[list] = !backofficeListsUpdate[list];
+			return {
+				backofficeLists: backofficeListsUpdate
+			}
+		});
+	}
 
-  authLinks() {
-    if (this.props.authenticated) {
-      return [
-        <List key="0" component="nav">
-          <ListItem button onClick={() => this.props.closeClick()} component={Link} to="/">
-            <ListItemText primary="Home" />
-          </ListItem>
-          <ListItem button onClick={() => this.props.closeClick()} component={Link} to="/posts">
-            <ListItemText primary="News" />
-          </ListItem>
-          <Divider />
-          <ListItem button onClick={() => this.props.closeClick()} component={Link} to="/signout">
-            <ListItemText primary="Sign out" />
-          </ListItem>
-        </List>,
-      ];
-    }
-    return [
-      <List key="0" component="nav">
-        <ListItem button onClick={() => this.props.closeClick()} component={Link} to="/">
-          <ListItemText primary="Home" />
-        </ListItem>
-        <ListItem button onClick={() => this.props.closeClick()} component={Link} to="/posts">
-          <ListItemText primary="News" />
-        </ListItem>
-        <Divider />
-        <ListItem button onClick={() => this.props.closeClick()} component={Link} to="/signin">
-          <ListItemText primary="Sign in" />
-        </ListItem>
-        <ListItem button onClick={() => this.props.closeClick()} component={Link} to="/signup">
-          <ListItemText primary="Sign up" />
-        </ListItem>
-      </List>,
-    ];
-  }
+	authLinks() {
+		if (this.props.authenticated) {
+			return [
+				<List key="0" component="nav">
+					<ListItem button onClick={() => this.props.closeClick()} component={Link} to="/">
+						<ListItemText primary="Home" />
+					</ListItem>
+					<ListItem button onClick={() => this.props.closeClick()} component={Link} to="/posts">
+						<ListItemText primary="News" />
+					</ListItem>
+					<Divider />
+					<ListItem button onClick={() => this.props.closeClick()} component={Link} to="/signout">
+						<ListItemText primary="Sign out" />
+					</ListItem>
+				</List>,
+			];
+		}
+		return [
+			<List key="0" component="nav">
+				<ListItem button onClick={() => this.props.closeClick()} component={Link} to="/">
+					<ListItemText primary="Home" />
+				</ListItem>
+				<ListItem button onClick={() => this.props.closeClick()} component={Link} to="/posts">
+					<ListItemText primary="News" />
+				</ListItem>
+				<Divider />
+				<ListItem button onClick={() => this.props.closeClick()} component={Link} to="/signin">
+					<ListItemText primary="Sign in" />
+				</ListItem>
+				<ListItem button onClick={() => this.props.closeClick()} component={Link} to="/signup">
+					<ListItemText primary="Sign up" />
+				</ListItem>
+			</List>,
+		];
+	}
 
-  backofficeLinks() {
-    if (this.props.authenticated) {
-      return [
-        <List 
-        key={0}
-        subheader={<ListSubheader component="div">Backoffice</ListSubheader>}
-        component="nav"
-        >
-          <ListItem
-            button
-            onClick={() => this.toggleBackofficeLists('postsOpen')}
-          >
-            <ListItemIcon>
-              <IconDescription />
-            </ListItemIcon>
-            <ListItemText inset primary="Posts" />
-            {this.state.backofficeLists.postsOpen ? <IconExpandLess /> : <IconExpandMore />}
-          </ListItem>
-          <Collapse in={this.state.backofficeLists.postsOpen} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItem
-                key={"1"}
-                button
-                onClick={() => this.props.closeClick()}
-                component={Link} 
-                to="/backoffice/posts-table"
-              >
-                <ListItemIcon>
-                  <IconList />
-                </ListItemIcon>
-                <ListItemText inset primary="All posts" />
-              </ListItem>
-              <ListItem
-                key={"2"}
-                button
-                onClick={() => this.props.closeClick()}
-                component={Link} 
-                to="/backoffice/post-create"
-              >
-                <ListItemIcon>
-                  <IconModeEdit />
-                </ListItemIcon>
-                <ListItemText inset primary="Create post" />
-              </ListItem>
-            </List>
-          </Collapse>
-          <ListItem
-            button
-            onClick={() => this.props.closeClick()}
-            component={Link} 
-            to="/404"
-          >
-            <ListItemIcon>
-              <IconBugReport />
-            </ListItemIcon>
-            <ListItemText inset primary="404" />
-          </ListItem>
-        </List>,
-      ];
-    }
-    return [];
-  }
+	backofficeLinks() {
+		if (this.props.authenticated) {
+			return [
+				<List
+					key={0}
+					subheader={<ListSubheader component="div">Backoffice</ListSubheader>}
+					component="nav"
+				>
+					<ListItem
+						button
+						onClick={() => this.toggleBackofficeLists('postsOpen')}
+					>
+						<ListItemIcon>
+							<IconDescription />
+						</ListItemIcon>
+						<ListItemText inset primary="Posts" />
+						{this.state.backofficeLists.postsOpen ? <IconExpandLess /> : <IconExpandMore />}
+					</ListItem>
+					<Collapse in={this.state.backofficeLists.postsOpen} timeout="auto" unmountOnExit>
+						<List component="div" disablePadding>
+							<ListItem
+								key={"1"}
+								button
+								onClick={() => this.props.closeClick()}
+								component={Link}
+								to="/backoffice/posts-table"
+							>
+								<ListItemIcon>
+									<IconList />
+								</ListItemIcon>
+								<ListItemText inset primary="All posts" />
+							</ListItem>
+							<ListItem
+								key={"2"}
+								button
+								onClick={() => this.props.closeClick()}
+								component={Link}
+								to="/backoffice/post-create"
+							>
+								<ListItemIcon>
+									<IconModeEdit />
+								</ListItemIcon>
+								<ListItemText inset primary="Create post" />
+							</ListItem>
+						</List>
+					</Collapse>
+					<ListItem
+						button
+						onClick={() => this.props.closeClick()}
+						component={Link}
+						to="/404"
+					>
+						<ListItemIcon>
+							<IconBugReport />
+						</ListItemIcon>
+						<ListItemText inset primary="404" />
+					</ListItem>
+				</List>,
+			];
+		}
+		return [];
+	}
 
-  render() {
-    const { classes, theme } = this.props;
+	render() {
+		const { classes, theme } = this.props;
 
-    return (
-      <Drawer
-        anchor="left"
-        open={this.props.offcanvasOpened}
-        onClose={(open) => this.props.closeClick()}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        {this.authLinks()}
-        {this.backofficeLinks()}
-      </Drawer>
-    )
-  }
+		return (
+			<aside className="mobile-nav">
+				<img src="https://api.adorable.io/avatars/64/manaus.png" alt="Profile pic" />
+				<h2>manaus_t</h2>
+				<ul className="primary-links">
+					<li>
+						<a href="#">
+							<i className="fa fa-music"></i>Music</a>
+					</li>
+					<li>
+						<a href="#">
+							<i className="fa fa-user"></i>Profile</a>
+					</li>
+					<li>
+						<a href="#">
+							<i className="fa fa-play"></i>Playlists</a>
+					</li>
+				</ul>
+				<a href="#" className="nightmode">
+					<i className="fa fa-moon"></i>Toggle Night Mode</a>
+				<ul className="secondary-links">
+					<li>
+						<a href="#">Settings</a>
+					</li>
+					<li>
+						<a href="#">Contact us</a>
+					</li>
+					<li>
+						<a href="#">Privacy Policy</a>
+					</li>
+					<li>
+						<a href="#" className="logout">Logout</a>
+					</li>
+				</ul>
+			</aside>
+
+		)
+	}
 }
 
 Offcanvas.propTypes = {
-  offcanvasOpened: PropTypes.bool,
+	offcanvasOpened: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => {
-  return {
-    authenticated: state.auth.authenticated,
-    offcanvasOpened: state.offcanvas.offcanvasOpened
-  };
+	return {
+		authenticated: state.auth.authenticated,
+		offcanvasOpened: state.offcanvas.offcanvasOpened
+	};
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    closeClick: () => dispatch(closeOffcanvas())
-  };
+	return {
+		closeClick: () => dispatch(closeOffcanvas())
+	};
 };
 
 const OffcanvasWithStyles = withStyles(styles, { withTheme: true })(Offcanvas);

@@ -1,29 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-/*
-Material UI
-*/
-import { withStyles } from 'material-ui/styles';
-import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
-import Button from 'material-ui/Button';
-import Typography from 'material-ui/Typography';
-
-/*
-Styles
-*/
-const styles = {
-	card: {
-	},
-	media: {
-		height: 200,
-	},
-	i: {
-		paddingRight:8 + 'px',
-		fontSize: 8
-	}
-};
-
 class PostsList extends Component {
 
 	constructor(props) {
@@ -39,15 +16,37 @@ class PostsList extends Component {
 		var seconds = ((millis % 60000) / 1000).toFixed(0);
 		return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 	}
+	getTimeDifference(datetime) {
+		var datetime = typeof datetime !== 'undefined' ? datetime : "2014-01-01 01:02:03.123456";
+
+		var datetime = new Date(datetime).getTime();
+		var now = new Date().getTime();
+
+		if (isNaN(datetime)) {
+			return "";
+		}
+
+		if (datetime < now) {
+			var milisec_diff = now - datetime;
+		} else {
+			var milisec_diff = datetime - now;
+		}
+
+		var days = Math.floor(milisec_diff / 1000 / 60 / (60 * 24));
+		var date_diff = new Date(milisec_diff);
+		if (days < 1) return `${date_diff.getHours()} hours ago`;
+		if (days >= 1) return `${days} days ago`;
+	}
+	formatDate(datetime) {
+		datetime = new Date(datetime)
+		return `${datetime}`
+	}
 
 	componentDidMount() {
 		fetch('/api/v1/posts')
 			.then(response => response.json())
 			.then((item) => {
-				let posts = item;
-				posts.sort(function(a,b) {return (a.created_at > b.created_at) ? 1 : ((b.created_at > a.created_at) ? -1 : 0);} ); 
-
-				this.setState({ posts: posts })
+				this.setState({ posts: item })
 			});
 	}
 
@@ -55,47 +54,57 @@ class PostsList extends Component {
 		const { classes } = this.props;
 		if (this.state.posts) {
 			return (
-				<div className="row" style={{ paddingTop: '16px' }}>
+				<div>
 					{this.state.posts.map((element, i) => (
-						<div className="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-3" key={i}>
-							<Card className={classes.card} key={element._id}>
-								<CardMedia
-									className={classes.media}
-									image={(element.content && element.content.images) ? element.content.images[0].url : `https://api.adorable.io/avatars/128/${element.title}.png`}
-									title="Contemplative Reptile"
-								/>
-								<CardContent>
-									<Typography gutterBottom variant="headline" component="h2">
-									{(() => {
-											switch (element.type) {
-												case 'song':
-													return <i class="fas fa-music" styles={styles.i} />
-												case 'artist':
-													return <i class="fas fa-users" styles={styles.i} />
-												case 'album':
-													return <i class="fas fa-dot-circle" styles={styles.i} />
-												default:
-													null
-											}
-										})()}
-										{element.content.title}
-									</Typography>
-									{element.type !== "song" &&
-										<Typography variant="headline" component="p">
-											{element.content.artist_name}
-										</Typography>
-									}
-									{element.type === "song" &&
-										<Typography component="p">
-											{element.content.artist_name}
-										</Typography>
-									}
-									<Typography component="p">
-										{(element.author && element.author.username) ? element.author.username : ''}
-									</Typography>
-								</CardContent>
-							</Card>
-						</div>
+						<a href={`/post/${element._id}`} key={element._id}>
+							<section class="card post">
+							{(element.content && element.content.images)
+								? <div class="post-thumbnail" style={{ backgroundImage: 'url(' + element.content.images[0].url + ')' }}></div>
+								: <div class="post-thumbnail" style={{ backgroundImage: 'url(https://api.adorable.io/avatars/128/${element.title}.png)' }}></div>
+								}
+								<div class="post-body">
+									<div class="post-info">
+										<h2>
+											{(() => {
+												switch (element.type) {
+													case 'song':
+														return <i class="fas fa-music" />
+													case 'artist':
+														return <i class="fas fa-users" />
+													case 'album':
+														return <i class="fas fa-dot-circle" />
+													default:
+														null
+												}
+											})()}
+											{element.content.title}
+											{element.content.explicit && <span class="explicit">explicit</span>}
+										</h2>
+										{element.type !== "song" &&
+											<h3>
+												{element.content.artist_name}
+											</h3>
+										}
+										{element.type === "song" &&
+											<h3>
+												{element.content.artist_name}
+											</h3>
+										}
+										<p>by <span class="author">{element.author.username}</span>
+											<time class="timestamp" title={this.formatDate(element.created_at)} datetime={this.formatDate(element.created_at)}>{this.getTimeDifference(element.created_at)}</time>
+										</p>
+									</div>
+									<div class="actions">
+										<span class="likes">
+											<i class="fa fa-heart"></i>{element.likes.length}</span>
+										<span class="comments">
+											<i class="fa fa-comments"></i>250</span>
+										<span class="share">
+											<i class="fa fa-share"></i>share</span>
+									</div>
+								</div>
+							</section>
+						</a>
 					))}
 				</div>
 			);
@@ -108,9 +117,4 @@ class PostsList extends Component {
 		}
 	}
 }
-
-PostsList.propTypes = {
-	classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(PostsList);
+export default PostsList;

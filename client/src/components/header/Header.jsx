@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 /*
 Libraries
 */
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 /*
 State management
@@ -31,109 +31,89 @@ import IconAccountCircle from '@material-ui/icons/AccountCircle';
 Component styles
 */
 const styles = {
-  flex: {
-    flex: 1,
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
-  },
+	flex: {
+		flex: 1,
+	},
+	menuButton: {
+		marginLeft: -12,
+		marginRight: 20,
+	},
 };
 
 class Header extends Component {
-  constructor(props) {
-    super(props);
+	constructor(props) {
+		super(props);
 
-    this.state = {
-      anchorEl: null
-    }
+		this.state = {
+			anchorEl: null
+		}
 
-    this.handleHamburgerClick = this.handleHamburgerClick.bind(this);
-  }
+		this.handleHamburgerClick = this.handleHamburgerClick.bind(this);
+	}
 
-  handleHamburgerClick(e) {
-    e.preventDefault();
-    this.props.hamburgerClick();
-  }
+	handleHamburgerClick(e) {
+		e.preventDefault();
+		this.props.hamburgerClick();
+	}
 
-  handleUserMenuOpen = (ev) => {
-    this.setState({ anchorEl: ev.currentTarget });
-  }
+	handleUserMenuOpen = (ev) => {
+		this.setState({ anchorEl: ev.currentTarget });
+	}
 
-  handleUserMenuClose = () => {
-    this.setState({ anchorEl: null });
-  }
+	handleUserMenuClose = () => {
+		this.setState({ anchorEl: null });
+	}
 
-  userLinks() {
-    if (this.props.authenticated) {
-      return [
-        <MenuItem onClick={() => this.handleUserMenuClose()} component={Link} to="/profile" key={1}>Profile</MenuItem>,
-        <MenuItem onClick={() => this.handleUserMenuClose()} component={Link} to="/signout" key={2}>Sign out</MenuItem>,
-      ];
-    }
-    return [
-      <MenuItem onClick={() => this.handleUserMenuClose()} component={Link} to="/signin" key={1}>Sign in</MenuItem>,
-      <MenuItem onClick={() => this.handleUserMenuClose()} component={Link} to="/signup" key={2}>Sign up</MenuItem>,
-    ];
-  }
+	userLinks() {
+		if (this.props.authenticated) {
+			return [
+				<MenuItem onClick={() => this.handleUserMenuClose()} component={Link} to="/profile" key={1}>Profile</MenuItem>,
+				<MenuItem onClick={() => this.handleUserMenuClose()} component={Link} to="/signout" key={2}>Sign out</MenuItem>,
+			];
+		}
+		return [
+			<MenuItem onClick={() => this.handleUserMenuClose()} component={Link} to="/signin" key={1}>Sign in</MenuItem>,
+			<MenuItem onClick={() => this.handleUserMenuClose()} component={Link} to="/signup" key={2}>Sign up</MenuItem>,
+		];
+	}
 
-  render() {
-    const { classes } = this.props;
-    const { anchorEl } = this.state;
-    const open = Boolean(anchorEl);
+	render() {
+		const { classes } = this.props;
+		const { anchorEl } = this.state;
+		const open = Boolean(anchorEl);
 
-    return (
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={ this.handleHamburgerClick }>
-            <IconMenu />
-          </IconButton>
-          <Typography variant="title" color="inherit" className={classes.flex}>
-            Echo
-          </Typography>
-          <div>
-            <IconButton
-              aria-owns={open ? 'menu-appbar' : null}
-              aria-haspopup="true"
-              onClick={(ev) => this.handleUserMenuOpen(ev)}
-              color="inherit"
-            >
-              <IconAccountCircle />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={open}
-              onClose={() => this.handleUserMenuClose()}
-            >
-              {this.userLinks()}
-            </Menu>
-          </div>
-        </Toolbar>
-      </AppBar>
-    )
-  }
+		return (
+			<nav>
+				<div className="main-nav">
+					<img src="/favicon.png" alt="Echo" className="nav-logo" />
+					<form action="/posts/search" method="GET" className="search-form">
+					<label className="search">
+						<i className="fa fa-search"></i>
+						<input type="text" name="term" placeholder="Search Echo" />
+					</label>
+					</form>
+				</div>
+				<div className="tabs">
+					<a href="/" className="active">Discussion</a>
+					<a href="/browse">Browse</a>
+					<a href="/messages">Messages</a>
+				</div>
+			</nav>
+		)
+	}
 }
 
 const mapStateToProps = (state) => {
-  return {
-    authenticated: state.auth.authenticated,
-    offcanvasOpened: state.offcanvas.offcanvasOpened
-  };
+	return {
+		authenticated: state.auth.authenticated,
+		offcanvasOpened: state.offcanvas.offcanvasOpened
+	};
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    hamburgerClick: () => dispatch(toggleOffcanvas())
-  };
+	return {
+		hamburgerClick: () => dispatch(toggleOffcanvas())
+	};
 };
 
 const HeaderWithStyles = withStyles(styles, { withTheme: true })(Header);
