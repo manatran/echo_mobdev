@@ -84,7 +84,8 @@ exports.get_posts = function (req, res, next) {
 									explicit: "$content.explicit",
 									duration: "$content.duration",
 									popularity: "$content.popularity",
-									album_name: "$content.album_name",
+									"album_name": "$content.album_name",
+									"album_id": { "$arrayElemAt": ['$album.spotify_id', 0] },
 									images: { "$arrayElemAt": ['$album.images', 0] },
 								}
 							}
@@ -202,7 +203,8 @@ exports.get_post = function (req, res, next) {
 									explicit: "$content.explicit",
 									duration: "$content.duration",
 									popularity: "$content.popularity",
-									album_name: "$content.album_name",
+									"album_name": "$content.album_name",
+									"album_id": "$album.spotify_id",
 									images: { "$arrayElemAt": ['$album.images', 0] },
 								}
 							}

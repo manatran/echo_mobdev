@@ -43,25 +43,25 @@ router.patch('/artists/:artistId/softundelete', artistController.artist_softunde
 router.get('/songs', songController.get_songs);
 router.get('/songs/:songId', songController.get_song);
 router.post('/songs', songController.song_create_song);
-router.delete('/songs/:songId', auth.authenticateJwt(), songController.song_delete_delete);
-router.patch('/songs/:songId/softdelete', auth.authenticateJwt(), songController.song_softdelete_patch);
-router.patch('/songs/:songId/softundelete', auth.authenticateJwt(), songController.song_softundelete_patch);
+router.delete('/songs/:songId', songController.song_delete_delete);
+router.patch('/songs/:songId/softdelete', songController.song_softdelete_patch);
+router.patch('/songs/:songId/softundelete', songController.song_softundelete_patch);
 
 router.get('/comments', commentController.get_comments);
 router.get('/comments/:postId', commentController.get_comments_by_post);
 router.post('/comments', commentController.comment_create_comment);
-router.put('/comments/:commentId', auth.authenticateJwt(), commentController.comment_update_put);
-router.delete('/comments/:commentId', auth.authenticateJwt(), commentController.comment_delete_delete);
-router.patch('/comments/:commentId/softdelete', auth.authenticateJwt(), commentController.comment_softdelete_patch);
-router.patch('/comments/:commentId/softundelete', auth.authenticateJwt(), commentController.comment_softundelete_patch);
+router.put('/comments/:commentId', commentController.comment_update_put);
+router.delete('/comments/:commentId', commentController.comment_delete_delete);
+router.patch('/comments/:commentId/softdelete', commentController.comment_softdelete_patch);
+router.patch('/comments/:commentId/softundelete', commentController.comment_softundelete_patch);
 
 router.get('/subcomments', subcommentController.get_subcomments);
 router.get('/subcomments/:parentId', subcommentController.get_subcomments_by_parent);
 router.post('/subcomments', subcommentController.subcomment_create_subcomment);
-router.put('/subcomments/:subcommentId', auth.authenticateJwt(), subcommentController.subcomment_update_put);
-router.delete('/subcomments/:subcommentId', auth.authenticateJwt(), subcommentController.subcomment_delete_delete);
-router.patch('/subcomments/:subcommentId/softdelete', auth.authenticateJwt(), subcommentController.subcomment_softdelete_patch);
-router.patch('/subcomments/:subcommentId/softundelete', auth.authenticateJwt(), subcommentController.subcomment_softundelete_patch);
+router.put('/subcomments/:subcommentId', subcommentController.subcomment_update_put);
+router.delete('/subcomments/:subcommentId', subcommentController.subcomment_delete_delete);
+router.patch('/subcomments/:subcommentId/softdelete', subcommentController.subcomment_softdelete_patch);
+router.patch('/subcomments/:subcommentId/softundelete', subcommentController.subcomment_softundelete_patch);
 
 router.get('/playlists', playlistController.get_playlists);
 router.get('/playlists/:playlistId', playlistController.get_playlist);
