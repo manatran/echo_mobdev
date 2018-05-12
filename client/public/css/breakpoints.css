@@ -24,4 +24,8 @@
 	aside, main{
 		padding-top: 80px; 
 	}
+
+	.post-link{
+		width:100%;
+	}
 }

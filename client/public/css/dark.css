@@ -40,7 +40,8 @@ html.dark, html.dark body, html.dark #root {
 .dark aside .user .description{
 	color:#BEBEBE;
 }
-.dark aside .user .stats a{
+.dark aside .user .stats {
+	color:#eee;
 	border-top: solid 1px #202020;
 }
 .dark aside .user .action-btn{
@@ -110,23 +111,18 @@ html.dark, html.dark body, html.dark #root {
 .dark .actions span:last-of-type{
 	border-right:none;
 }
-.dark .actions span:hover{
-	color:#F16667;
-}
-.dark .actions span:hover i{
-  color: #F16667;
-	-webkit-text-fill-color: #F16667;
-	-webkit-text-stroke-color: #F16667;
-}
 .dark .actions i{
 	-webkit-text-fill-color: transparent;
   -webkit-text-stroke-color: #A7A7A7;
 }
-.dark .actions span:hover{
-	background-color: #202020;
-}
 .dark .post.detail:hover{
 	background-color: #303030;
+}
+.dark .post:hover .actions span{
+	border-right-color: #303030;
+}
+.dark .post.detail:hover .actions span{
+	border-right-color: #202020;
 }
 
 .dark .comment-form textarea{
