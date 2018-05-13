@@ -19,5 +19,10 @@ const CommentSchema = new Schema(
 );
 
 CommentSchema.virtual('id').get(() => this._id);
+CommentSchema.virtual('subcomments', {
+	ref: 'Subcomment',
+	localField: '_id',
+	foreignField: 'parent_id'
+})
 
 module.exports = mongoose.model('Comment', CommentSchema);

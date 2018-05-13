@@ -4,12 +4,11 @@ import { connect } from 'react-redux';
 import { fetchComments } from '../../actions/commentActions';
 
 import utils from '../../utilities/functions';
-import SubcommentList from './subCommentList';
 import Spinner from '../spinner/Spinner';
 
 class CommentList extends Component {
 
-	componentWillMount(){
+	componentWillMount() {
 		this.props.fetchComments(this.props.postId);
 	}
 
@@ -37,7 +36,24 @@ class CommentList extends Component {
 										<button type="submit" value="Submit"><i className="fas fa-comment-alt"></i></button>
 									</form>
 								</div>
-								<SubcommentList commentId={comment._id} />
+								{comment.subcomments.length > 0 &&
+									<div className="subcomment-thread">
+										{comment.subcomments.map((subcomment, i) => (
+											<div className="subcomment" key={subcomment._id}>
+												<h2>
+													{subcomment.author.username}
+													<time className="timestamp" title={utils.formatDate(subcomment.created_at)} dateTime={utils.formatDate(subcomment.created_at)}>{utils.getTimeDifference(subcomment.created_at)}</time>
+												</h2>
+												<p>{subcomment.content}</p>
+												<div className="actions">
+													<span className="likes"><i className="fa fa-heart"></i>{subcomment.likes.length}</span>
+													<span className="comments"><i className="fa fa-comments"></i>250</span>
+													<span className="share"><i className="fa fa-share"></i>share</span>
+												</div>
+											</div>
+										))}
+									</div>
+								}
 							</section>))
 						: <section className="light">No comments yet. Start a discussion by posting a comment.</section>}
 				</div>

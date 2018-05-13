@@ -7,7 +7,13 @@ const errorHandler = require('../utilities/errorHandler');
 Get all comments
 */
 exports.get_comments = function (req, res, next) {
-	const query = Comment.find().populate('author');
+	const query = Comment.find().populate('author').populate('subcomments').populate({
+		path: 'subcomments',
+		populate: {
+			path: 'author',
+			model: 'User',
+		},
+	});
 	query.sort({ created_at: -1 });
 	query.exec((err, comments) => {
 		if (err) return errorHandler.handleAPIError(500, err.message || 'Some error occurred while retrieving comments', next);
@@ -23,7 +29,13 @@ Get a certain comment
 */
 exports.get_comments_by_post = function (req, res, next) {
 	const id = req.params.postId;
-	const query = Comment.find({'post_id': id}).populate('author');
+	const query = Comment.find({'post_id': id}).populate('author').populate('subcomments').populate({
+		path: 'subcomments',
+		populate: {
+			path: 'author',
+			model: 'User',
+		},
+	});
 	query.exec((err, comment) => {
 		if (err) return errorHandler.handleAPIError(500, `Could not get the comment with id: ${id}`, next);
 		if (!comment) {

@@ -1,4 +1,4 @@
-import { FETCH_COMMENTS } from '../constants';
+import { FETCH_COMMENTS, FETCH_SUBCOMMENTS } from '../constants';
 
 export const fetchComments = (postId) => dispatch => {
 		fetch(`/api/v1/comments/${postId}`)

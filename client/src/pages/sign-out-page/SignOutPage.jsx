@@ -2,23 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 /*
-Libraries
-*/
-
-/*
 State management
 */
 import { connect } from 'react-redux';
 import { signOutAction } from '../../actions/authActions';
-
-/*
-Material UI
-*/
-
-
-/*
-Components
-*/
 
 /*
 Component styles
