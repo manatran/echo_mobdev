@@ -430,9 +430,6 @@ aside i{
 .post.detail:hover{
 	background-color: white;
 }
-.post.detail .post-thumbnail{
-	width: 33%;
-}
 .post.detail .post-body{
 	width: 67%;
 	height:150px;
@@ -453,7 +450,7 @@ aside i{
 	align-items: center;
 	justify-content: space-between;
 }
-.comment-form textarea{
+form textarea{
 	box-sizing: border-box;
 	min-height: 75px;
 	width: 90%;
@@ -464,7 +461,7 @@ aside i{
 	border-radius: 8px;
 	border-left:solid 3px #4D9FB4;
 }
-.comment-form button{
+form button{
 	cursor: pointer;
 	width:10%;
 	background-color:transparent;
@@ -472,7 +469,25 @@ aside i{
 	outline: none;
 	color: #4D9FB4;
 }
-
+.subcomment-form{
+	width:100%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	box-shadow: 0 0 2px rgba(0,0,0,0.3);
+	margin:8px 0;
+	border-radius: 8px;
+}
+.subcomment-form textarea{
+	padding: 8px;
+	min-height: 40px;
+	height: 40px;
+	transition:.2s;
+}
+.subcomment-form textarea:focus{
+	height: 80px;
+}
 
 .spinner {
   margin: 100px auto;

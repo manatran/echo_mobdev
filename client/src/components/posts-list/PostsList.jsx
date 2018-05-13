@@ -98,7 +98,7 @@ class PostsList extends Component {
 							</a>
 						</section>
 					))}
-					<section className="card light">
+					<section className="light">
 						<p>That's it, no more posts! You could always create more if you want.</p>
 						<a href="#" id="scroll-top">Back to top <i className="fas fa-level-up-alt"></i></a>
 					</section>

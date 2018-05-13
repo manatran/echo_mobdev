@@ -25,10 +25,34 @@ class PostDetail extends Component {
 			return (
 				<div>
 					<section className="card post detail">
-						{(this.state.post.content && this.state.post.content.images)
-							? <div className="post-thumbnail" style={{ backgroundImage: 'url(' + this.state.post.content.images[0].url + ')' }}></div>
-							: <div className="post-thumbnail" style={{ backgroundImage: 'url(https://api.adorable.io/avatars/128/${this.state.post.title}.png)' }}></div>
-						}
+						{(this.state.post.type !== 'song')
+							? <a className="thumbnail-link" href={`https://open.spotify.com/${this.state.post.type}/${this.state.post.content.spotify_id}`} target="_blank">{(this.state.post.content && this.state.post.content.images)
+								? <div className="post-thumbnail" style={{ backgroundImage: 'url(' + this.state.post.content.images[0].url + ')' }}>
+									<div className="overlay round-left">
+										<i className="fab fa-spotify"></i>
+									</div>
+								</div>
+								: <div className="post-thumbnail" style={{ backgroundImage: 'url(https://api.adorable.io/avatars/128/${this.state.post.title}.png)' }}>
+									<div className="overlay round-left">
+										<i className="fab fa-spotify"></i>
+									</div>
+								</div>
+							}
+
+							</a>
+							: <a className="thumbnail-link" href={`https://open.spotify.com/track/${this.state.post.content.spotify_id}`} target="_blank">{(this.state.post.content && this.state.post.content.images)
+								? <div className="post-thumbnail" style={{ backgroundImage: 'url(' + this.state.post.content.images[0].url + ')' }}>
+									<div className="overlay round-left">
+										<i className="fab fa-spotify"></i>
+									</div>
+								</div>
+								: <div className="post-thumbnail" style={{ backgroundImage: 'url(https://api.adorable.io/avatars/128/${this.state.post.title}.png)' }}>
+									<div className="overlay round-left">
+										<i className="fab fa-spotify"></i>
+									</div>
+								</div>
+							}
+							</a>}
 						<div className="post-body">
 							<div className="post-info">
 								<h2>
@@ -72,7 +96,7 @@ class PostDetail extends Component {
 							<button type="submit" value="Submit"><i className="fas fa-comment-alt"></i></button>
 						</form>
 					</section>
-					
+
 					<CommentList postId={this.props.postId} />
 
 				</div>
