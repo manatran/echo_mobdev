@@ -7,15 +7,17 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 /*
-Material UI
-*/
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
-import './App.css';
-
-/*
 Layouts
 */
 import Main from './layouts/main/Main';
+
+/*
+Styling
+*/
+import './styles/normalize.css';
+import './styles/styles.css';
+import './styles/breakpoints.css';
+import './styles/dark.css';
 
 /*
 Configuration
@@ -38,19 +40,12 @@ if(auth) {
   store.dispatch({ type: UNAUTHENTICATED });
 }
 
-/*
-Theme
-*/
-const theme = createMuiTheme();
-
 class App extends Component {
   render() {    
     return (
       <Provider store={store}>
         <Router>
-          <MuiThemeProvider theme={theme}>
-            <Main />
-          </MuiThemeProvider>
+          <Main />
         </Router>
       </Provider>
     );

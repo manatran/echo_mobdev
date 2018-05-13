@@ -1,3 +1,4 @@
+export const FETCH_POSTS = 'FETCH_POSTS';
 export const POST_CREATED = 'POST_CREATED';
 export const POST_CREATING = 'POST_CREATING';
 export const POST_CREATION_ERROR = 'POST_CREATION_ERROR';

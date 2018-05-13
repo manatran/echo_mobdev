@@ -1,30 +1,24 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { fetchComments } from '../../actions/commentActions';
+
 import utils from '../../utilities/functions';
 import SubcommentList from './subCommentList';
 import Spinner from '../spinner/Spinner';
 
 class CommentList extends Component {
 
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			comments: []
-		}
-	}
-
-	componentDidMount() {
-		fetch(`/api/v1/comments/${this.props.postId}`)
-			.then(response => response.json())
-			.then(item => this.setState({ comments: item }));
+	componentWillMount(){
+		this.props.fetchComments(this.props.postId);
 	}
 
 	render() {
-		if (this.state.comments) {
+		if (this.props.comments) {
 			return (
 				<div>
-					{(this.state.comments.length > 0)
-						? this.state.comments.map((comment, i) => (
+					{(this.props.comments.length > 0)
+						? this.props.comments.map((comment, i) => (
 							<section className="card comment-thread" key={comment._id}>
 								<div className="comment">
 									<h2>{comment.author.username}
@@ -58,4 +52,14 @@ class CommentList extends Component {
 	}
 }
 
-export default CommentList;
+CommentList.propTypes = {
+	fetchComments: PropTypes.func.isRequired,
+	comments: PropTypes.array.isRequired
+}
+
+const mapStateToProps = state => ({
+	comments: state.comment.comments
+})
+
+
+export default connect(mapStateToProps, { fetchComments })(CommentList);

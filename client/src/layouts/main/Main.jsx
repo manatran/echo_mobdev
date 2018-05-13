@@ -6,15 +6,10 @@ Libraries
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 /*
-Material UI
-*/
-import './Main.css';
-
-/*
 Components
 */
 import Header from '../../components/header/Header';
-import Offcanvas from '../../components/offcanvas';
+import Offcanvas from '../../components/offcanvas/Offcanvas';
 import PrimarySidebar from '../../components/sidebars/PrimarySidebar';
 import SecondarySidebar from '../../components/sidebars/SecondarySidebar';
 

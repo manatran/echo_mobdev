@@ -1,4 +1,15 @@
-import { POST_CREATION_ERROR, POST_CREATED } from '../constants';
+import { FETCH_POSTS, POST_CREATION_ERROR, POST_CREATED } from '../constants';
+
+export const fetchPosts = () => dispatch => {
+		fetch('/api/v1/posts')
+			.then(response => response.json())
+			.then((posts) => {
+				dispatch({
+					type: FETCH_POSTS,
+					payload: posts
+				})
+			});
+}
 
 export function createPost({ title, synopsis, body, category }, history) {
   return async (dispatch) => {

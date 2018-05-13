@@ -1,32 +1,22 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { fetchPosts } from '../../actions/postActions';
+
 import utils from '../../utilities/functions';
 import Spinner from '../spinner/Spinner';
 
 class PostsList extends Component {
-
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			posts: null
-		}
-	}
-
-	componentDidMount() {
-		fetch('/api/v1/posts')
-			.then(response => response.json())
-			.then((item) => {
-				this.setState({ posts: item })
-			});
+	
+	componentWillMount(){
+		this.props.fetchPosts();
 	}
 
 	render() {
-		const { classes } = this.props;
-		if (this.state.posts) {
+		if (this.props.posts) {
 			return (
 				<div>
-					{this.state.posts.map((element, i) => (
+					{this.props.posts.map((element, i) => (
 						<section className="card post" key={element._id}>
 							{(element.type !== 'song')
 								? <a className="thumbnail-link" href={`https://open.spotify.com/${element.type}/${element.content.spotify_id}`} target="_blank">{(element.content && element.content.images)
@@ -98,7 +88,7 @@ class PostsList extends Component {
 							</a>
 						</section>
 					))}
-					<section className="light">
+					<section className="light" style={{paddingBottom: 16 + 'px'}}>
 						<p>That's it, no more posts! You could always create more if you want.</p>
 						<a href="#" id="scroll-top">Back to top <i className="fas fa-level-up-alt"></i></a>
 					</section>
@@ -113,4 +103,15 @@ class PostsList extends Component {
 		}
 	}
 }
-export default PostsList;
+
+PostsList.propTypes = {
+	fetchPosts: PropTypes.func.isRequired,
+	posts: PropTypes.array.isRequired
+}
+
+const mapStateToProps = state => ({
+	posts: state.post.posts
+})
+
+
+export default connect(mapStateToProps, { fetchPosts })(PostsList);
