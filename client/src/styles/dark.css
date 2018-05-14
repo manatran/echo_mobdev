@@ -155,6 +155,22 @@ html.dark, html.dark body, html.dark #root {
 	color:#eee;
 }
 
+.dark .login input{
+	background-color: #202020;
+	color:#BEBEBE;
+}
+.dark .login{
+	color:#eee;
+}
+.dark .login a {
+	color:#F16667;
+}
+
+.dark .card.login input[type=submit]{
+	border-left:solid 3px  #4D9FB4;
+	border-bottom:solid 3px  #4D9FB4;
+}
+
 .dark .spinner > div {
 	background-color: #4D9FB4;
 }
