@@ -137,6 +137,9 @@ html.dark, html.dark body, html.dark #root {
 .dark .comment-form button{
 	color: #F16667;
 }
+.dark .subcomment-form button{
+	color: #F16667;
+}
 .dark .subcomment-form textarea{
 	background-color: #303030;
 	color:#eee;

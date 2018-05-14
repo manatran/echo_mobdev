@@ -1,25 +1,9 @@
 window.onload = (e) => {
-	const nightmode = document.querySelectorAll('.nightmode')
-	const body = document.querySelector('html')
-
-	const navLogo = document.querySelector('.nav-logo')
 	const mobileNav = document.querySelector('.mobile-nav')
+	const body = document.querySelector('html')
+	const navLogo = document.querySelector('.nav-logo')
 
-	//nightmode toggle stylesheet
-	for (let i = 0; i < nightmode.length; i++) {
-		nightmode[i].addEventListener('click', (e) => {
-			e.preventDefault()
-
-			body.classList.toggle('dark')
-			if (body.classList.contains('dark')) {
-				navLogo.src = '/favicon_alt.png'
-			} else {
-				navLogo.src = '/favicon.png'
-			}
-		})
-	}
-
-	// nightmode toggle logo
+	// toggle menubar
 	body.addEventListener('click', (e) => {
 		if (e.target == navLogo && window.innerWidth < 1080) {
 			mobileNav.classList.add('active')

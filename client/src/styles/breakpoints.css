@@ -1,14 +1,14 @@
 /* Desktop*/
 @media only screen and (min-width : 1080px){
 	nav{
-		padding:0 calc(50vw - 624px);
+		padding:0 calc(50vw - 608px);
 		justify-content: space-between;
 	}
 	nav .main-nav{
-		width:50%;
+		width:calc(50% + 16px);
 		justify-content: space-between;
 		order:2;
-		padding:8px 16px 8px 0;
+		padding:8px 0;
 	}
 	nav .tabs{
 		order:1;

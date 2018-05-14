@@ -1,6 +1,19 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { toggleNightmode } from '../../actions/nightmodeActions';
 
 class SecondaryMenu extends Component {
+	constructor(props) {
+		super(props);
+
+		this.handleToggleNightmode = this.handleToggleNightmode.bind(this);
+	}
+
+	handleToggleNightmode(e) {
+		e.preventDefault()
+		this.props.nightmodeClick()
+	}
 
 	render() {
 		return (
@@ -19,7 +32,7 @@ class SecondaryMenu extends Component {
 							<i className="fa fa-play"></i>Playlists</a>
 					</li>
 				</ul>
-				<a href="#" className="nightmode">
+				<a href="#" className="nightmode" onClick={this.handleToggleNightmode}>
 					<i className="fa fa-moon"></i>Toggle Night Mode</a>
 				<ul className="secondary-links">
 					<li>
@@ -40,4 +53,17 @@ class SecondaryMenu extends Component {
 	}
 }
 
-export default SecondaryMenu;
+const mapStateToProps = state => {
+	return {
+		nightmode: state.nightmode.nightmode
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    nightmodeClick: () => dispatch(toggleNightmode())
+  };
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(SecondaryMenu);

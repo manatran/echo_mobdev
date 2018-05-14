@@ -26,7 +26,7 @@ class CommentList extends Component {
 									<p>{comment.content}</p>
 									<div className="actions">
 										<span className="likes"><i className="fa fa-heart"></i>{comment.likes.length}</span>
-										<span className="comments"><i className="fa fa-comments"></i>250</span>
+										<span className="comments"><i className="fa fa-comments"></i>{comment.subcomments.length}</span>
 										<span className="share"><i className="fa fa-share"></i>share</span>
 									</div>
 									<form action="/api/v1/subcomments" method="POST" className="subcomment-form">
@@ -47,7 +47,6 @@ class CommentList extends Component {
 												<p>{subcomment.content}</p>
 												<div className="actions">
 													<span className="likes"><i className="fa fa-heart"></i>{subcomment.likes.length}</span>
-													<span className="comments"><i className="fa fa-comments"></i>250</span>
 													<span className="share"><i className="fa fa-share"></i>share</span>
 												</div>
 											</div>
