@@ -41,9 +41,7 @@ if (auth) {
 }
 
 let nightmode = JSON.parse(localStorage.getItem('nightmode'))
-
 let body = document.querySelector('html');
-let navLogo = document.querySelector('.nav-logo')
 
 if (nightmode) {
 	body.classList.add('dark')

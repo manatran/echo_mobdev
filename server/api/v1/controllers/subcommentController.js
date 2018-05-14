@@ -45,6 +45,7 @@ exports.subcomment_create_subcomment = function (req, res, next) {
 	const subcomment = new Subcomment(req.body);
 	subcomment.save((err, subcomment) => {
 		if (err) return errorHandler.handleAPIError(500, `Could not save the new subcomment ${err}`, next);
+		subcomment.populate('author')
 		res.status(201).json(subcomment);
 	});
 }

@@ -57,6 +57,7 @@ exports.comment_create_comment = function (req, res, next) {
 	const comment = new Comment(req.body);
 	comment.save((err, comment) => {
 		if (err) return errorHandler.handleAPIError(500, `Could not save the new comment`, next);
+		comment.populate('author')
 		res.status(201).json(comment);
 	});
 }

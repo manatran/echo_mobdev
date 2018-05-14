@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { createComment } from '../../actions/commentActions'
+
 import utils from '../../utilities/functions';
 import commentList from './commentList';
 import Spinner from '../spinner/Spinner';
@@ -10,8 +14,26 @@ class PostDetail extends Component {
 		super(props);
 
 		this.state = {
-			post: undefined
+			post: undefined,
+			content: ''
 		}
+		this.onChange = this.onChange.bind(this)
+		this.onSubmit = this.onSubmit.bind(this)
+	}
+
+	onChange(e){
+		this.setState({[e.target.name]: e.target.value })
+	}
+
+	onSubmit(e){
+		e.preventDefault()
+		const comment = {
+			post_id: this.props.postId,
+			content: this.state.content,
+			author: '5aef46e5bddead379cb44ea4'
+		}
+		this.props.createComment(comment)
+		document.querySelector('.comment-form form').reset()
 	}
 
 	componentDidMount() {
@@ -89,10 +111,8 @@ class PostDetail extends Component {
 						</div>
 					</section>
 					<section className="card comment-form">
-						<form action={"/api/v1/comments"} method="POST">
-							<input type="hidden" name="author" value="5aef46e5bddead379cb44ea4" />
-							<input type="hidden" name="post_id" value={this.props.postId} />
-							<textarea name="content" id="comment" placeholder="Type your comment"></textarea>
+						<form onSubmit={this.onSubmit}>
+							<textarea name="content" placeholder="Type your comment" onChange={this.onChange} value={this.state.value}></textarea>
 							<button type="submit" value="Submit"><i className="fas fa-comment-alt"></i></button>
 						</form>
 					</section>
@@ -111,4 +131,8 @@ class PostDetail extends Component {
 	}
 }
 
-export default PostDetail;
+PostDetail.propTypes = {
+	createComment: PropTypes.func.isRequired
+}
+
+export default connect(null, { createComment })(PostDetail);

@@ -1,11 +1,11 @@
-import { FETCH_COMMENTS } from '../constants';
+import { FETCH_COMMENTS, CREATE_COMMENT } from '../constants';
+import { stat } from 'fs';
 
 const initialState = {
 	comments: [],
 	newCommentCreated: false,
 	newComment: undefined,
 	error: undefined,
-
 }
 
 function commentReducer(state = initialState, action) {
@@ -15,6 +15,11 @@ function commentReducer(state = initialState, action) {
 				...state,
 				comments: action.payload
 			};
+		case CREATE_COMMENT:
+		return {
+			...state,
+			comments: [action.payload, ...state.comments] 
+		}
 		default:
 			return state;
 	}
