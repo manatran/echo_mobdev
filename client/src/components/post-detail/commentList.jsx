@@ -3,10 +3,38 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchComments } from '../../actions/commentActions';
 
+import SubcommentForm from './SubcommentForm'
+
 import utils from '../../utilities/functions';
 import Spinner from '../spinner/Spinner';
 
 class CommentList extends Component {
+
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			parent_id: '',
+			content: ''
+		}
+		this.onChange = this.onChange.bind(this)
+		this.onSubmit = this.onSubmit.bind(this)
+	}
+
+	onChange(e){
+		this.setState({[e.target.name]: e.target.value })
+	}
+
+	onSubmit(e){
+		e.preventDefault()
+		const comment = {
+			parent_id: this.state.parentId,
+			content: this.state.content,
+			author: '5aef46e5bddead379cb44ea4'
+		}
+		this.props.createComment(comment)
+		document.querySelector('.comment-form form').reset()
+	}
 
 	componentWillMount() {
 		this.props.fetchComments(this.props.postId);
@@ -29,12 +57,7 @@ class CommentList extends Component {
 										<span className="comments"><i className="fa fa-comments"></i>{comment.subcomments && comment.subcomments.length || 0}</span>
 										<span className="share"><i className="fa fa-share"></i>share</span>
 									</div>
-									<form action="/api/v1/subcomments" method="POST" className="subcomment-form">
-										<input type="hidden" name="author" value="5aef46e5bddead379cb44ea4" />
-										<input type="hidden" name="parent_id" value={comment._id} />
-										<textarea name="content" id="comment" placeholder="Type your comment"></textarea>
-										<button type="submit" value="Submit"><i className="fas fa-comment-alt"></i></button>
-									</form>
+									<SubcommentForm parentId={comment._id} />
 								</div>
 								{(comment.subcomments && comment.subcomments.length > 0) &&
 									<div className="subcomment-thread">

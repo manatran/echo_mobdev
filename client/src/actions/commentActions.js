@@ -1,4 +1,4 @@
-import { FETCH_COMMENTS, CREATE_COMMENT } from '../constants';
+import { FETCH_COMMENTS, CREATE_COMMENT, CREATE_SUBCOMMENT } from '../constants';
 
 export const fetchComments = (postId) => dispatch => {
 	fetch(`/api/v1/comments/${postId}`)
@@ -24,6 +24,23 @@ export const createComment = commentData => dispatch => {
 			dispatch({
 				type: CREATE_COMMENT,
 				payload: comment
+			})
+		});
+}
+
+export const createSubcomment = subcommentData => dispatch => {
+	fetch(`/api/v1/subcomments/`, {
+		method: 'POST',
+		headers: {
+			'content-type': 'application/json'
+		},
+		body: JSON.stringify(subcommentData)
+	})
+		.then(response => response.json())
+		.then((subcomment) => {
+			dispatch({
+				type: CREATE_SUBCOMMENT,
+				payload: subcomment
 			})
 		});
 }

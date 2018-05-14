@@ -4,9 +4,8 @@ import { connect } from 'react-redux';
 import { createComment } from '../../actions/commentActions'
 
 import utils from '../../utilities/functions';
-import commentList from './commentList';
 import Spinner from '../spinner/Spinner';
-import CommentList from './commentList';
+import CommentList from './CommentList';
 
 class PostDetail extends Component {
 
@@ -33,7 +32,7 @@ class PostDetail extends Component {
 			author: '5aef46e5bddead379cb44ea4'
 		}
 		this.props.createComment(comment)
-		document.querySelector('.comment-form form').reset()
+		document.querySelector('.comment-form form textarea').value = '';
 	}
 
 	componentDidMount() {
@@ -112,7 +111,7 @@ class PostDetail extends Component {
 					</section>
 					<section className="card comment-form">
 						<form onSubmit={this.onSubmit}>
-							<textarea name="content" placeholder="Type your comment" onChange={this.onChange} value={this.state.value}></textarea>
+							<textarea name="content" placeholder="Type your comment" onChange={this.onChange} value={this.state.content}></textarea>
 							<button type="submit" value="Submit"><i className="fas fa-comment-alt"></i></button>
 						</form>
 					</section>
