@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSubcomment } from '../../actions/commentActions';
+import store from '../../store';
 
 import utils from '../../utilities/functions';
 import Spinner from '../spinner/Spinner';
@@ -27,7 +28,7 @@ class SubcommentForm extends Component {
 		const subcomment = {
 			parent_id: this.props.parentId,
 			content: this.state.content,
-			author: '5aef46e5bddead379cb44ea4'
+			author: store.getState().auth.user.user.id
 		}
 		this.props.createSubcomment(subcomment)
 		window.location.reload()

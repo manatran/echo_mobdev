@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import store from '../../store';
 
 /*
 Components
@@ -11,6 +12,13 @@ Component styles
 import './PostsTablePage.css';
 
 class PostsTablePage extends Component {
+
+	componentDidMount() {
+		if(!store.getState().auth.isAuthenticated){
+			this.props.history.push('/login')
+		}
+  }
+
   render() {
     return (
       <div>

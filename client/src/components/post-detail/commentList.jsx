@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchComments } from '../../actions/commentActions';
+import store from '../../store';
 
 import SubcommentForm from './SubcommentForm'
 
@@ -30,7 +31,7 @@ class CommentList extends Component {
 		const comment = {
 			parent_id: this.state.parentId,
 			content: this.state.content,
-			author: '5aef46e5bddead379cb44ea4'
+			author: store.getState().auth.user.user.id
 		}
 		this.props.createComment(comment)
 		document.querySelector('.comment-form form').reset()

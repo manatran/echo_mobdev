@@ -10,7 +10,7 @@
 		order:2;
 		padding:8px 0;
 	}
-	nav .tabs{
+	nav .tabs div{
 		order:1;
 		width:auto;
 	}

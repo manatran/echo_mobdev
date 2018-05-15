@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-
-/*
-Material UI
-*/
-
+import store from '../../store';
 
 /*
 Components
@@ -18,6 +14,12 @@ import './PostPage.css';
 class PostPage extends Component {
   constructor(props) {
     super(props);
+	}
+	
+	componentDidMount() {
+		if(!store.getState().auth.isAuthenticated){
+			this.props.history.push('/login')
+		}
   }
 
   render() {

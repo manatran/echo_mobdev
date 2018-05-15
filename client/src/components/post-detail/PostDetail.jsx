@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createComment } from '../../actions/commentActions'
+import store from '../../store';
 
 import utils from '../../utilities/functions';
 import Spinner from '../spinner/Spinner';
@@ -29,7 +30,7 @@ class PostDetail extends Component {
 		const comment = {
 			post_id: this.props.postId,
 			content: this.state.content,
-			author: '5aef46e5bddead379cb44ea4'
+			author: store.getState().auth.user.user.id
 		}
 		this.props.createComment(comment)
 		document.querySelector('.comment-form form textarea').value = '';

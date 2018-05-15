@@ -93,7 +93,7 @@ nav .search input{
 	margin-left: 8px;
 	color:#6D6D6D;
 }
-nav .tabs{
+nav .tabs div{
 	width:100vw;
 	display: flex;
 	flex-direction: row;

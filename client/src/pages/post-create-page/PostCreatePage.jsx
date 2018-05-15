@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
+import store from '../../store';
 
 /*
 Libraries
 */
 import queryString from 'query-string';
-
-/*
-Material UI
-*/
-
 
 /*
 Components
@@ -30,8 +26,14 @@ class PostCreatePage extends Component {
     this.state = {
       boSelectedPostId:  id
     }
-  }
-
+	}
+	
+	componentDidMount() {
+		if(!store.getState().auth.isAuthenticated){
+			this.props.history.push('/login')
+		}
+	}
+	
   render() {
     return (
       <div>

@@ -50,7 +50,7 @@ exports.user_auth_local_post = function (req, res, next) {
 				const token = tokenUtils.createToken(payload)
 
 				res.status(200).json({
-					username: user.username,
+					user: user,
 					token: `Bearer ${token}`,
 					strategy: 'local'
 				});

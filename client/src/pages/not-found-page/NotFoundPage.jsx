@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
+import store from '../../store';
 
 class NotFoundPage extends Component {
+
+	componentDidMount() {
+		if(!store.getState().auth.isAuthenticated){
+			this.props.history.push('/login')
+		}
+  }
+
 	render() {
 		return (
 			<main className="error-page">
