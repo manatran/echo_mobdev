@@ -1,18 +1,5 @@
 import React, { Component } from 'react';
-
-/*
-Material UI
-*/
-
-
-/*
-Components
-*/
-
-/*
-Component styles
-*/
-import './SignupPage.css';
+import SignUp from '../../components/sign-up/SignUp';
 
 class SignupPage extends Component {
   constructor(props) {
@@ -21,11 +8,9 @@ class SignupPage extends Component {
 
   render() {
     return (
-      <div>
-        <div className="c-max">
-          
-        </div>
-      </div>
+      <main>
+				<SignUp/>
+			</main>
     )
   }
 }

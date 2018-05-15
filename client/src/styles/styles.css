@@ -513,16 +513,25 @@ form button{
 	border-radius: 8px;
 }
 .card.login input[type=submit]{
+	box-sizing: border-box;
+	transition: .2s;
 	text-transform: uppercase;
 	font-weight: 600;
 	color: #6D6D6D;
 	padding:8px 16px;
-	border-left:solid 3px  #F16667;
-	border-bottom:solid 3px  #F16667;
+	border-right:solid 2px  #F16667;
+	border-bottom:solid 2px  #F16667;
 	cursor: pointer;
+}
+.card.login input[type=submit]:hover{
+	border: solid 1.5px #A7A7A7;
 }
 .login a {
 	color:#4D9FB4;
+}
+.login img{
+	padding:32px 16px;
+	max-width: 164px;
 }
 
 .spinner {

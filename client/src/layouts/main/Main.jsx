@@ -37,9 +37,12 @@ class Main extends Component {
           <Route exact path='/' component={HomePage}/>
           <Redirect from="/home" to="/"/>
           <Route path='/post/:id' component={PostPage}/>
+					<Redirect from="/login" to="/signin" />
           <Route path='/signin' component={SignInPage}/>
-          <Route path='/signout' component={SignOutPage}/>
+					<Redirect from="/register" to="/signup" />
           <Route path='/signup' component={SignupPage}/>
+					<Redirect from="/logout" to="/signout" />
+          <Route path='/signout' component={SignOutPage}/>
           <Route path='/backoffice/posts-table' component={PostsTablePage}/>
           <Route path='/backoffice/post-create' component={PostCreatePage}/>
           <Route path="*" component={NotFoundPage}/>

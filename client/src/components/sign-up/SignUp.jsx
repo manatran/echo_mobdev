@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
 
-class SignIn extends Component {
+class SignUp extends Component {
 
 	render() {
 		return (
 			<section className="card login">
 				<img src="/logo.png" />
 				Let It Resonate
-				<form action="">
+				<form >
 					<input type="text" name="username" placeholder="Username" />
 					<input type="password" name="password" placeholder="Password" />
-					<input type="submit" value="Login" />
+					<input type="password" name="password2" placeholder="Confirm password" />
+					<input type="submit" value="Sign up" />
 				</form>
-				<p>Don't have an account yet? <a href="/signup">Sign up here!</a></p>
+				<p>Already have an account? <a href="/signin">Log in here!</a></p>
 			</section>
 		);
 	}
 }
 
-export default SignIn;
+export default SignUp;
