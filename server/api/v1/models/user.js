@@ -6,18 +6,19 @@ const config = require('../../../config/config');
 
 const UserSchema = mongoose.Schema(
 	{
-		username: {
+		email: {
 			type: String, required: true,
 			trim: true, unique: true
+		},
+		username: {
+			type: String, required: true
 		},
 		bio: {
 			type: String, max: 256
 		},
-		picture: [{
-			height: { type: Number },
-			width: { type: Number },
-			url: { type: String, max: 128 }
-		}],
+		picture: {
+			type: String, required: true
+		},
 		localProvider: {
 			password: {
 				type: String,

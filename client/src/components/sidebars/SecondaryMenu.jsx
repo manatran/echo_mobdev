@@ -45,7 +45,7 @@ class SecondaryMenu extends Component {
 						<a href="#">Privacy Policy</a>
 					</li>
 					<li>
-						<a href="#" className="logout">Logout</a>
+						<a href="/logout" className="logout">Logout</a>
 					</li>
 				</ul>
 			</div>

@@ -14,7 +14,7 @@ class SignInPage extends Component {
   render() {
     return (
       <main>
-				<SignIn/>
+				<SignIn history={this.props.history}/>
 			</main>
     )
   }

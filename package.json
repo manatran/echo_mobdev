@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "bcrypt": "^1.0.3",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "cuid": "^2.1.0",

@@ -1,10 +1,12 @@
+import axios from 'axios';
+
 const utils = {
-	millisToMinutesAndSeconds: function(millis) {
+	millisToMinutesAndSeconds: function (millis) {
 		var minutes = Math.floor(millis / 60000);
 		var seconds = ((millis % 60000) / 1000).toFixed(0);
 		return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 	},
-	getTimeDifference: function(datetime) {
+	getTimeDifference: function (datetime) {
 		var datetime = typeof datetime !== 'undefined' ? datetime : "2014-01-01 01:02:03.123456";
 
 		var datetime = new Date(datetime).getTime();
@@ -25,9 +27,24 @@ const utils = {
 		if (days < 1) return `${date_diff.getHours()} hours ago`;
 		if (days >= 1) return `${days} days ago`;
 	},
-	formatDate: function(datetime) {
+	formatDate: function (datetime) {
 		datetime = new Date(datetime)
 		return `${datetime}`
+	},
+	isEmpty: function (value) {
+		return value === undefined ||
+			value === null ||
+			(typeof value === 'object' && Object.keys(value).length === 0) ||
+			(typeof value === 'string' && value.trim().length === 0);
+	},
+	setAuthToken: function (token){
+		if (token) {
+			// Apply to every request
+			axios.defaults.headers.common['Authorization'] = token;
+		} else {
+			// Delete auth header
+			delete axios.defaults.headers.common['Authorization'];
+		}
 	}
 }
 

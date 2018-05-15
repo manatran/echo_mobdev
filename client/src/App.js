@@ -32,12 +32,10 @@ import store from './store';
 /*
 Auth state
 */
-import { AUTHENTICATED, UNAUTHENTICATED, TOGGLE_NIGHTMODE, ADD_NIGHTMODE, REMOVE_NIGHTMODE } from './constants';
+import { SET_CURRENT_USER, TOGGLE_NIGHTMODE, ADD_NIGHTMODE, REMOVE_NIGHTMODE } from './constants';
 const auth = localStorage.getItem('mobdev2_auth');
 if (auth) {
-	store.dispatch({ type: AUTHENTICATED, payload: JSON.parse(auth) });
-} else {
-	store.dispatch({ type: UNAUTHENTICATED });
+	store.dispatch({ type: SET_CURRENT_USER, payload: JSON.parse(auth) });
 }
 
 let nightmode = JSON.parse(localStorage.getItem('nightmode'))

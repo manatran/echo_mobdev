@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 State management
 */
 import { connect } from 'react-redux';
-import { signOutAction } from '../../actions/authActions';
+import { logoutUser } from '../../actions/authActions';
 
 /*
 Component styles
@@ -14,7 +14,8 @@ import './SignOutPage.css';
 
 class SignOutPage extends Component {
   componentDidMount() {
-    this.props.signOut();
+		this.props.signOut();
+		this.props.history.push('/login')
   }
   render() {
     return (
@@ -38,7 +39,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    signOut: () => dispatch(signOutAction())
+    signOut: () => dispatch(logoutUser())
   };
 };
 
