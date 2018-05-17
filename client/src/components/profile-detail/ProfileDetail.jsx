@@ -48,8 +48,8 @@ class ProfileDetail extends Component {
 						<h2>Playlists by {this.state.profile.username}</h2>
 						{(this.state.playlists.length > 0)
 							? this.state.playlists.map((playlist, i) => (
-								<a href={`/playlist/${playlist._id}`}>
-								<div className="playlist-item" key={playlist._id}>
+								<a href={`/playlist/${playlist._id}`} key={playlist._id}>
+								<div className="playlist-item" >
 									<img src={playlist.image} alt="Thumbnail" />
 									<div>
 										<h3>{playlist.title}</h3>

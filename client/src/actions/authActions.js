@@ -19,9 +19,9 @@ export const registerUser = (userData, history) => dispatch => {
 export const loginUser = userData => dispatch => {
   axios.post('/api/v1/auth/local', userData)
     .then(res => {
-			localStorage.setItem('mobdev2_auth', JSON.stringify(res.data));
+			localStorage.setItem('mobdev2_auth', JSON.stringify(res.data.user));
       utils.setAuthToken(res.data.token);
-      dispatch(setCurrentUser(res.data));
+      dispatch(setCurrentUser(res.data.user));
     })
     .catch(err =>
       dispatch({

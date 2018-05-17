@@ -12,8 +12,6 @@ class Settings extends Component {
 
 		this.state = {
 			bio: '',
-			picture: '',
-			banner: '',
 			user: undefined
 		}
 		this.onChange = this.onChange.bind(this)
@@ -30,7 +28,8 @@ class Settings extends Component {
 		let body = {
 			bio: ''
 		}
-		if (this.state.bio) body.bio = this.state.bio 
+		if (this.state.bio) body.bio = this.state.bio
+
 		fetch(`/api/v1/user/edit/${this.state.user._id}`, {
 			method: 'PATCH',
 			headers: {
@@ -52,20 +51,22 @@ class Settings extends Component {
 	}
 
 	componentDidMount() {
-		this.setState({bio: store.getState().auth.user.bio})
-		this.setState({user: store.getState().auth.user})
+		this.setState({ bio: store.getState().auth.user.bio })
+		this.setState({ user: store.getState().auth.user })
 	}
 
 	render() {
 		return (
 			<div>
 				<section className="card settings">
-				<h2>Settings</h2>
-				<a href="#" className="nightmode" onClick={this.handleToggleNightmode}>
-					<i className="fa fa-moon"></i>Toggle Night Mode</a>
+					<h2>Settings</h2>
+					<a href="#" className="nightmode" onClick={this.handleToggleNightmode}>
+						<i className="fa fa-moon"></i>Toggle Night Mode</a>
 					<form onSubmit={this.onSubmit}>
-						<textarea name="bio" onChange={this.onChange} value={this.state.bio}></textarea>
-						<input type="submit" value="Save changes"/>
+						<label>Bio <br/>
+							<textarea name="bio" onChange={this.onChange} value={this.state.bio}></textarea>
+						</label>
+						<input type="submit" value="Save changes" />
 					</form>
 				</section>
 				<section className="card light">
@@ -83,9 +84,9 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    nightmodeClick: () => dispatch(toggleNightmode())
-  };
+	return {
+		nightmodeClick: () => dispatch(toggleNightmode())
+	};
 };
 
 

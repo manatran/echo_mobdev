@@ -7,9 +7,19 @@ import utils from '../../utilities/functions';
 import Spinner from '../spinner/Spinner';
 
 class PostsList extends Component {
-	
-	componentWillMount(){
+
+	componentWillMount() {
 		this.props.fetchPosts();
+	}
+
+	componentDidMount() {
+		let scrollTop = document.getElementById('scroll-top')
+		if (scrollTop) {
+			scrollTop.addEventListener('click', (e) => {
+				e.preventDefault();
+				window.scroll({ top: 0, left: 0, behavior: 'smooth' })
+			})
+		}
 	}
 
 	render() {
@@ -88,7 +98,7 @@ class PostsList extends Component {
 							</a>
 						</section>
 					))}
-					<section className="light" style={{paddingBottom: 16 + 'px'}}>
+					<section className="light" style={{ paddingBottom: 16 + 'px' }}>
 						<p>That's it, no more posts! You could always create more if you want.</p>
 						<a href="#" id="scroll-top">Back to top <i className="fas fa-level-up-alt"></i></a>
 					</section>
