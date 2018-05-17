@@ -23,6 +23,7 @@ import ProfilePage from '../../pages/profile-page/ProfilePage';
 import PlaylistPage from '../../pages/playlist-page/PlaylistPage';
 import PlaylistDetailPage from '../../pages/playlist-page/PlaylistDetailPage';
 import BrowsePage from '../../pages/browse-page/BrowsePage';
+import SettingsPage from '../../pages/settings-page/SettingsPage';
 import SignInPage from '../../pages/sign-in-page/SignInPage';
 import SignOutPage from '../../pages/sign-out-page/SignOutPage';
 import SignupPage from '../../pages/signup-page/SignupPage';
@@ -46,6 +47,7 @@ class Main extends Component {
           <Route path='/playlist/:id' component={PlaylistDetailPage}/>
           <Route exact path='/browse' component={BrowsePage}/>
           <Route exact path='/browse/:term' component={BrowsePage}/>
+          <Route path='/settings' component={SettingsPage}/>
 					<Redirect from="/login" to="/signin" />
           <Route path='/signin' component={SignInPage}/>
 					<Redirect from="/register" to="/signup" />

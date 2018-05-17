@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import queryString from 'query-string';
 import utils from '../../utilities/functions'
 
 class Browse extends Component {

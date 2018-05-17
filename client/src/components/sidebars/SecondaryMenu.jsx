@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { toggleNightmode } from '../../actions/nightmodeActions';
-import store from '../../store'
+import store from '../../store';
 
 class SecondaryMenu extends Component {
 	constructor(props) {
@@ -25,7 +25,7 @@ class SecondaryMenu extends Component {
 							<i className="fa fa-music"></i>Music</a>
 					</li>
 					<li>
-						<a href={`/profile/${store.getState().auth.user.user._id}`}>
+						<a href={`/profile/${store.getState().auth.user._id}`}>
 							<i className="fa fa-user"></i>Profile</a>
 					</li>
 					<li>

@@ -19,6 +19,26 @@ exports.get_user = function(req, res, next) {
 	})
 }
 
+exports.edit_user = function(req,res,next){
+	const id = req.params.userId;
+
+	User.findByIdAndUpdate(id, {
+		bio: req.body.bio
+	}, { new: true })
+		.then(user => {
+			if (!user) {
+				return errorHandler.handleAPIError(404, `User not found with id: ${id}`, next);
+			}
+			res.send(user);
+		}).catch(err => {
+			console.log(err);
+			if (err.kind === 'ObjectId') {
+				return errorHandler.handleAPIError(404, `User not found with id: ${id}`, next);
+			}
+			return errorHandler.handleAPIError(500, `Could not edit user with id: ${id}`, next);
+		});
+}
+
 
 exports.user_create_post = function (req, res, next) {
 	User.findOne({ email: req.body.email }).then(user => {
@@ -73,23 +93,6 @@ exports.user_auth_local_post = function (req, res, next) {
 			}
 		});
 	})
-	/*passport.authenticate('local', config.jwtSession, (err, user, info) => {
-		if (err) { return next(err); }
-		if (!user) {
-			return res.status(401).json({
-				error: 'Something went wrong'
-			})
-		}
-		req.auth = {
-			id: user.id
-		};
-		const token = tokenUtils.createToken(req.auth);
-		res.status(200).json({
-			username: user.username,
-			token: `Bearer ${token}`,
-			strategy: 'local'
-		});
-	})(req, res, next);*/
 }
 
 exports.user_auth_facebook_post = function (req, res, next) {

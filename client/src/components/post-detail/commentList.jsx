@@ -31,7 +31,7 @@ class CommentList extends Component {
 		const comment = {
 			parent_id: this.state.parentId,
 			content: this.state.content,
-			author: store.getState().auth.user.user.id
+			author: store.getState().auth.user.id
 		}
 		this.props.createComment(comment)
 		document.querySelector('.comment-form form').reset()

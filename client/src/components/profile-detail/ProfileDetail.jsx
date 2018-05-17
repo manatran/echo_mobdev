@@ -39,7 +39,7 @@ class ProfileDetail extends Component {
 						</div>
 						<h2>{this.state.profile.username}</h2>
 						<p className="description">{this.state.profile.bio}</p>
-						{(this.state.profile._id == store.getState().auth.user.user._id) && 
+						{(this.state.profile._id == store.getState().auth.user._id) && 
 							<a className="action-btn" href={`/settings`}>edit profile</a>
 						 }
 					</section>

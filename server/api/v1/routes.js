@@ -96,6 +96,7 @@ router.patch('/posts/:postId/softdelete', postController.post_softdelete_patch);
 router.patch('/posts/:postId/softundelete', postController.post_softundelete_patch);
 
 router.get('/user/:userId', authController.get_user);
+router.patch('/user/edit/:userId', authController.edit_user);
 
 router.post('/signup', authController.user_create_post);
 authRouter.post('/local', authController.user_auth_local_post);

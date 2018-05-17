@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import store from '../../store';
 
 /* Comoponents */
-import Browse from '../../components/browse/Browse';
+import Settings from '../../components/settings/Settings';
 
-class BrowsePage extends Component {
+class SettingsPage extends Component {
 	constructor(props) {
 		super(props);
 	}
@@ -18,10 +18,10 @@ class BrowsePage extends Component {
 	render() {
 		return (
 			<main>
-				<Browse history={this.props.history} term={this.props.match.params.term} />
+				<Settings history={this.props.history} />
 			</main>
 		)
 	}
 }
 
-export default BrowsePage;
+export default SettingsPage;

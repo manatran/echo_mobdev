@@ -35,7 +35,7 @@ window.onload = (e) => {
 				window.scroll({ top: 0, left: 0, behavior: 'smooth' })
 			})
 		}
-	}, 3000);
+	}, 2000);
 
 }
 
