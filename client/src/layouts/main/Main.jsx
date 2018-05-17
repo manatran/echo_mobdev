@@ -44,7 +44,8 @@ class Main extends Component {
           <Route path='/profile/:id' component={ProfilePage}/>
           <Route path='/playlists' component={PlaylistPage}/>
           <Route path='/playlist/:id' component={PlaylistDetailPage}/>
-          <Route path='/browse/:term' component={BrowsePage}/>
+          <Route exact path='/browse' component={BrowsePage}/>
+          <Route exact path='/browse/:term' component={BrowsePage}/>
 					<Redirect from="/login" to="/signin" />
           <Route path='/signin' component={SignInPage}/>
 					<Redirect from="/register" to="/signup" />

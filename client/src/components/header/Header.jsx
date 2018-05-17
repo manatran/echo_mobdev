@@ -42,7 +42,7 @@ class Header extends Component {
 					{store.getState().auth.isAuthenticated &&
 						<div>
 							<a href="/" className="active">Discussion</a>
-							<a href="/browse/%20">Browse</a>
+							<a href="/browse">Browse</a>
 							<a href="/messages">Messages</a>
 						</div>
 					}

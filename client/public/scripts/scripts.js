@@ -19,18 +19,12 @@ window.onload = (e) => {
 	let tabs = document.querySelectorAll('.tabs a');
 	let active = document.querySelector('.tabs .active');
 
-	if (window.location.pathname == '/') {
-		active.classList.remove('active');
-		tabs[0].classList.add('active')
-	}
-	if (window.location.pathname.includes('/browse')) {
-		active.classList.remove('active');
-		tabs[1].classList.add('active')
-	}
-	if (window.location.pathname.includes('/messages')) {
-		active.classList.remove('active');
-		tabs[2].classList.add('active')
-	}
+	
+	active.classList.remove('active');
+
+	if (window.location.pathname == '/') tabs[0].classList.add('active')
+	if (window.location.pathname.includes('/browse')) tabs[1].classList.add('active')
+	if (window.location.pathname.includes('/messages')) tabs[2].classList.add('active')
 
 	//ScrollTop button
 	setTimeout(() => {
