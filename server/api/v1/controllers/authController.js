@@ -6,6 +6,19 @@ const errorHandler = require('../utilities/errorHandler');
 const tokenUtils = require('../utilities/token');
 const config = require('../../../config/config');
 
+exports.get_user = function(req, res, next) {
+	const id = req.params.userId;
+	User.findOne({_id: id}).then(user => {
+		if(user){
+			res.json(user)
+		}else{
+			return res.status(401).json({
+				error: 'User does not exist'
+			})
+		}
+	})
+}
+
 
 exports.user_create_post = function (req, res, next) {
 	User.findOne({ email: req.body.email }).then(user => {
@@ -15,13 +28,13 @@ exports.user_create_post = function (req, res, next) {
 			});
 		} else {
 			const user = new User({
-        username: req.body.username,
-        email: req.body.email,
-        picture: 'https://api.adorable.io/avatars/200/' + req.body.email + '.png',
-        localProvider: {
-          password: req.body.password
-        }
-      });
+				username: req.body.username,
+				email: req.body.email,
+				picture: 'https://api.adorable.io/avatars/200/' + req.body.email + '.png',
+				localProvider: {
+					password: req.body.password
+				}
+			});
 			user.save((err, post) => {
 				if (err) return next(err);
 				res.status(201).json(user);
@@ -31,7 +44,7 @@ exports.user_create_post = function (req, res, next) {
 }
 
 exports.user_auth_local_post = function (req, res, next) {
-	
+
 	const email = req.body.email;
 	const password = req.body.password;
 
@@ -92,10 +105,7 @@ exports.user_auth_facebook_post = function (req, res, next) {
 		};
 		const token = tokenUtils.createToken(req.auth);
 		res.status(200).json({
-			user: {
-				id: user.id,
-				username: user.username
-			},
+			user: user,
 			token: `Bearer ${token}`,
 			strategy: 'facebook-token'
 		});

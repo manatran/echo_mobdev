@@ -13,7 +13,7 @@ class PrimarySidebar extends Component {
 			const { classes } = this.props;
 			return (
 				<aside className="sidebar">
-					<section className="header" style={{ backgroundImage: 'url(https://tse2.mm.bing.net/th?id=OIP.KlkdXEtiARSSjWVEYlQtJwHaFB&pid=Api)' }}>
+					<section className="header" style={{ backgroundImage: 'url(' + store.getState().auth.user.user.banner || 'https://tse2.mm.bing.net/th?id=OIP.KlkdXEtiARSSjWVEYlQtJwHaFB&pid=Api' + ')' }}>
 					</section>
 					<section className="user card round-bottom">
 						<img src={store.getState().auth.user.user.picture} alt="User" />
@@ -27,7 +27,7 @@ class PrimarySidebar extends Component {
 							<span className="posts">
 								<em>13</em> Posts</span>
 						</div>
-						<a className="action-btn" href={`/profile/${store.getState().auth.user.user.id}`}>edit profile</a>
+						<a className="action-btn" href={`/settings`}>edit profile</a>
 					</section>
 				</aside>
 			);

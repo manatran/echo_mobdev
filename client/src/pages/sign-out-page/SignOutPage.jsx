@@ -7,11 +7,6 @@ State management
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/authActions';
 
-/*
-Component styles
-*/
-import './SignOutPage.css';
-
 class SignOutPage extends Component {
   componentDidMount() {
 		this.props.signOut();

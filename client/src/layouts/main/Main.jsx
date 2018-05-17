@@ -19,6 +19,10 @@ Page components
 import HomePage from '../../pages/home-page/HomePage';
 import NotFoundPage from '../../pages/not-found-page/NotFoundPage';
 import PostPage from '../../pages/post-page/PostPage';
+import ProfilePage from '../../pages/profile-page/ProfilePage';
+import PlaylistPage from '../../pages/playlist-page/PlaylistPage';
+import PlaylistDetailPage from '../../pages/playlist-page/PlaylistDetailPage';
+import BrowsePage from '../../pages/browse-page/BrowsePage';
 import SignInPage from '../../pages/sign-in-page/SignInPage';
 import SignOutPage from '../../pages/sign-out-page/SignOutPage';
 import SignupPage from '../../pages/signup-page/SignupPage';
@@ -32,11 +36,15 @@ class Main extends Component {
       <div>
         <Offcanvas />
 				<PrimarySidebar />
-        <Header />
+        <Header history={this.history} />
         <Switch>
           <Route exact path='/' component={HomePage}/>
           <Redirect from="/home" to="/"/>
           <Route path='/post/:id' component={PostPage}/>
+          <Route path='/profile/:id' component={ProfilePage}/>
+          <Route path='/playlists' component={PlaylistPage}/>
+          <Route path='/playlist/:id' component={PlaylistDetailPage}/>
+          <Route path='/browse/:term' component={BrowsePage}/>
 					<Redirect from="/login" to="/signin" />
           <Route path='/signin' component={SignInPage}/>
 					<Redirect from="/register" to="/signup" />

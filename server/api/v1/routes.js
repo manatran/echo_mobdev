@@ -64,7 +64,8 @@ router.patch('/subcomments/:subcommentId/softdelete', subcommentController.subco
 router.patch('/subcomments/:subcommentId/softundelete', subcommentController.subcomment_softundelete_patch);
 
 router.get('/playlists', playlistController.get_playlists);
-router.get('/playlists/:playlistId', playlistController.get_playlist);
+router.get('/playlists/:userId', playlistController.get_playlist);
+router.get('/playlists/detail/:playlistId', playlistController.get_playlist_by_id);
 router.post('/playlists', playlistController.playlist_create_playlist);
 router.put('/playlists/:playlistId', playlistController.playlist_update_put);
 router.delete('/playlists/:playlistId', playlistController.playlist_delete_delete);
@@ -93,6 +94,8 @@ router.post('/posts', postController.post_create_post);
 router.delete('/posts/:postId', postController.post_delete_delete);
 router.patch('/posts/:postId/softdelete', postController.post_softdelete_patch);
 router.patch('/posts/:postId/softundelete', postController.post_softundelete_patch);
+
+router.get('/user/:userId', authController.get_user);
 
 router.post('/signup', authController.user_create_post);
 authRouter.post('/local', authController.user_auth_local_post);

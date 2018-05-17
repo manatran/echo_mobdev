@@ -37,6 +37,8 @@ exports.get_playlists = function (req, res, next) {
 					author: { $first: "$author" },
 					type: { $first: "$type" },
 					likes: { $first: "$likes" },
+					title: {$first: "$title"},
+					image: {$first: "$image"},
 					songs: {
 						$push: {
 							spotify_id: "$songs.spotify_id",
@@ -68,9 +70,9 @@ exports.get_playlists = function (req, res, next) {
 Get a certain playlist
 */
 exports.get_playlist = function (req, res, next) {
-	const id = req.params.playlistId;
+	const id = req.params.userId;
 	const query = Playlist.aggregate([
-		{ $match: {spotify_id: mongoose.Schema.Types.ObjectId(id)}},
+		{ $match: {author: mongoose.Types.ObjectId(id)}},
 		{
 			$lookup: {
 				from: 'songs',
@@ -99,6 +101,8 @@ exports.get_playlist = function (req, res, next) {
 					author: { $first: "$author" },
 					type: { $first: "$type" },
 					likes: { $first: "$likes" },
+					title: {$first: "$title"},
+					image: {$first: "$image"},
 					songs: {
 						$push: {
 							spotify_id: "$songs.spotify_id",
@@ -114,6 +118,91 @@ exports.get_playlist = function (req, res, next) {
 							"deleted_at": "$deleted_at"
 						}
 					}
+				}
+			}
+	])
+	query.exec((err, playlist) => {
+		if (err) return errorHandler.handleAPIError(500, `Could not get the playlist with id: ${id}`, next);
+		if (!playlist) {
+			return errorHandler.handleAPIError(404, `Playlist not found with id: ${id}`, next);
+		}
+		return res.json(playlist);
+	});
+}
+
+/*
+Get a certain playlist
+*/
+exports.get_playlist_by_id = function (req, res, next) {
+	const id = req.params.playlistId;
+	const query = Playlist.aggregate([
+		{ $match: {_id: mongoose.Types.ObjectId(id)}},
+		{
+			$lookup: {
+				from: 'songs',
+				localField: 'songs',
+				foreignField: 'spotify_id',
+				as: 'songs'
+			}
+		},
+			{
+				$unwind: {
+					path: "$songs",
+					preserveNullAndEmptyArrays: true
+				}
+			},
+			{
+				$lookup: {
+					from: 'albums',
+					localField: 'songs.album',
+					foreignField: 'spotify_id',
+					as: 'album'
+				}
+			},
+			{
+				$lookup: {
+					from: 'users',
+					localField: 'author',
+					foreignField: '_id',
+					as: 'author'
+				}
+			},
+			{
+				$group: {
+					_id: "$_id",
+					author: { $first: "$author" },
+					type: { $first: "$type" },
+					likes: { $first: "$likes" },
+					title: {$first: "$title"},
+					image: {$first: "$image"},
+					description: {$first: "$description"},
+					songs: {
+						$push: {
+							spotify_id: "$songs.spotify_id",
+							title: "$songs.title",
+							artist_name: "$songs.artist_name",
+							explicit: "$songs.explicit",
+							duration: "$songs.duration",
+							popularity: "$songs.popularity",
+							album_name: "$songs.album_name",
+							images: { "$arrayElemAt": ['$album.images', 0] },
+							"created_at": "$created_at",
+							"updated_at": "$updated_at",
+							"deleted_at": "$deleted_at"
+						}
+					}
+				}
+			},
+			{
+				$project: {
+					"_id":1,
+					"author": { "$arrayElemAt": ['$author', 0] },
+					"type": 1,
+					"likes": 1,
+					"title": 1,
+					"image": 1,
+					"description": 1,
+					"songs": 1
 				}
 			}
 	])

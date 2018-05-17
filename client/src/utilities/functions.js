@@ -37,7 +37,7 @@ const utils = {
 			(typeof value === 'object' && Object.keys(value).length === 0) ||
 			(typeof value === 'string' && value.trim().length === 0);
 	},
-	setAuthToken: function (token){
+	setAuthToken: function (token) {
 		if (token) {
 			// Apply to every request
 			axios.defaults.headers.common['Authorization'] = token;
@@ -45,6 +45,15 @@ const utils = {
 			// Delete auth header
 			delete axios.defaults.headers.common['Authorization'];
 		}
+	},
+	intersperse: function (arr, sep) {
+		if (arr.length === 0) {
+			return [];
+		}
+
+		return arr.slice(1).reduce(function (xs, x, i) {
+			return xs.concat([sep, x]);
+		}, [arr[0]]);
 	}
 }
 

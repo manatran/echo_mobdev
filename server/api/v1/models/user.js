@@ -19,6 +19,9 @@ const UserSchema = mongoose.Schema(
 		picture: {
 			type: String, required: true
 		},
+		banner: {
+			type: String
+		},
 		localProvider: {
 			password: {
 				type: String,

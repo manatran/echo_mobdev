@@ -23,11 +23,11 @@ window.onload = (e) => {
 		active.classList.remove('active');
 		tabs[0].classList.add('active')
 	}
-	if (window.location.pathname == '/browse') {
+	if (window.location.pathname.includes('/browse')) {
 		active.classList.remove('active');
 		tabs[1].classList.add('active')
 	}
-	if (window.location.pathname == '/messages') {
+	if (window.location.pathname.includes('/messages')) {
 		active.classList.remove('active');
 		tabs[2].classList.add('active')
 	}

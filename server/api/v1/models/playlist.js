@@ -5,14 +5,11 @@ const Comment = require('./song')
 const PlaylistSchema = new Schema(
 	{
 		title: { type: String, required: true, max: 128 },
+		description: { type: String },
 		type: { type: String, enum: ["public", "private"], required: true },
 		author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 		likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-		images: [{
-			height: { type: Number },
-			width: { type: Number },
-			url: { type: String, max: 128 }
-		}],
+		image: { type: String, required: true, max: 128 },
 		songs: [{ type: String, ref: 'Song' }],
 		created_at: { type: Date, default: Date.now },
 		updated_at: { type: Date, default: Date.now },
