@@ -1,0 +1,142 @@
+import React, { Component } from 'react';
+import store from '../../store';
+
+import utils from '../../utilities/functions';
+import Spinner from '../spinner/Spinner';
+
+class Music extends Component {
+
+	constructor(props) {
+		super(props);
+		this.state = {
+			songs: '',
+			albums: '',
+			artists: ''
+		}
+	}
+
+	componentWillMount() {
+		fetch(`/api/v1/songs`)
+			.then(response => response.json())
+			.then(item => this.setState({ songs: item }));
+
+		fetch(`/api/v1/albums`)
+			.then(response => response.json())
+			.then(item => this.setState({ albums: item }));
+
+		fetch(`/api/v1/artists`)
+			.then(response => response.json())
+			.then(item => this.setState({ artists: item }));
+	}
+
+	componentDidMount() {
+		let scrollTop = document.getElementById('scroll-top')
+		if (scrollTop) {
+			scrollTop.addEventListener('click', (e) => {
+				e.preventDefault();
+				window.scroll({ top: 0, left: 0, behavior: 'smooth' })
+			})
+
+			// active tabs
+			let tabs = document.querySelectorAll('.subtabs a');
+
+			for (let i = 0; i < tabs.length; i++) {
+				tabs[i].addEventListener('click', (e) => {
+					e.preventDefault()
+
+					let active = document.querySelector('.subtabs .active');
+
+					active.classList.remove('active')
+					tabs[i].classList.add('active')
+
+					let artists = document.querySelector('.artists')
+					let albums = document.querySelector('.albums')
+					let songs = document.querySelector('.songs')
+
+					artists.classList.add('hidden')
+					albums.classList.add('hidden')
+					songs.classList.add('hidden')
+
+					if (tabs[i].innerHTML.toLowerCase() == 'artists') artists.classList.remove('hidden')
+					if (tabs[i].innerHTML.toLowerCase() == 'albums') albums.classList.remove('hidden')
+					if (tabs[i].innerHTML.toLowerCase() == 'songs') songs.classList.remove('hidden')
+				})
+			}
+		}
+	}
+
+	render() {
+		return (
+			<div>
+				<section className="card round-top tabs subtabs">
+					<div>
+						<a className="active" href="#">Artists</a>
+						<a href="#">Albums</a>
+						<a href="#">Songs</a>
+					</div>
+				</section>
+				{this.state.albums.length > 0
+					? <section className="card results round-bottom albums hidden">
+						<h2>Albums</h2>
+						{this.state.albums.map((album, i) => (
+							<a href={`https://open.spotify.com/album/${album.spotify_id}`} target="_blank" key={album.spotify_id}>
+								<div className="playlist-item" >
+									<img src={album.images && album.images[0].url} alt="Thumbnail" />
+									<div>
+										<h3>{album.title}</h3>
+										<p>{album.artist_name}</p>
+									</div>
+								</div>
+							</a>
+
+						))}
+					</section>
+					: <section className="card light"><p>No albums found</p></section>}
+
+				{this.state.songs.length > 0
+					? <section className="card results round-bottom songs hidden">
+						<h2>Songs</h2>
+						{this.state.songs.map((song, i) => (
+							<a href={`https://open.spotify.com/track/${song.spotify_id}`} target="_blank" key={song.spotify_id}>
+								<div className="playlist-item" >
+									<div>
+										<h3>{song.title}</h3>
+										<p>{song.artist_name}</p>
+									</div>
+								</div>
+							</a>
+
+						))}
+					</section>
+					: <section className="card light"><p>No songs found</p></section>}
+
+
+				{this.state.artists.length > 0
+					? <section className="card results round-bottom artists">
+						<h2>Artists</h2>
+						{this.state.artists.map((artist, i) => (
+							<a href={`https://open.spotify.com/artist/${artist.spotify_id}`} target="_blank" key={artist.spotify_id}>
+								<div className="playlist-item" >
+									{artist.images[0] && <img src={artist.images[0].url} alt="Thumbnail" />}
+									<div>
+										<h3>{artist.title}</h3>
+									</div>
+								</div>
+							</a>
+
+						))}
+					</section>
+					: <section className="card light"><p>No artists found</p></section>}
+
+				<section className="light" style={{ paddingBottom: 16 + 'px' }}>
+					<p>That's it, no more posts! You could always create more if you want.</p>
+					<a href="#" id="scroll-top">Back to top <i className="fas fa-level-up-alt"></i></a>
+				</section>
+
+			</div>
+		);
+	}
+}
+
+
+export default Music;

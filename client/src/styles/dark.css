@@ -25,12 +25,12 @@ html.dark #root {
 	color: #BEBEBE;
 }
 
-.dark nav .tabs a {
+.dark .tabs a {
 	color: #BEBEBE;
 }
 
-.dark nav .tabs a.active,
-.dark nav .tabs a:hover {
+.dark .tabs a.active,
+.dark .tabs a:hover {
 	color: #4D9FB4;
 	border-bottom: solid 4px #4D9FB4;
 }

@@ -21,7 +21,7 @@ class SecondaryMenu extends Component {
 			<div>
 				<ul className="primary-links">
 					<li>
-						<a href="/Music">
+						<a href="/music">
 							<i className="fa fa-music"></i>Music</a>
 					</li>
 					<li>

@@ -111,13 +111,13 @@ nav img {
 	color: #6D6D6D;
 }
 
-nav .tabs div {
+.tabs div {
 	width: 100vw;
 	display: flex;
 	flex-direction: row;
 }
 
-nav .tabs a {
+.tabs a {
 	width: 33.3333%;
 	display: flex;
 	flex-direction: row;
@@ -130,8 +130,8 @@ nav .tabs a {
 	border-bottom: solid 4px transparent;
 }
 
-nav .tabs a.active,
-nav .tabs a:hover {
+.tabs a.active,
+.tabs a:hover {
 	color: #F16667;
 	border-bottom: solid 4px #F16667;
 }
@@ -784,6 +784,17 @@ form button {
 }
 .settings .nightmode{
 	border: none !important;
+}
+
+.subtabs{
+	margin-bottom: 0;
+}
+.subtabs div{
+	width: 100%;
+}
+
+.hidden{
+	display: none;
 }
 
 
