@@ -245,6 +245,9 @@ html.dark #root {
 .dark .playlist-header::before{
 	background-image: linear-gradient(to bottom, transparent, #303030)
 }
+.dark .playlist-item{
+	color:#eee;
+}
 
 .dark .settings textarea{
 	background-color: #202020;

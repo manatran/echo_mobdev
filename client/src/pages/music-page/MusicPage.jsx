@@ -18,7 +18,7 @@ class MusicPage extends Component {
   render() {
     return (
       <main>
-        <Music />
+        <Music history={this.props.history} />
       </main>
     )
   }

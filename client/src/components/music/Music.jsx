@@ -65,9 +65,29 @@ class Music extends Component {
 		}
 	}
 
+	onClick(id, type){
+		let newPost = {
+			content: id,
+			type: type,
+			author: store.getState().auth.user._id
+		}
+		fetch(`/api/v1/posts/`, {
+			method: 'POST',
+			headers: {
+				'content-type': 'application/json'
+			},
+			body: JSON.stringify(newPost)
+		})
+			.then(response => response.json())
+			.then((post) => {
+				this.props.history.push(`/post/${post._id}`)
+			})
+	}
+
 	render() {
 		return (
 			<div>
+
 				<section className="card round-top tabs subtabs">
 					<div>
 						<a className="active" href="#">Artists</a>
@@ -83,7 +103,7 @@ class Music extends Component {
 				{this.state.albums.length > 0
 					? <section className="card results round-bottom albums hidden">
 						{this.state.albums.map((album, i) => (
-							<a href={`https://open.spotify.com/album/${album.spotify_id}`} target="_blank" key={album.spotify_id}>
+							<span onClick={() => this.onClick(album.spotify_id, 'album')} key={album.spotify_id}>
 								<div className="playlist-item" >
 									<img src={album.images && album.images[0].url} alt="Thumbnail" />
 									<div>
@@ -91,7 +111,7 @@ class Music extends Component {
 										<p>{album.artist_name}</p>
 									</div>
 								</div>
-							</a>
+							</span>
 						))}
 					</section>
 					: <section className="card light"><p>No albums found</p></section>}
@@ -99,7 +119,7 @@ class Music extends Component {
 				{this.state.songs.length > 0
 					? <section className="card results round-bottom songs hidden">
 						{this.state.songs.map((song, i) => (
-							<a href={`https://open.spotify.com/track/${song.spotify_id}`} target="_blank" key={song.spotify_id}>
+							<span onClick={() => this.onClick(song.spotify_id, 'song')} key={song.spotify_id}>
 								<div className="playlist-item" >
 									{song.album && song.album.images[0]
 										? <img src={song.album.images[0].url} alt="Thumbnail" />
@@ -110,7 +130,7 @@ class Music extends Component {
 										<p>{song.artist_name}</p>
 									</div>
 								</div>
-							</a>
+							</span>
 						))}
 					</section>
 					: <section className="card light"><p>No songs found</p></section>}
@@ -118,7 +138,7 @@ class Music extends Component {
 				{this.state.artists.length > 0
 					? <section className="card results round-bottom artists">
 						{this.state.artists.map((artist, i) => (
-							<a href={`https://open.spotify.com/artist/${artist.spotify_id}`} target="_blank" key={artist.spotify_id}>
+							<span onClick={() => this.onClick(artist.spotify_id, 'artist')} key={artist.spotify_id}>
 								<div className="playlist-item" >
 									{artist.images[0]
 										? <img src={artist.images[0].url} alt="Thumbnail" />
@@ -128,7 +148,7 @@ class Music extends Component {
 										<h3>{artist.title}</h3>
 									</div>
 								</div>
-							</a>
+							</span>
 						))}
 					</section>
 					: <section className="card light"><p>No artists found</p></section>}

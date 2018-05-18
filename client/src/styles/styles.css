@@ -694,6 +694,7 @@ form button {
 	flex-direction: row;
 	align-items: center;
 	margin: 16px 0;
+	cursor: pointer;
 }
 
 .playlist-item p,
