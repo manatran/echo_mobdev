@@ -65,7 +65,7 @@ class Music extends Component {
 		}
 	}
 
-	onClick(id, type){
+	onClick(id, type) {
 		let newPost = {
 			content: id,
 			type: type,
@@ -97,7 +97,7 @@ class Music extends Component {
 				</section>
 
 				<section className="card light no-radius">
-					<p>Click the content to create a post.</p>
+					<p>Click the content to create a post or use the search feature to find more content.</p>
 				</section>
 
 				{this.state.albums.length > 0
