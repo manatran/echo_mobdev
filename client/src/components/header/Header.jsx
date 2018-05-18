@@ -27,7 +27,7 @@ class Header extends Component {
 		let tabs = document.querySelectorAll('.tabs a');
 		let active = document.querySelector('.tabs .active');
 
-		active.classList.remove('active');
+		if(active) active.classList.remove('active');
 
 		if (window.location.pathname == '/') tabs[0].classList.add('active')
 		if (window.location.pathname.includes('/browse')) tabs[1].classList.add('active')

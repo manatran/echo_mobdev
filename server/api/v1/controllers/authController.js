@@ -6,12 +6,12 @@ const errorHandler = require('../utilities/errorHandler');
 const tokenUtils = require('../utilities/token');
 const config = require('../../../config/config');
 
-exports.get_user = function(req, res, next) {
+exports.get_user = function (req, res, next) {
 	const id = req.params.userId;
-	User.findOne({_id: id}).then(user => {
-		if(user){
+	User.findOne({ _id: id }).then(user => {
+		if (user) {
 			res.json(user)
-		}else{
+		} else {
 			return res.status(401).json({
 				error: 'User does not exist'
 			})
@@ -19,12 +19,14 @@ exports.get_user = function(req, res, next) {
 	})
 }
 
-exports.edit_user = function(req,res,next){
+exports.edit_user = function (req, res, next) {
 	const id = req.params.userId;
 
-	User.findByIdAndUpdate(id, {
-		bio: req.body.bio
-	}, { new: true })
+	let body = req.body
+	if (req.body.bio) body.bio = req.body.bio
+	if (req.body.picture) body.picture = req.body.picture
+
+	User.findByIdAndUpdate(id, { bio: body.bio, picture: body.picture }, { new: true })
 		.then(user => {
 			if (!user) {
 				return errorHandler.handleAPIError(404, `User not found with id: ${id}`, next);

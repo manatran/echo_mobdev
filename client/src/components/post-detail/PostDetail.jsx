@@ -99,7 +99,7 @@ class PostDetail extends Component {
 								{this.state.post.type === "song" &&
 									<h3>{this.state.post.content.artist_name}</h3>
 								}
-								<p>by <span className="author">{this.state.post.author.username}</span>
+								<p>by <span className="author"><a href={`/profile/${this.state.post.author._id}`}>{this.state.post.author.username}</a></span>
 									<time className="timestamp" title={utils.formatDate(this.state.post.created_at)} dateTime={utils.formatDate(this.state.post.created_at)}>{utils.getTimeDifference(this.state.post.created_at)}</time>
 								</p>
 							</div>

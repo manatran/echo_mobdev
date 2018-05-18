@@ -430,7 +430,7 @@ aside i {
 	color: #A7A7A7;
 }
 
-.post .author {
+.post .author a{
 	color: #F16667;
 }
 
@@ -621,6 +621,22 @@ form button {
 .card.settings{
 	color:#6D6D6D;
 }
+.settings label{
+	padding:16px 0;
+}
+.settings label, .settings textarea{
+	width:100%;
+}
+.settings .image-upload{
+	background-color: #F2F2F2;
+	cursor: pointer;
+	padding: 16px;
+	border: dashed 1px #6D6D6D;
+	border-radius: 8px;
+}
+.settings .image-preview{
+	border-radius: 50%;
+}
 .login a {
 	color: #4D9FB4;
 }
@@ -683,6 +699,10 @@ form button {
 
 .playlist-item p {
 	color: #6D6D6D;
+	text-overflow: ellipsis;
+	overflow: hidden; 
+	width: 256px;
+  white-space: nowrap;
 }
 
 .playlist-item img {

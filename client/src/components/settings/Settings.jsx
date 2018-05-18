@@ -5,6 +5,13 @@ import { connect } from 'react-redux';
 import { toggleNightmode } from '../../actions/nightmodeActions';
 import { setCurrentUser } from '../../actions/authActions';
 import store from '../../store';
+import Spinner from '../spinner/Spinner'
+
+import Dropzone from 'react-dropzone';
+import request from 'superagent';
+
+const CLOUDINARY_UPLOAD_PRESET = 'echo-mobdev';
+const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/echo-mobdev/upload';
 
 class Settings extends Component {
 	constructor(props) {
@@ -12,6 +19,7 @@ class Settings extends Component {
 
 		this.state = {
 			bio: '',
+			picture: '',
 			user: undefined
 		}
 		this.onChange = this.onChange.bind(this)
@@ -25,10 +33,9 @@ class Settings extends Component {
 
 	onSubmit(e) {
 		e.preventDefault()
-		let body = {
-			bio: ''
-		}
+		let body = {}
 		if (this.state.bio) body.bio = this.state.bio
+		if (this.state.picture) body.picture = this.state.picture
 
 		fetch(`/api/v1/user/edit/${this.state.user._id}`, {
 			method: 'PATCH',
@@ -43,6 +50,32 @@ class Settings extends Component {
 				store.dispatch(setCurrentUser(user))
 				window.location = `/profile/${this.state.user._id}`
 			})
+	}
+
+	onImageDrop(files) {
+		this.setState({
+			uploadedFile: files[0]
+		});
+
+		this.handleImageUpload(files[0]);
+	}
+
+	handleImageUpload(file) {
+		let upload = request.post(CLOUDINARY_UPLOAD_URL)
+			.field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
+			.field('file', file);
+
+		upload.end((err, response) => {
+			if (err) {
+				console.error(err);
+			}
+
+			if (response.body.secure_url !== '') {
+				this.setState({
+					picture: response.body.secure_url
+				});
+			}
+		});
 	}
 
 	handleToggleNightmode(e) {
@@ -60,17 +93,34 @@ class Settings extends Component {
 			<div>
 				<section className="card settings">
 					<h2>Settings</h2>
-					<a href="#" className="nightmode" onClick={this.handleToggleNightmode}>
-						<i className="fa fa-moon"></i>Toggle Night Mode</a>
 					<form onSubmit={this.onSubmit}>
-						<label>Bio <br/>
+						<label>Bio <br />
 							<textarea name="bio" onChange={this.onChange} value={this.state.bio}></textarea>
 						</label>
+						<label>Profile picture <br />
+							<Dropzone
+								className="image-upload"
+								multiple={false}
+								accept="image/*"
+								onDrop={this.onImageDrop.bind(this)}>
+								<p>Drop an image or click to select a file to upload.</p>
+							</Dropzone>
+
+						</label>
+						<div>
+							{this.state.picture === ''
+								? <div>
+									<img className="image-preview" src={store.getState().auth.user.picture} />
+								</div>
+								: <div>
+									<p>{this.state.uploadedFile.name}</p>
+									<img className="image-preview" src={this.state.picture} />
+								</div>}
+						</div>
 						<input type="submit" value="Save changes" />
 					</form>
-				</section>
-				<section className="card light">
-					<p>If you save your settings and don't see changes immediately, please try logging out and back in again.</p>
+					<a href="#" className="nightmode" onClick={this.handleToggleNightmode}>
+						<i className="fa fa-moon"></i>Toggle Night Mode</a>
 				</section>
 			</div>
 		)

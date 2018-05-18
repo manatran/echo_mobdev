@@ -13,6 +13,7 @@
     "query-string": "^5.0.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-dropzone": "^4.2.9",
     "react-facebook-login": "^4.0.1",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
@@ -20,7 +21,8 @@
     "redux": "^3.7.2",
     "redux-form": "^7.3.0",
     "redux-form-material-ui": "^5.0.0-beta.2",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "superagent": "^3.8.3"
   },
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
