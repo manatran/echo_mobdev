@@ -94,7 +94,7 @@ class Browse extends Component {
 						))}
 					</section>
 					: <section className="card light"><p>No songs found</p></section>}
-			
+
 
 				{this.state.artists.length > 0
 					? <section className="card results">
@@ -102,7 +102,10 @@ class Browse extends Component {
 						{this.state.artists.map((artist, i) => (
 							<a href={`https://open.spotify.com/artist/${artist.spotify_id}`} target="_blank" key={artist.spotify_id}>
 								<div className="playlist-item" >
-									{artist.images[0] && <img src={artist.images[0].url} alt="Thumbnail" />}
+									{artist.images[0]
+										? <img src={artist.images[0].url} alt="Thumbnail" />
+										: <img src={`https://api.adorable.io/avatars/64/${artist.title}.png`} alt="Thumbnail" />
+									}
 									<div>
 										<h3>{artist.title}</h3>
 									</div>

@@ -75,9 +75,13 @@ class Music extends Component {
 						<a href="#">Songs</a>
 					</div>
 				</section>
+
+				<section className="card light no-radius">
+					<p>Click the content to create a post.</p>
+				</section>
+
 				{this.state.albums.length > 0
 					? <section className="card results round-bottom albums hidden">
-						<h2>Albums</h2>
 						{this.state.albums.map((album, i) => (
 							<a href={`https://open.spotify.com/album/${album.spotify_id}`} target="_blank" key={album.spotify_id}>
 								<div className="playlist-item" >
@@ -88,48 +92,49 @@ class Music extends Component {
 									</div>
 								</div>
 							</a>
-
 						))}
 					</section>
 					: <section className="card light"><p>No albums found</p></section>}
 
 				{this.state.songs.length > 0
 					? <section className="card results round-bottom songs hidden">
-						<h2>Songs</h2>
 						{this.state.songs.map((song, i) => (
 							<a href={`https://open.spotify.com/track/${song.spotify_id}`} target="_blank" key={song.spotify_id}>
 								<div className="playlist-item" >
+									{song.album && song.album.images[0]
+										? <img src={song.album.images[0].url} alt="Thumbnail" />
+										: <img src={`https://api.adorable.io/avatars/64/${song.title}.png`} alt="Thumbnail" />
+									}
 									<div>
 										<h3>{song.title}</h3>
 										<p>{song.artist_name}</p>
 									</div>
 								</div>
 							</a>
-
 						))}
 					</section>
 					: <section className="card light"><p>No songs found</p></section>}
 
-
 				{this.state.artists.length > 0
 					? <section className="card results round-bottom artists">
-						<h2>Artists</h2>
 						{this.state.artists.map((artist, i) => (
 							<a href={`https://open.spotify.com/artist/${artist.spotify_id}`} target="_blank" key={artist.spotify_id}>
 								<div className="playlist-item" >
-									{artist.images[0] && <img src={artist.images[0].url} alt="Thumbnail" />}
+									{artist.images[0]
+										? <img src={artist.images[0].url} alt="Thumbnail" />
+										: <img src={`https://api.adorable.io/avatars/64/${artist.title}.png`} alt="Thumbnail" />
+									}
 									<div>
 										<h3>{artist.title}</h3>
 									</div>
 								</div>
 							</a>
-
 						))}
 					</section>
 					: <section className="card light"><p>No artists found</p></section>}
 
 				<section className="light" style={{ paddingBottom: 16 + 'px' }}>
-					<p>That's it, no more posts! You could always create more if you want.</p>
+					<p>That's it, no more content! Use the search feature to find more.</p>
 					<a href="#" id="scroll-top">Back to top <i className="fas fa-level-up-alt"></i></a>
 				</section>
 
