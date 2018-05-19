@@ -4,7 +4,10 @@
 	color: #333;
 	font-size: 16px;
 }
-
+::selection{
+	background-color:#F16667;
+	color: white;
+}
 html,
 body,
 #root {
@@ -61,13 +64,15 @@ h2 {
 .round-right {
 	border-radius: 0 8px 8px 0;
 }
+
 .no-radius {
-	margin:0;
+	margin: 0;
 	border-radius: 0;
 }
-.no-radius p{
-	margin:0;
-	padding:8px 0;
+
+.no-radius p {
+	margin: 0;
+	padding: 8px 0;
 }
 
 nav {
@@ -438,12 +443,61 @@ aside i {
 	color: #A7A7A7;
 }
 
-.post .author a{
+.post .author a {
 	color: #F16667;
 }
-.author i, .profile h2 i{
+
+.author i,
+.profile h2 i {
 	margin: 0 4px 0 2px;
 	font-size: .75em;
+}
+
+.options {
+	float: right;
+	padding: 0 8px;
+	color: #333;
+	cursor: pointer;
+}
+
+.options i {
+	float: right;
+	cursor: pointer;
+}
+
+.options input[type=checkbox] {
+	display: none;
+}
+
+.options input[type=checkbox]:checked + .option-list {
+	display: block;
+}
+
+.options .option-list {
+	font-weight: 500;
+	user-select: none;
+	display: none;
+	cursor: pointer;
+	text-transform: uppercase;
+	top: 32px;
+	left: 8px;
+	background-color: #DDD;
+	padding: 12px;
+	box-sizing: border-box;
+	position: relative;
+	box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+.option-list::before {
+	position: absolute;
+	content: '';
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 0 8px 11px 8px;
+	border-color: transparent transparent #DDD transparent;
+	top: -10px;
+	right: 4px;
 }
 
 .timestamp::before {
@@ -590,14 +644,16 @@ form button {
 	height: 80px;
 }
 
-.card.login, .card.settings{
+.card.login,
+.card.settings {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
 
-.card.login form, .card.settings form {
+.card.login form,
+.card.settings form {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -606,7 +662,8 @@ form button {
 	padding: 16px;
 }
 
-.card.login input, .card.settings input  {
+.card.login input,
+.card.settings input {
 	margin: 8px;
 	outline: none;
 	border: none;
@@ -615,7 +672,8 @@ form button {
 	border-radius: 8px;
 }
 
-.card.login input[type=submit], .card.settings input[type=submit] {
+.card.login input[type=submit],
+.card.settings input[type=submit] {
 	box-sizing: border-box;
 	transition: .2s;
 	text-transform: uppercase;
@@ -627,28 +685,36 @@ form button {
 	cursor: pointer;
 }
 
-.card.login input[type=submit]:hover, .card.settings input[type=submit]:hover {
+.card.login input[type=submit]:hover,
+.card.settings input[type=submit]:hover {
 	border: solid 1.5px #A7A7A7;
 }
-.card.settings{
-	color:#6D6D6D;
+
+.card.settings {
+	color: #6D6D6D;
 }
-.settings label{
-	padding:16px 0;
+
+.settings label {
+	padding: 16px 0;
 }
-.settings label, .settings textarea{
-	width:100%;
+
+.settings label,
+.settings textarea {
+	width: 100%;
 }
-.settings .image-upload{
+
+.settings .image-upload {
 	background-color: #F2F2F2;
 	cursor: pointer;
 	padding: 16px;
 	border: dashed 1px #6D6D6D;
 	border-radius: 8px;
 }
-.settings .image-preview{
+
+.settings .image-preview {
 	border-radius: 50%;
 }
+
 .login a {
 	color: #4D9FB4;
 }
@@ -713,9 +779,9 @@ form button {
 .playlist-item p {
 	color: #6D6D6D;
 	text-overflow: ellipsis;
-	overflow: hidden; 
+	overflow: hidden;
 	width: 256px;
-  white-space: nowrap;
+	white-space: nowrap;
 }
 
 .playlist-item img {
@@ -739,10 +805,11 @@ form button {
 	background-size: cover;
 	background-position: center;
 }
-.playlist-header .content{
+
+.playlist-header .content {
 	margin-top: 16px;
 	z-index: 10;
-	color:black;
+	color: black;
 }
 
 .playlist-header:before {
@@ -753,7 +820,7 @@ form button {
 	right: 0;
 	bottom: 0;
 	left: 0;
-	background-image: linear-gradient(to bottom, transparent, white );
+	background-image: linear-gradient(to bottom, transparent, white);
 }
 
 .playlist-header img {
@@ -761,58 +828,65 @@ form button {
 	width: 94px;
 	border-radius: 50%;
 	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
-	margin:16px;
+	margin: 16px;
 }
-.playlist-header a{
-	color:#F16667;
+
+.playlist-header a {
+	color: #F16667;
 }
-.playlist-header p, .playlist-header h2{
+
+.playlist-header p,
+.playlist-header h2 {
 	text-align: center;
-	margin:0;
+	margin: 0;
 }
-.playlist p{
+
+.playlist p {
 	margin-top: 0;
 }
 
-.browse{
-	padding:16px;
+.browse {
+	padding: 16px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
 
-.results{
-	padding:16px;
+.results {
+	padding: 16px;
 }
 
-.settings{
-	padding:16px;
+.settings {
+	padding: 16px;
 }
-.settings textarea{
+
+.settings textarea {
 	background-color: #eee;
 	border-radius: 8px !important;
-	height:128px;
+	height: 128px;
 	border: none;
 }
-.settings input[type=text]{
+
+.settings input[type=text] {
 	width: 85%;
 }
-.settings .nightmode{
+
+.settings .nightmode {
 	border: none !important;
 }
 
-.subtabs{
+.subtabs {
 	margin-bottom: 0;
 }
-.subtabs div{
+
+.subtabs div {
 	width: 100%;
 }
 
-.hidden{
+.hidden {
 	display: none;
 }
-
 
 .spinner {
 	margin: 100px auto;

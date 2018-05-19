@@ -150,6 +150,17 @@ html.dark #root {
 	color: #BEBEBE;
 }
 
+.dark .options {
+	color: #ccc;
+}
+.dark .options .option-list {
+	background-color: #202020;
+}
+
+.dark .option-list::before {
+	border-color: transparent transparent #202020 transparent;
+}
+
 .dark p {
 	color: #A7A7A7;
 }
@@ -217,12 +228,14 @@ html.dark #root {
 	color: #eee;
 }
 
-.dark .login input, .dark .card.settings input  {
+.dark .login input,
+.dark .card.settings input {
 	background-color: #202020;
 	color: #BEBEBE;
 }
 
-.dark .login, .dark .settings {
+.dark .login,
+.dark .settings {
 	color: #6D6D6D;
 }
 
@@ -230,30 +243,35 @@ html.dark #root {
 	color: #F16667;
 }
 
-.dark .card.login input[type=submit], .dark .card.settings input[type=submit]  {
+.dark .card.login input[type=submit],
+.dark .card.settings input[type=submit] {
 	border-right: solid 3px #4D9FB4;
 	border-bottom: solid 3px #4D9FB4;
 }
 
-.dark .card.login input[type=submit]:hover, .dark .card.settings input[type=submit]:hover {
+.dark .card.login input[type=submit]:hover,
+.dark .card.settings input[type=submit]:hover {
 	border: solid 1.5px #6D6D6D;
 }
 
-.dark .playlist-header a{
-	color:#4D9FB4;
-}
-.dark .playlist-header::before{
-	background-image: linear-gradient(to bottom, transparent, #303030)
-}
-.dark .playlist-item{
-	color:#eee;
+.dark .playlist-header a {
+	color: #4D9FB4;
 }
 
-.dark .settings textarea{
-	background-color: #202020;
-	color:#eee;
+.dark .playlist-header::before {
+	background-image: linear-gradient(to bottom, transparent, #303030)
 }
-.dark .settings .image-upload{
+
+.dark .playlist-item {
+	color: #eee;
+}
+
+.dark .settings textarea {
+	background-color: #202020;
+	color: #eee;
+}
+
+.dark .settings .image-upload {
 	background-color: #333;
 	border: dashed 1px #6D6D6D;
 }

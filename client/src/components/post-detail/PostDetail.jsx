@@ -19,13 +19,25 @@ class PostDetail extends Component {
 		}
 		this.onChange = this.onChange.bind(this)
 		this.onSubmit = this.onSubmit.bind(this)
+		this.deletePost = this.deletePost.bind(this)
 	}
 
-	onChange(e){
-		this.setState({[e.target.name]: e.target.value })
+	onChange(e) {
+		this.setState({ [e.target.name]: e.target.value })
 	}
 
-	onSubmit(e){
+	deletePost() {
+		fetch(`/api/v1/posts/${this.props.postId}`,{
+			method: 'DELETE',
+			headers: {
+				'content-type': 'application/json'
+			}
+		})
+			.then(this.props.history.push('/'))
+			.catch(err => console.log(err));
+	}
+
+	onSubmit(e) {
 		e.preventDefault()
 		const comment = {
 			post_id: this.props.postId,
@@ -77,6 +89,18 @@ class PostDetail extends Component {
 							</a>}
 						<div className="post-body">
 							<div className="post-info">
+								{(store.getState().auth.user.isAdmin || this.state.post.author._id == store.getState().auth.user._id)
+									? <div className="options">
+										<label>
+											<i className="fas fa-ellipsis-v" />
+											<input type="checkbox" name="options" value="toggle" />
+											<div className="option-list card">
+												<span onClick={this.deletePost}>Delete</span>
+											</div>
+										</label>
+
+									</div>
+									: ''}
 								<h2>
 									{(() => {
 										switch (this.state.post.type) {

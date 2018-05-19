@@ -25,7 +25,7 @@ class PostPage extends Component {
   render() {
     return (
       <main>
-        <PostDetail postId={ this.props.match.params.id }/>
+        <PostDetail history={this.props.history} postId={ this.props.match.params.id }/>
       </main>
     )
   }
