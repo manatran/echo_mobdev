@@ -9,7 +9,10 @@ class Offcanvas extends Component {
 			return (
 				<aside className="mobile-nav">
 					<img src={store.getState().auth.user.picture} alt="Profile pic" />
-					<h2><a href={`/profile/${store.getState().auth.user.id}`}>{store.getState().auth.user.username}</a></h2>
+					<h2>
+						{store.getState().auth.user.isAdmin && <i title="admin" className="fas fa-crown" />}
+						<a href={`/profile/${store.getState().auth.user.id}`}>{store.getState().auth.user.username}</a>
+					</h2>
 					<SecondaryMenu />
 				</aside>
 			)

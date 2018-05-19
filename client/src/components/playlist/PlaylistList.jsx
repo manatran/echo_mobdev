@@ -44,7 +44,7 @@ class PlaylistList extends Component {
 								</div>
 								</a>
 							))
-							: <section className="card light">no playlists found</section>
+							: <section className="light">no playlists found</section>
 						}
 					</section>
 				</div>

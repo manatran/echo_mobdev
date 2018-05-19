@@ -20,6 +20,7 @@ class Settings extends Component {
 		this.state = {
 			bio: '',
 			picture: '',
+			banner: '',
 			user: undefined
 		}
 		this.onChange = this.onChange.bind(this)
@@ -36,6 +37,7 @@ class Settings extends Component {
 		let body = {}
 		if (this.state.bio) body.bio = this.state.bio
 		if (this.state.picture) body.picture = this.state.picture
+		if (this.state.banner) body.banner = this.state.banner
 
 		fetch(`/api/v1/user/edit/${this.state.user._id}`, {
 			method: 'PATCH',
@@ -85,6 +87,7 @@ class Settings extends Component {
 
 	componentDidMount() {
 		this.setState({ bio: store.getState().auth.user.bio })
+		this.setState({ banner: store.getState().auth.user.banner })
 		this.setState({ user: store.getState().auth.user })
 	}
 
@@ -97,7 +100,21 @@ class Settings extends Component {
 						<label>Bio <br />
 							<textarea name="bio" onChange={this.onChange} value={this.state.bio}></textarea>
 						</label>
+						<label>Banner URL<br />
+							<input type="text" name="banner" onChange={this.onChange} value={this.state.banner} />
+						</label>
+
 						<label>Profile picture <br />
+							<div>
+								{this.state.picture === ''
+									? <div>
+										<img className="image-preview" src={store.getState().auth.user.picture} />
+									</div>
+									: <div>
+										<p>{this.state.uploadedFile.name}</p>
+										<img className="image-preview" src={this.state.picture} />
+									</div>}
+							</div>
 							<Dropzone
 								className="image-upload"
 								multiple={false}
@@ -105,18 +122,8 @@ class Settings extends Component {
 								onDrop={this.onImageDrop.bind(this)}>
 								<p>Drop an image or click to select a file to upload.</p>
 							</Dropzone>
-
 						</label>
-						<div>
-							{this.state.picture === ''
-								? <div>
-									<img className="image-preview" src={store.getState().auth.user.picture} />
-								</div>
-								: <div>
-									<p>{this.state.uploadedFile.name}</p>
-									<img className="image-preview" src={this.state.picture} />
-								</div>}
-						</div>
+
 						<input type="submit" value="Save changes" />
 					</form>
 					<a href="#" className="nightmode" onClick={this.handleToggleNightmode}>

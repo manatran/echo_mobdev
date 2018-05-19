@@ -37,7 +37,7 @@ class ProfileDetail extends Component {
 							<img src={this.state.profile.picture} alt={this.state.profile.username} />
 							<span className="posts"><em>13</em> Posts</span>
 						</div>
-						<h2>{this.state.profile.username}</h2>
+						<h2>{this.state.profile.isAdmin && <i title="admin" className="fas fa-crown" />}{this.state.profile.username}</h2>
 						<p className="description">{this.state.profile.bio}</p>
 						{(this.state.profile._id == store.getState().auth.user._id) && 
 							<a className="action-btn" href={`/settings`}>edit profile</a>

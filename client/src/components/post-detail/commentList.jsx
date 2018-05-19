@@ -22,11 +22,11 @@ class CommentList extends Component {
 		this.onSubmit = this.onSubmit.bind(this)
 	}
 
-	onChange(e){
-		this.setState({[e.target.name]: e.target.value })
+	onChange(e) {
+		this.setState({ [e.target.name]: e.target.value })
 	}
 
-	onSubmit(e){
+	onSubmit(e) {
 		e.preventDefault()
 		const comment = {
 			parent_id: this.state.parentId,
@@ -49,7 +49,7 @@ class CommentList extends Component {
 						? this.props.comments.map((comment, i) => (
 							<section className="card comment-thread" key={comment._id}>
 								<div className="comment">
-									<h2>{comment.author.username || 'manaus_t'}
+									<h2 className="author">{comment.author.isAdmin && <i title="admin" className="fas fa-crown" />}{comment.author.username }
 										<time className="timestamp" title={utils.formatDate(comment.created_at)} dateTime={utils.formatDate(comment.created_at)}>{utils.getTimeDifference(comment.created_at)}</time>
 									</h2>
 									<p>{comment.content}</p>
@@ -64,8 +64,8 @@ class CommentList extends Component {
 									<div className="subcomment-thread">
 										{comment.subcomments.map((subcomment, i) => (
 											<div className="subcomment" key={subcomment._id}>
-												<h2>
-													{subcomment.author.username}
+												<h2 className="author">
+													{subcomment.author.isAdmin && <i title="admin" className="fas fa-crown" />}{subcomment.author.username}
 													<time className="timestamp" title={utils.formatDate(subcomment.created_at)} dateTime={utils.formatDate(subcomment.created_at)}>{utils.getTimeDifference(subcomment.created_at)}</time>
 												</h2>
 												<p>{subcomment.content}</p>

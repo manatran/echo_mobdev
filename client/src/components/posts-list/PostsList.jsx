@@ -86,7 +86,7 @@ class PostsList extends Component {
 												{element.content.artist_name}
 											</h3>
 										}
-										<p>by <span className="author">{element.author.username}</span>
+										<p className="author">by {element.author.isAdmin && <i title="admin" className="fas fa-crown" />}<span className="author">{element.author.username}</span>
 											<time className="timestamp" title={utils.formatDate(element.created_at)} dateTime={utils.formatDate(element.created_at)}>{utils.getTimeDifference(element.created_at)}</time>
 										</p>
 									</div>

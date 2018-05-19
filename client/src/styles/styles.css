@@ -441,6 +441,10 @@ aside i {
 .post .author a{
 	color: #F16667;
 }
+.author i, .profile h2 i{
+	margin: 0 4px 0 2px;
+	font-size: .75em;
+}
 
 .timestamp::before {
 	content: '●';
@@ -790,6 +794,9 @@ form button {
 	border-radius: 8px !important;
 	height:128px;
 	border: none;
+}
+.settings input[type=text]{
+	width: 85%;
 }
 .settings .nightmode{
 	border: none !important;

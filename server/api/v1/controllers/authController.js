@@ -22,11 +22,7 @@ exports.get_user = function (req, res, next) {
 exports.edit_user = function (req, res, next) {
 	const id = req.params.userId;
 
-	let body = req.body
-	if (req.body.bio) body.bio = req.body.bio
-	if (req.body.picture) body.picture = req.body.picture
-
-	User.findByIdAndUpdate(id, { bio: body.bio, picture: body.picture }, { new: true })
+	User.findByIdAndUpdate(id, req.body, { new: true })
 		.then(user => {
 			if (!user) {
 				return errorHandler.handleAPIError(404, `User not found with id: ${id}`, next);
@@ -50,10 +46,11 @@ exports.user_create_post = function (req, res, next) {
 			});
 		} else {
 			const user = new User({
+				isAdmin: false,
 				username: req.body.username,
 				email: req.body.email,
 				picture: 'https://api.adorable.io/avatars/128/' + req.body.email + '.png',
-				banner: 'https://i.imgur.com/Yej172C.png',
+				banner: 'https://i.imgur.com/WaqJEie.png',
 				localProvider: {
 					password: req.body.password
 				}

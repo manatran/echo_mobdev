@@ -6,6 +6,9 @@ const config = require('../../../config/config');
 
 const UserSchema = mongoose.Schema(
 	{
+		isAdmin: {
+			type: Boolean, required: true
+		},
 		email: {
 			type: String, required: true,
 			trim: true, unique: true

@@ -29,9 +29,6 @@ import SignInPage from '../../pages/sign-in-page/SignInPage';
 import SignOutPage from '../../pages/sign-out-page/SignOutPage';
 import SignupPage from '../../pages/signup-page/SignupPage';
 
-import PostCreatePage from '../../pages/post-create-page/PostCreatePage';
-import PostsTablePage from '../../pages/posts-table-page/PostsTablePage';
-
 class Main extends Component {
   render() {
     return (
@@ -56,8 +53,6 @@ class Main extends Component {
           <Route path='/signup' component={SignupPage}/>
 					<Redirect from="/logout" to="/signout" />
           <Route path='/signout' component={SignOutPage}/>
-          <Route path='/backoffice/posts-table' component={PostsTablePage}/>
-          <Route path='/backoffice/post-create' component={PostCreatePage}/>
           <Route path="*" component={NotFoundPage}/>
         </Switch>
 				<SecondarySidebar />
