@@ -5,7 +5,7 @@ window.onload = (e) => {
 
 	// toggle menubar
 	body.addEventListener('click', (e) => {
-		if (e.target == navLogo && window.innerWidth >= 1080) window.location = '/';
+		if (e.target == navLogo && window.innerWidth >= 1080) window.scroll({ top: 0, left: 0, behavior: 'smooth' });
 
 		if (e.target == navLogo && window.innerWidth < 1080) mobileNav.classList.add('active')
 

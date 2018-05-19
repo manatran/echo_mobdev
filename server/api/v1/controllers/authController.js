@@ -52,7 +52,8 @@ exports.user_create_post = function (req, res, next) {
 			const user = new User({
 				username: req.body.username,
 				email: req.body.email,
-				picture: 'https://api.adorable.io/avatars/200/' + req.body.email + '.png',
+				picture: 'https://api.adorable.io/avatars/128/' + req.body.email + '.png',
+				banner: 'https://i.imgur.com/Yej172C.png',
 				localProvider: {
 					password: req.body.password
 				}

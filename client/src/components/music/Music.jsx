@@ -97,7 +97,7 @@ class Music extends Component {
 				</section>
 
 				<section className="card light no-radius">
-					<p>Click the content to create a post or use the search feature to find more content.</p>
+					<p>Click the content to create a post or use the searchbar to find more content.</p>
 				</section>
 
 				{this.state.albums.length > 0
