@@ -37,6 +37,27 @@ class CommentList extends Component {
 		document.querySelector('.comment-form form').reset()
 	}
 
+	deleteComment(commentId, type) {
+		fetch(`/api/v1/${type}/${commentId}/softdelete`, {
+			method: 'PATCH',
+			headers: {
+				'content-type': 'application/json'
+			}
+		})
+			.then(window.location = window.location)
+			.catch(err => console.log(err));
+	}
+	restoreComment(commentId, type) {
+		fetch(`/api/v1/${type}/${commentId}/softundelete`, {
+			method: 'PATCH',
+			headers: {
+				'content-type': 'application/json'
+			}
+		})
+			.then(window.location = window.location)
+			.catch(err => console.log(err));
+	}
+
 	componentWillMount() {
 		this.props.fetchComments(this.props.postId);
 	}
@@ -49,10 +70,25 @@ class CommentList extends Component {
 						? this.props.comments.map((comment, i) => (
 							<section className="card comment-thread" key={comment._id}>
 								<div className="comment">
-									<h2 className="author">{comment.author.isAdmin && <i title="admin" className="fas fa-crown" />}{comment.author.username }
+									{(store.getState().auth.user.isAdmin || comment.author._id == store.getState().auth.user._id)
+										? <div className="options">
+											<label>
+												<i className="fas fa-ellipsis-v" />
+												<input type="checkbox" name="options" value="toggle" />
+												<div className="option-list card">
+													{comment.deleted_at
+														? <span onClick={() => this.restoreComment(comment._id, 'comments')}>restore</span>
+														: <span onClick={() => this.deleteComment(comment._id, 'comments')}>Delete</span>
+													}
+												</div>
+											</label>
+
+										</div>
+										: ''}
+									<h2 className="author">{comment.author.isAdmin && <i title="admin" className="fas fa-crown" />}{comment.author.username || store.getState().auth.user.username}
 										<time className="timestamp" title={utils.formatDate(comment.created_at)} dateTime={utils.formatDate(comment.created_at)}>{utils.getTimeDifference(comment.created_at)}</time>
 									</h2>
-									<p>{comment.content}</p>
+									<p>{comment.deleted_at ? '[DELETED]' : comment.content}</p>
 									<div className="actions">
 										<span className="likes"><i className="fa fa-heart"></i>{comment.likes.length}</span>
 										<span className="comments"><i className="fa fa-comments"></i>{comment.subcomments && comment.subcomments.length || 0}</span>
@@ -64,11 +100,26 @@ class CommentList extends Component {
 									<div className="subcomment-thread">
 										{comment.subcomments.map((subcomment, i) => (
 											<div className="subcomment" key={subcomment._id}>
+												{(store.getState().auth.user.isAdmin || subcomment.author._id == store.getState().auth.user._id)
+													? <div className="options">
+														<label>
+															<i className="fas fa-ellipsis-v" />
+															<input type="checkbox" name="options" value="toggle" />
+															<div className="option-list card">
+																{subcomment.deleted_at
+																	? <span onClick={() => this.restoreComment(subcomment._id, 'subcomments')}>restore</span>
+																	: <span onClick={() => this.deleteComment(subcomment._id, 'subcomments')}>Delete</span>
+																}
+															</div>
+														</label>
+
+													</div>
+													: ''}
 												<h2 className="author">
 													{subcomment.author.isAdmin && <i title="admin" className="fas fa-crown" />}{subcomment.author.username}
 													<time className="timestamp" title={utils.formatDate(subcomment.created_at)} dateTime={utils.formatDate(subcomment.created_at)}>{utils.getTimeDifference(subcomment.created_at)}</time>
 												</h2>
-												<p>{subcomment.content}</p>
+												<p>{subcomment.deleted_at ? '[DELETED]' : subcomment.content}</p>
 												<div className="actions">
 													<span className="likes"><i className="fa fa-heart"></i>{subcomment.likes.length}</span>
 													<span className="share"><i className="fa fa-share"></i>share</span>

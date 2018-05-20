@@ -888,6 +888,10 @@ form button {
 	display: none;
 }
 
+.privacy-policy{
+	padding: 16px;
+}
+
 .spinner {
 	margin: 100px auto;
 	width: 50px;

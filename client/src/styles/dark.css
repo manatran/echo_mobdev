@@ -276,6 +276,9 @@ html.dark #root {
 	border: dashed 1px #6D6D6D;
 }
 
+.dark .privacy-policy{
+	color:#ccc;}
+
 .dark .spinner>div {
 	background-color: #4D9FB4;
 }

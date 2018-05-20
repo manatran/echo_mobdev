@@ -6,11 +6,6 @@ Components
 */
 import PostDetail from '../../components/post-detail/PostDetail';
 
-/*
-Component styles
-*/
-import './PostPage.css';
-
 class PostPage extends Component {
   constructor(props) {
     super(props);

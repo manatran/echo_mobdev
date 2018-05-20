@@ -28,6 +28,7 @@ import SettingsPage from '../../pages/settings-page/SettingsPage';
 import SignInPage from '../../pages/sign-in-page/SignInPage';
 import SignOutPage from '../../pages/sign-out-page/SignOutPage';
 import SignupPage from '../../pages/signup-page/SignupPage';
+import PrivacyPolicyPage from '../../pages/privacy-policy-page/PrivacyPolicyPage';
 
 class Main extends Component {
   render() {
@@ -47,6 +48,7 @@ class Main extends Component {
           <Route exact path='/browse/:term' component={BrowsePage}/>
           <Route path='/settings' component={SettingsPage}/>
           <Route path="/music" component={MusicPage}/>
+          <Route path='/privacy-policy' component={PrivacyPolicyPage}/>
 					<Redirect from="/login" to="/signin" />
           <Route path='/signin' component={SignInPage}/>
 					<Redirect from="/register" to="/signup" />
