@@ -33,15 +33,15 @@ class ProfileDetail extends Component {
 					<div className="banner" style={{ backgroundImage: 'url(' + this.state.profile.banner + ')' }}></div>
 					<section className="card user profile round-bottom">
 						<div className="stats">
-							<span className="likes"><em>12.400</em> Likes</span>
+							<span className="posts"><em>12.400</em> Posts</span>
 							<img src={this.state.profile.picture} alt={this.state.profile.username} />
-							<span className="posts"><em>13</em> Posts</span>
+							<span className="comments"><em>13</em> Comments</span>
 						</div>
 						<h2>{this.state.profile.isAdmin && <i title="admin" className="fas fa-crown" />}{this.state.profile.username}</h2>
 						<p className="description">{this.state.profile.bio}</p>
-						{(this.state.profile._id == store.getState().auth.user._id) && 
+						{(this.state.profile._id == store.getState().auth.user._id) &&
 							<a className="action-btn" href={`/settings`}>edit profile</a>
-						 }
+						}
 					</section>
 
 					<section className="card playlists">
@@ -49,18 +49,18 @@ class ProfileDetail extends Component {
 						{(this.state.playlists.length > 0)
 							? this.state.playlists.map((playlist, i) => (
 								<a href={`/playlist/${playlist._id}`} key={playlist._id}>
-								<div className="playlist-item" >
-									<img src={playlist.image} alt="Thumbnail" />
-									<div>
-										<h3>{playlist.title}</h3>
-										<p>
-											{playlist.songs.map((song, i) => <React.Fragment key={i}>
-												{!!i && ", "}
-												{song.artist_name}
-											</React.Fragment>)}
-										</p>
+									<div className="playlist-item" >
+										<img src={playlist.image} alt="Thumbnail" />
+										<div>
+											<h3>{playlist.title}</h3>
+											<p>
+												{playlist.songs.map((song, i) => <React.Fragment key={i}>
+													{!!i && ", "}
+													{song.artist_name}
+												</React.Fragment>)}
+											</p>
+										</div>
 									</div>
-								</div>
 								</a>
 							))
 							: <p>No playlists yet!</p>

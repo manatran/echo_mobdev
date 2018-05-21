@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { loginUser } from '../../actions/authActions';
+import { loginUser, loginFacebook } from '../../actions/authActions';
+import FacebookLogin from 'react-facebook-login';
+
+import config from '../../config';
 
 class SignIn extends Component {
 	constructor() {
@@ -13,6 +16,10 @@ class SignIn extends Component {
 		};
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
+	}
+
+	facebookResponse = response => {
+		this.props.loginFacebook(response.accessToken, this.props.history)
 	}
 
 	componentDidMount() {
@@ -71,6 +78,12 @@ class SignIn extends Component {
 					</label>
 
 					<input type="submit" value="Login" />
+					
+					<FacebookLogin
+            appId={config.FACEBOOK_APP_ID}
+            autoLoad={false}
+            fields="name,email,picture"
+            callback={this.facebookResponse} />
 				</form>
 				<p>Don't have an account yet? <a href="/signup">Sign up here!</a></p>
 			</section>
@@ -83,9 +96,16 @@ SignIn.propTypes = {
   auth: PropTypes.object.isRequired
 };
 
+const mapDispatchToProps = (dispatch) => {
+	return {
+		loginUser: (userData, history) => dispatch(loginUser(userData, history)),
+		loginFacebook: (accessToken, history) => dispatch(loginFacebook(accessToken, history))
+	}
+}
+
 const mapStateToProps = state => ({
   auth: state.auth,
   errors: state.errors
 });
 
-export default connect(mapStateToProps, { loginUser })(SignIn);
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

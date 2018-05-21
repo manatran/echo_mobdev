@@ -23,10 +23,10 @@ class PrimarySidebar extends Component {
 						</h2>
 						<p className="description">{store.getState().auth.user.bio}</p>
 						<div className="stats">
-							<span className="likes">
-								<em>12.400</em> Likes</span>
 							<span className="posts">
-								<em>13</em> Posts</span>
+								<em>12.400</em> Posts</span>
+							<span className="comments">
+								<em>13</em> Comments</span>
 						</div>
 						<a className="action-btn" href={`/settings`}>edit profile</a>
 					</section>

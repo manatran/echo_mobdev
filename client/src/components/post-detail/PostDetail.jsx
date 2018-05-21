@@ -44,7 +44,7 @@ class PostDetail extends Component {
 			content: this.state.content,
 			author: store.getState().auth.user.id
 		}
-		this.props.createComment(comment)
+		if (this.state.content) this.props.createComment(comment)
 		document.querySelector('.comment-form form textarea').value = '';
 	}
 
