@@ -78,7 +78,7 @@ class CommentList extends Component {
 												<i className="fas fa-ellipsis-v" />
 												<input type="checkbox" name="options" value="toggle" />
 												<div className="option-list card">
-													{comment.deleted_at
+													{comment.deleted_at && comment.author.isAdmin
 														? <span onClick={() => this.restoreComment(comment._id, 'comments')}>restore</span>
 														: <span onClick={() => this.deleteComment(comment._id, 'comments')}>Delete</span>
 													}

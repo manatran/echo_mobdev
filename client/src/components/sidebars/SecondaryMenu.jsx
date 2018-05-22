@@ -40,9 +40,6 @@ class SecondaryMenu extends Component {
 						<a href="/settings">Settings</a>
 					</li>
 					<li>
-						<a href="/contact">Contact us</a>
-					</li>
-					<li>
 						<a href="/privacy-policy">Privacy Policy</a>
 					</li>
 					<li>
