@@ -31,22 +31,37 @@ export const loginUser = userData => dispatch => {
     );
 };
 
-export const loginFacebook = (accessToken, history) => dispatch => {
+export function loginFacebook(accessToken, history) {
+  return async (dispatch) => {
+    try {
+      const postData = new Blob([JSON.stringify({access_token: accessToken}, null, 2)], {type : 'application/json'});
+      const options = {
+          method: 'POST',
+          body: postData,
+          mode: 'cors',
+          cache: 'default'
+      };
+      const response = await fetch('/api/v1/auth/facebook', options);
+			const responseJson = await response.json();
+			console.log(responseJson)
 
-	const userData = new Blob([JSON.stringify({access_token: accessToken}, null, 2)], {type : 'application/json'});
-	
-	axios.post('/api/v1/auth/facebook', userData)
-    .then(res => {
-			localStorage.setItem('mobdev2_auth', JSON.stringify(res.data.user));
-      utils.setAuthToken(res.data.token);
-      dispatch(setCurrentUser(res.data.user));
-    })
-    .catch(err =>
+      dispatch({ 
+        type: SET_CURRENT_USER,
+        payload: responseJson.user
+      });
+      localStorage.setItem('mobdev2_auth', JSON.stringify(responseJson.user));
+
+      // Set token to Auth header
+      const token = responseJson.token;
+      utils.setAuthToken(token);
+
+    } catch(error) {
       dispatch({
         type: GET_ERRORS,
-        payload: err
-      })
-    );
+        payload: 'Invalid access token'
+      });
+    }
+  };
 }
 
 // Set logged in user

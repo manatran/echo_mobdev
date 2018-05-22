@@ -18,10 +18,10 @@ class NotFoundPage extends Component {
 					</section>
 					
 					<section className="card" style={{display:'flex',flexDirection:'row',justifyContent:'center',padding:16+'px'}}>
-						<iframe title="YOUTUBE-embed" src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&amp;controls=0&amp;showinfo=0&amp;autoplay=1" frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen style={{height: 360 +'px',width:640+'px',maxWidth:90+'vw'}}></iframe>
+						<iframe title="YOUTUBE-embed" src="https://www.youtube.com/embed/53N99Nim6WE?rel=0&amp;controls=0&amp;showinfo=0&amp;autoplay=1" frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen style={{height: 360 +'px',width:640+'px',maxWidth:90+'vw'}}></iframe>
 					</section>
 					<section className="card" style={{padding: 16+"px",textAlign: 'center'}}>
-						<a href="/" className="button">Stop your shenanigans! Take me back to the homepage please.</a>
+						<a href="/" className="button">Not bad! Now take me back to the homepage please.</a>
 					</section>
 				</div>
 			</main>
