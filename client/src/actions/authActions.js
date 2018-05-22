@@ -19,9 +19,9 @@ export const registerUser = (userData, history) => dispatch => {
 export const loginUser = userData => dispatch => {
   axios.post('/api/v1/auth/local', userData)
     .then(res => {
-			localStorage.setItem('mobdev2_auth', JSON.stringify(res.data.user));
+			localStorage.setItem('mobdev2_auth', JSON.stringify(res.data));
       utils.setAuthToken(res.data.token);
-      dispatch(setCurrentUser(res.data.user));
+      dispatch(setCurrentUser(res.data));
     })
     .catch(err =>
       dispatch({
@@ -47,9 +47,9 @@ export function loginFacebook(accessToken, history) {
 
       dispatch({ 
         type: SET_CURRENT_USER,
-        payload: responseJson.user
+        payload: responseJson
       });
-      localStorage.setItem('mobdev2_auth', JSON.stringify(responseJson.user));
+      localStorage.setItem('mobdev2_auth', JSON.stringify(responseJson));
 
       // Set token to Auth header
       const token = responseJson.token;

@@ -31,7 +31,7 @@ class CommentList extends Component {
 		const comment = {
 			parent_id: this.state.parentId,
 			content: this.state.content,
-			author: store.getState().auth.user.id
+			author: store.getState().auth.user.user.id
 		}
 		this.props.createComment(comment)
 		document.querySelector('.comment-form form').reset()
@@ -41,7 +41,8 @@ class CommentList extends Component {
 		fetch(`/api/v1/${type}/${commentId}/softdelete`, {
 			method: 'PATCH',
 			headers: {
-				'content-type': 'application/json'
+				'content-type': 'application/json',
+				Authorization: store.getState().auth.user.token
 			}
 		})
 			.then(window.location = window.location)
@@ -51,7 +52,8 @@ class CommentList extends Component {
 		fetch(`/api/v1/${type}/${commentId}/softundelete`, {
 			method: 'PATCH',
 			headers: {
-				'content-type': 'application/json'
+				'content-type': 'application/json',
+				Authorization: store.getState().auth.user.token
 			}
 		})
 			.then(window.location = window.location)
@@ -70,7 +72,7 @@ class CommentList extends Component {
 						? this.props.comments.map((comment, i) => (
 							<section className="card comment-thread" key={comment._id}>
 								<div className="comment">
-									{(store.getState().auth.user.isAdmin || comment.author._id == store.getState().auth.user._id)
+									{(store.getState().auth.user.user.isAdmin || comment.author._id == store.getState().auth.user.user._id)
 										? <div className="options">
 											<label>
 												<i className="fas fa-ellipsis-v" />
@@ -85,7 +87,7 @@ class CommentList extends Component {
 
 										</div>
 										: ''}
-									<h2 className="author">{comment.author.isAdmin && <i title="admin" className="fas fa-crown" />}{comment.author.username || store.getState().auth.user.username}
+									<h2 className="author">{comment.author.isAdmin && <i title="admin" className="fas fa-crown" />}{comment.author.username || store.getState().auth.user.user.username}
 										<time className="timestamp" title={utils.formatDate(comment.created_at)} dateTime={utils.formatDate(comment.created_at)}>{utils.getTimeDifference(comment.created_at)}</time>
 									</h2>
 									<p>{comment.deleted_at ? '[DELETED]' : comment.content}</p>
@@ -100,7 +102,7 @@ class CommentList extends Component {
 									<div className="subcomment-thread">
 										{comment.subcomments.map((subcomment, i) => (
 											<div className="subcomment" key={subcomment._id}>
-												{(store.getState().auth.user.isAdmin || subcomment.author._id == store.getState().auth.user._id)
+												{(store.getState().auth.user.user.isAdmin || subcomment.author._id == store.getState().auth.user.user._id)
 													? <div className="options">
 														<label>
 															<i className="fas fa-ellipsis-v" />

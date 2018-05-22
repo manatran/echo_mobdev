@@ -28,15 +28,15 @@ class Browse extends Component {
 
 	componentDidMount() {
 		if (this.props.term !== undefined) {
-			fetch(`/api/v1/search/song/${this.props.term}`)
+			fetch(`/api/v1/search/song/${this.props.term}`, {headers: {Authorization: store.getState().auth.user.token}})
 				.then(response => response.json())
 				.then(item => this.setState({ songs: item }));
 
-			fetch(`/api/v1/search/album/${this.props.term}`)
+			fetch(`/api/v1/search/album/${this.props.term}`, {headers: {Authorization: store.getState().auth.user.token}})
 				.then(response => response.json())
 				.then(item => this.setState({ albums: item }));
 
-			fetch(`/api/v1/search/artist/${this.props.term}`)
+			fetch(`/api/v1/search/artist/${this.props.term}`, {headers: {Authorization: store.getState().auth.user.token}})
 				.then(response => response.json())
 				.then(item => this.setState({ artists: item }));
 		}
@@ -46,12 +46,13 @@ class Browse extends Component {
 		let newPost = {
 			content: id,
 			type: type,
-			author: store.getState().auth.user._id
+			author: store.getState().auth.user.user._id
 		}
 		fetch(`/api/v1/posts/`, {
 			method: 'POST',
 			headers: {
-				'content-type': 'application/json'
+				'content-type': 'application/json',
+				Authorization: store.getState().auth.user.token
 			},
 			body: JSON.stringify(newPost)
 		})

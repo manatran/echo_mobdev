@@ -16,7 +16,7 @@ class PlaylistList extends Component {
 	}
 
 	componentWillMount() {
-		fetch(`/api/v1/playlists`)
+		fetch(`/api/v1/playlists`, {headers: {Authorization: store.getState().auth.user.token}})
 			.then(response => response.json())
 			.then(item => this.setState({ playlists: item }));
 	}

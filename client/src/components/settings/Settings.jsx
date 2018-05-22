@@ -42,7 +42,8 @@ class Settings extends Component {
 		fetch(`/api/v1/user/edit/${this.state.user._id}`, {
 			method: 'PATCH',
 			headers: {
-				'content-type': 'application/json'
+				'content-type': 'application/json',
+				Authorization: store.getState().auth.user.token
 			},
 			body: JSON.stringify(body)
 		})
@@ -86,9 +87,9 @@ class Settings extends Component {
 	}
 
 	componentDidMount() {
-		this.setState({ bio: store.getState().auth.user.bio })
-		this.setState({ banner: store.getState().auth.user.banner })
-		this.setState({ user: store.getState().auth.user })
+		this.setState({ bio: store.getState().auth.user.user.bio })
+		this.setState({ banner: store.getState().auth.user.user.banner })
+		this.setState({ user: store.getState().auth.user.user })
 	}
 
 	render() {
@@ -108,7 +109,7 @@ class Settings extends Component {
 							<div>
 								{this.state.picture === ''
 									? <div>
-										<img className="image-preview" src={store.getState().auth.user.picture} />
+										<img className="image-preview" src={store.getState().auth.user.user.picture} />
 									</div>
 									: <div>
 										<p>{this.state.uploadedFile.name}</p>

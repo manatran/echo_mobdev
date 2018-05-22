@@ -8,10 +8,10 @@ class Offcanvas extends Component {
 		if (store.getState().auth.isAuthenticated) {
 			return (
 				<aside className="mobile-nav">
-					<img src={store.getState().auth.user.picture} alt="Profile pic" />
+					<img src={store.getState().auth.user.user.picture} alt="Profile pic" />
 					<h2>
-						{store.getState().auth.user.isAdmin && <i title="admin" className="fas fa-crown" />}
-						<a href={`/profile/${store.getState().auth.user.id}`}>{store.getState().auth.user.username}</a>
+						{store.getState().auth.user.user.isAdmin && <i title="admin" className="fas fa-crown" />}
+						<a href={`/profile/${store.getState().auth.user.user.id}`}>{store.getState().auth.user.user.username}</a>
 					</h2>
 					<SecondaryMenu />
 				</aside>

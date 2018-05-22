@@ -16,7 +16,7 @@ class PlaylistDetail extends Component {
 	}
 
 	componentWillMount() {
-		fetch(`/api/v1/playlists/detail/${this.props.playlistId}`)
+		fetch(`/api/v1/playlists/detail/${this.props.playlistId}`, {headers: {Authorization: store.getState().auth.user.token}})
 			.then(response => response.json())
 			.then(item => this.setState({ playlist: item }));
 	}
@@ -34,7 +34,7 @@ class PlaylistDetail extends Component {
 					</section>
 					<section className="card playlist round-bottom">
 						<p>{this.state.playlist.description}</p>
-						{(this.state.playlist.author._id == store.getState().auth.user._id) && <a href={`/playlist/edit/${this.state.playlist._id}`} className="action-btn">edit playlist</a>}
+						{(this.state.playlist.author._id == store.getState().auth.user.user._id) && <a href={`/playlist/edit/${this.state.playlist._id}`} className="action-btn">edit playlist</a>}
 					</section>
 
 					<section className="card playlists">

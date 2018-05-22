@@ -25,7 +25,7 @@ class SecondaryMenu extends Component {
 							<i className="fa fa-music"></i>Music</a>
 					</li>
 					<li>
-						<a href={`/profile/${store.getState().auth.user._id}`}>
+						<a href={`/profile/${store.getState().auth.user.user._id}`}>
 							<i className="fa fa-user"></i>Profile</a>
 					</li>
 					<li>

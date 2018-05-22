@@ -30,7 +30,8 @@ class PostDetail extends Component {
 		fetch(`/api/v1/posts/${this.props.postId}`,{
 			method: 'DELETE',
 			headers: {
-				'content-type': 'application/json'
+				'content-type': 'application/json',
+				Authorization: store.getState().auth.user.token
 			}
 		})
 			.then(this.props.history.push('/'))
@@ -42,14 +43,14 @@ class PostDetail extends Component {
 		const comment = {
 			post_id: this.props.postId,
 			content: this.state.content,
-			author: store.getState().auth.user.id
+			author: store.getState().auth.user.user.id
 		}
 		if (this.state.content) this.props.createComment(comment)
 		document.querySelector('.comment-form form textarea').value = '';
 	}
 
 	componentDidMount() {
-		fetch(`/api/v1/posts/${this.props.postId}`)
+		fetch(`/api/v1/posts/${this.props.postId}`, {headers: {Authorization: store.getState().auth.user.token}})
 			.then(response => response.json())
 			.then(item => this.setState({ post: item }));
 	}
@@ -89,7 +90,7 @@ class PostDetail extends Component {
 							</a>}
 						<div className="post-body">
 							<div className="post-info">
-								{(store.getState().auth.user.isAdmin || this.state.post.author._id == store.getState().auth.user._id)
+								{(store.getState().auth.user.user.isAdmin || this.state.post.author._id == store.getState().auth.user.user._id)
 									? <div className="options">
 										<label>
 											<i className="fas fa-ellipsis-v" />

@@ -16,15 +16,15 @@ class Music extends Component {
 	}
 
 	componentWillMount() {
-		fetch(`/api/v1/songs`)
+		fetch(`/api/v1/songs`, {headers: {Authorization: store.getState().auth.user.token}})
 			.then(response => response.json())
 			.then(item => this.setState({ songs: item }));
 
-		fetch(`/api/v1/albums`)
+		fetch(`/api/v1/albums`, {headers: {Authorization: store.getState().auth.user.token}})
 			.then(response => response.json())
 			.then(item => this.setState({ albums: item }));
 
-		fetch(`/api/v1/artists`)
+		fetch(`/api/v1/artists`, {headers: {Authorization: store.getState().auth.user.token}})
 			.then(response => response.json())
 			.then(item => this.setState({ artists: item }));
 	}
@@ -69,12 +69,13 @@ class Music extends Component {
 		let newPost = {
 			content: id,
 			type: type,
-			author: store.getState().auth.user._id
+			author: store.getState().auth.user.user._id
 		}
 		fetch(`/api/v1/posts/`, {
 			method: 'POST',
 			headers: {
-				'content-type': 'application/json'
+				'content-type': 'application/json',
+				Authorization: store.getState().auth.user.token
 			},
 			body: JSON.stringify(newPost)
 		})
