@@ -5,10 +5,7 @@ module.exports = {
 	createToken: function (auth) {
 		return jwt.sign({
 			id: auth.id
-		}, config.auth.jwtSecret,
-			{
-				expiresIn: 60 * 120
-			});
+		}, config.auth.jwtSecret);
 	},
 	generateToken: function (req, res, next) {
 		req.token = createToken(req.auth);
