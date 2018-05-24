@@ -151,7 +151,6 @@ class PostDetail extends Component {
 									? 'liked'
 									: ''}`}><i className="fa fa-heart"></i>{this.state.post.likes.length}</span>
 								<span className="comments"><i className="fa fa-comments"></i>{this.state.comments}</span>
-								<span className="share"><i className="fa fa-share"></i>share</span>
 							</div>
 						</div>
 					</section>

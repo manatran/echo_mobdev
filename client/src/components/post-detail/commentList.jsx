@@ -94,7 +94,6 @@ class CommentList extends Component {
 									<div className="actions">
 										<span className="likes"><i className="fa fa-heart"></i>{comment.likes.length}</span>
 										<span className="comments"><i className="fa fa-comments"></i>{comment.subcomments && comment.subcomments.length || 0}</span>
-										<span className="share"><i className="fa fa-share"></i>share</span>
 									</div>
 									<SubcommentForm parentId={comment._id} />
 								</div>
@@ -124,7 +123,6 @@ class CommentList extends Component {
 												<p>{subcomment.deleted_at ? '[DELETED]' : subcomment.content}</p>
 												<div className="actions">
 													<span className="likes"><i className="fa fa-heart"></i>{subcomment.likes.length}</span>
-													<span className="share"><i className="fa fa-share"></i>share</span>
 												</div>
 											</div>
 										))}
