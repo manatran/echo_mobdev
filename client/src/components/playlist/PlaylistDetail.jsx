@@ -39,7 +39,7 @@ class PlaylistDetail extends Component {
 
 					<section className="card playlists">
 						<h2>Tracklist</h2>
-						{(this.state.playlist.songs.length > 0)
+						{(this.state.playlist.songs[0].title && this.state.playlist.songs.length > 0)
 							? this.state.playlist.songs.map((song, i) => (
 								<a href={`https://open.spotify.com/track/${song.spotify_id}`} target="_blank" key={song.spotify_id}>
 									<div className="playlist-item" >

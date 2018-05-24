@@ -6,7 +6,6 @@ const PlaylistSchema = new Schema(
 	{
 		title: { type: String, required: true, max: 128 },
 		description: { type: String },
-		type: { type: String, enum: ["public", "private"], required: true },
 		author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 		likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 		image: { type: String, required: true, max: 128 },

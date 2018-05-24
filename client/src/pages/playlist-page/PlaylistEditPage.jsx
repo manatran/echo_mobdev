@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import store from '../../store';
 
 /* Comoponents */
-import PlaylistList from '../../components/playlist/PlaylistList';
+import PlaylistEdit from '../../components/playlist/PlaylistEdit';
 
-class PlaylistPage extends Component {
+class PlaylistEditPage extends Component {
 	constructor(props) {
 		super(props);
 	}
@@ -12,15 +12,16 @@ class PlaylistPage extends Component {
 		if (!store.getState().auth.isAuthenticated) {
 			this.props.history.push('/login')
 		}
+
 	}
 
 	render() {
 		return (
 			<main>
-				<PlaylistList  history={this.props.history}/>
+				<PlaylistEdit history={this.props.history} playlistId={this.props.match.params.id} />
 			</main>
 		)
 	}
 }
 
-export default (PlaylistPage);
+export default (PlaylistEditPage);

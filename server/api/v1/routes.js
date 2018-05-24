@@ -68,6 +68,7 @@ router.get('/playlists/:userId', auth.authenticateJwt(), playlistController.get_
 router.get('/playlists/detail/:playlistId', auth.authenticateJwt(), playlistController.get_playlist_by_id);
 router.post('/playlists', auth.authenticateJwt(), playlistController.playlist_create_playlist);
 router.put('/playlists/:playlistId', auth.authenticateJwt(), playlistController.playlist_update_put);
+router.patch('/playlists/edit/:playlistId', auth.authenticateJwt(), playlistController.playlist_edit);
 router.delete('/playlists/:playlistId', auth.authenticateJwt(), playlistController.playlist_delete_delete);
 router.patch('/playlists/:playlistId/softdelete', auth.authenticateJwt(), playlistController.playlist_softdelete_patch);
 router.patch('/playlists/:playlistId/softundelete', auth.authenticateJwt(), playlistController.playlist_softundelete_patch);

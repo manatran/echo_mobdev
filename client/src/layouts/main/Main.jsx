@@ -22,6 +22,7 @@ import PostPage from '../../pages/post-page/PostPage';
 import ProfilePage from '../../pages/profile-page/ProfilePage';
 import PlaylistPage from '../../pages/playlist-page/PlaylistPage';
 import PlaylistDetailPage from '../../pages/playlist-page/PlaylistDetailPage';
+import PlaylistEditPage from '../../pages/playlist-page/PlaylistEditPage';
 import BrowsePage from '../../pages/browse-page/BrowsePage';
 import MusicPage from '../../pages/music-page/MusicPage';
 import SettingsPage from '../../pages/settings-page/SettingsPage';
@@ -45,7 +46,8 @@ class Main extends Component {
           <Route path='/post/:id' component={PostPage}/>
           <Route path='/profile/:id' component={ProfilePage}/>
           <Route path='/playlists' component={PlaylistPage}/>
-          <Route path='/playlist/:id' component={PlaylistDetailPage}/>
+          <Route exact path='/playlist/:id' component={PlaylistDetailPage}/>
+          <Route exact path='/playlist/edit/:id' component={PlaylistEditPage}/>
           <Route exact path='/browse' component={BrowsePage}/>
           <Route exact path='/browse/:term' component={BrowsePage}/>
           <Route path='/settings' component={SettingsPage}/>

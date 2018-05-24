@@ -35,7 +35,6 @@ exports.get_playlists = function (req, res, next) {
 				$group: {
 					_id: "$_id",
 					author: { $first: "$author" },
-					type: { $first: "$type" },
 					likes: { $first: "$likes" },
 					title: {$first: "$title"},
 					image: {$first: "$image"},
@@ -48,10 +47,7 @@ exports.get_playlists = function (req, res, next) {
 							duration: "$songs.duration",
 							popularity: "$songs.popularity",
 							album_name: "$songs.album_name",
-							images: { "$arrayElemAt": ['$album.images', 0] },
-							"created_at": "$created_at",
-							"updated_at": "$updated_at",
-							"deleted_at": "$deleted_at"
+							images: { "$arrayElemAt": ['$album.images', 0] }
 						}
 					}
 				}
@@ -99,7 +95,6 @@ exports.get_playlist = function (req, res, next) {
 				$group: {
 					_id: "$_id",
 					author: { $first: "$author" },
-					type: { $first: "$type" },
 					likes: { $first: "$likes" },
 					title: {$first: "$title"},
 					image: {$first: "$image"},
@@ -112,10 +107,7 @@ exports.get_playlist = function (req, res, next) {
 							duration: "$songs.duration",
 							popularity: "$songs.popularity",
 							album_name: "$songs.album_name",
-							images: { "$arrayElemAt": ['$album.images', 0] },
-							"created_at": "$created_at",
-							"updated_at": "$updated_at",
-							"deleted_at": "$deleted_at"
+							images: { "$arrayElemAt": ['$album.images', 0] }
 						}
 					}
 				}
@@ -171,7 +163,6 @@ exports.get_playlist_by_id = function (req, res, next) {
 				$group: {
 					_id: "$_id",
 					author: { $first: "$author" },
-					type: { $first: "$type" },
 					likes: { $first: "$likes" },
 					title: {$first: "$title"},
 					image: {$first: "$image"},
@@ -186,9 +177,6 @@ exports.get_playlist_by_id = function (req, res, next) {
 							popularity: "$songs.popularity",
 							album_name: "$songs.album_name",
 							images: { "$arrayElemAt": ['$album.images', 0] },
-							"created_at": "$created_at",
-							"updated_at": "$updated_at",
-							"deleted_at": "$deleted_at"
 						}
 					}
 				}
@@ -197,7 +185,6 @@ exports.get_playlist_by_id = function (req, res, next) {
 				$project: {
 					"_id":1,
 					"author": { "$arrayElemAt": ['$author', 0] },
-					"type": 1,
 					"likes": 1,
 					"title": 1,
 					"image": 1,
@@ -219,9 +206,8 @@ exports.get_playlist_by_id = function (req, res, next) {
 Create a Playlist
 */
 exports.playlist_create_playlist = function (req, res, next) {
-	console.log(req.body.type)
-	if (!req.body || !req.body.title || !req.body.type || !req.body.author) {
-		return errorHandler.handleAPIError(400, `Playlist must have a title, type, author`, next);
+	if (!req.body || !req.body.title || !req.body.image || !req.body.author) {
+		return errorHandler.handleAPIError(400, `Playlist must have a title, image, author`, next);
 	}
 
 	const playlist = new Playlist(req.body);
@@ -231,19 +217,38 @@ exports.playlist_create_playlist = function (req, res, next) {
 	});
 }
 
+/*Edit playlist*/
+exports.playlist_edit = function (req, res, next) {
+	const id = req.params.playlistId;
+
+	Playlist.findByIdAndUpdate(id, req.body, { new: true })
+		.then(playlist => {
+			if (!playlist) {
+				return errorHandler.handleAPIError(404, `Playlist not found with id: ${id}`, next);
+			}
+			res.send(playlist);
+		}).catch(err => {
+			console.log(err);
+			if (err.kind === 'ObjectId') {
+				return errorHandler.handleAPIError(404, `Playlist not found with id: ${id}`, next);
+			}
+			return errorHandler.handleAPIError(500, `Could not edit playlist with id: ${id}`, next);
+		});
+}
+
 /*
 Update a Playlist
 */
 exports.playlist_update_put = function (req, res, next) {
-	if (!req.body || !req.body.title || !req.body.type || !req.body.author) {
-		return errorHandler.handleAPIError(400, `Playlist must have a title, synopsis, body`, next);
+	if (!req.body || !req.body.title || !req.body.image || !req.body.author) {
+		return errorHandler.handleAPIError(400, `Playlist must have a title, image, author`, next);
 	}
 
 	const id = req.params.playlistId;
 
 	Playlist.findByIdAndUpdate(id, {
 		title: req.body.title,
-		type: req.body.type,
+		image: req.body.image,
 		songs: req.body.songs
 	}, { new: true })
 		.then(playlist => {

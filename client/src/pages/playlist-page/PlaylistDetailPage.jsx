@@ -18,7 +18,7 @@ class PlaylistDetailPage extends Component {
 	render() {
 		return (
 			<main>
-				<PlaylistDetail playlistId={this.props.match.params.id} />
+				<PlaylistDetail history={this.props.history} playlistId={this.props.match.params.id} />
 			</main>
 		)
 	}
