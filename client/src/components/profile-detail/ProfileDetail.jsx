@@ -12,30 +12,35 @@ class ProfileDetail extends Component {
 		super(props);
 		this.state = {
 			profile: undefined,
-			playlists: []
+			playlists: [],
+			stats: undefined
 		}
 	}
 
 	componentWillMount() {
-		fetch(`/api/v1/user/${this.props.profileId}`)
+		fetch(`/api/v1/user/${this.props.profileId}`, { headers: { Authorization: store.getState().auth.user.token } })
 			.then(response => response.json())
 			.then(item => this.setState({ profile: item }));
 
-		fetch(`/api/v1/playlists/${this.props.profileId}`)
+		fetch(`/api/v1/user/stats/${this.props.profileId}`, { headers: { Authorization: store.getState().auth.user.token } })
+			.then(response => response.json())
+			.then(item => this.setState({ stats: item }));
+
+		fetch(`/api/v1/playlists/${this.props.profileId}`, { headers: { Authorization: store.getState().auth.user.token } })
 			.then(response => response.json())
 			.then(item => this.setState({ playlists: item }));
 	}
 
 	render() {
-		if (this.state.profile) {
+		if (this.state.profile && this.state.stats) {
 			return (
 				<div>
 					<div className="banner" style={{ backgroundImage: 'url(' + this.state.profile.banner + ')' }}></div>
 					<section className="card user profile round-bottom">
 						<div className="stats">
-							<span className="posts"><em>12.400</em> Posts</span>
+							<span className="posts"><em>{this.state.stats.posts}</em> Posts</span>
 							<img src={this.state.profile.picture} alt={this.state.profile.username} />
-							<span className="comments"><em>13</em> Comments</span>
+							<span className="comments"><em>{this.state.stats.comments}</em> Comments</span>
 						</div>
 						<h2>{this.state.profile.isAdmin && <i title="admin" className="fas fa-crown" />}{this.state.profile.username}</h2>
 						<p className="description">{this.state.profile.bio}</p>

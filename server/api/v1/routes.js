@@ -91,11 +91,13 @@ router.patch('/messages/:messageId/softundelete', auth.authenticateJwt(), chatCo
 router.get('/posts', auth.authenticateJwt(), postController.get_posts);
 router.get('/posts/:postId', auth.authenticateJwt(), postController.get_post);
 router.post('/posts', auth.authenticateJwt(), postController.post_create_post);
+router.patch('/posts/like/:postId', auth.authenticateJwt(), postController.post_like_post);
 router.delete('/posts/:postId', auth.authenticateJwt(), postController.post_delete_delete);
 router.patch('/posts/:postId/softdelete', auth.authenticateJwt(), postController.post_softdelete_patch);
 router.patch('/posts/:postId/softundelete', auth.authenticateJwt(), postController.post_softundelete_patch);
 
 router.get('/user/:userId', authController.get_user);
+router.get('/user/stats/:userId', authController.get_user_stats);
 router.patch('/user/edit/:userId', authController.edit_user);
 
 router.post('/signup', authController.user_create_post);

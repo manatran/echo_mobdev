@@ -6,10 +6,19 @@ class PrimarySidebar extends Component {
 
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			stats: undefined
+		}
+	}
+	componentWillMount() {
+		fetch(`/api/v1/user/stats/${store.getState().auth.user.user._id}`, { headers: { Authorization: store.getState().auth.user.token } })
+			.then(response => response.json())
+			.then(item => this.setState({ stats: item }));
 	}
 
 	render() {
-		if (store.getState().auth.isAuthenticated) {
+		if (this.state.stats && store.getState().auth.isAuthenticated) {
 			const { classes } = this.props;
 			return (
 				<aside className="sidebar">
@@ -24,9 +33,9 @@ class PrimarySidebar extends Component {
 						<p className="description">{store.getState().auth.user.user.bio}</p>
 						<div className="stats">
 							<span className="posts">
-								<em>12.400</em> Posts</span>
+								<em>{this.state.stats.posts}</em> Posts</span>
 							<span className="comments">
-								<em>13</em> Comments</span>
+								<em>{this.state.stats.comments}</em> Comments</span>
 						</div>
 						<a className="action-btn" href={`/settings`}>edit profile</a>
 					</section>

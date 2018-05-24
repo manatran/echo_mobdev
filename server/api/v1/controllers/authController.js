@@ -2,6 +2,9 @@ const passport = require('passport');
 const bcrypt = require('bcryptjs')
 
 const User = require('../models/user');
+const Post = require('../models/post');
+const Comment = require('../models/comment');
+
 const errorHandler = require('../utilities/errorHandler');
 const tokenUtils = require('../utilities/token');
 const config = require('../../../config/config');
@@ -16,6 +19,14 @@ exports.get_user = function (req, res, next) {
 				error: 'User does not exist'
 			})
 		}
+	})
+}
+exports.get_user_stats = function (req, res, next) {
+	const id = req.params.userId;
+	Post.find({ author: id }).then(posts => {
+		Comment.find({ author: id }).then(comments => {
+			res.json({comments: comments.length, posts: posts.length})
+		})
 	})
 }
 

@@ -2,11 +2,19 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchPosts } from '../../actions/postActions';
+import store from '../../store';
 
 import utils from '../../utilities/functions';
 import Spinner from '../spinner/Spinner';
 
 class PostsList extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			comments: []
+		}
+	}
 
 	componentWillMount() {
 		this.props.fetchPosts();
@@ -23,10 +31,11 @@ class PostsList extends Component {
 	}
 
 	render() {
+	
 		if (this.props.posts) {
 			return (
 				<div>
-					{this.props.posts.map((element, i) => (
+					{this.props.posts.map((element, index) => (
 						<section className="card post" key={element._id}>
 							{(element.type !== 'song')
 								? <a className="thumbnail-link" href={`https://open.spotify.com/${element.type}/${element.content.spotify_id}`} target="_blank">{(element.content && element.content.images)
@@ -89,10 +98,6 @@ class PostsList extends Component {
 										<p className="author">by {element.author.isAdmin && <i title="admin" className="fas fa-crown" />}<span className="author">{element.author.username}</span>
 											<time className="timestamp" title={utils.formatDate(element.created_at)} dateTime={utils.formatDate(element.created_at)}>{utils.getTimeDifference(element.created_at)}</time>
 										</p>
-									</div>
-									<div className="actions">
-										<span className="likes"><i className="fa fa-heart"></i>{element.likes.length}</span>
-										<span className="comments"><i className="fa fa-comments"></i>250</span>
 									</div>
 								</div>
 							</a>

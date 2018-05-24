@@ -1,8 +1,13 @@
 const async = require('async');
 const mongoose = require('mongoose');
-const Post = require('../models/post');
-const errorHandler = require('../utilities/errorHandler');
+const passport = require('passport');
 
+const Post = require('../models/post');
+const User = require('../models/user');
+
+const tokenUtils = require('../utilities/token');
+const config = require('../../../config/config');
+const errorHandler = require('../utilities/errorHandler');
 /*
 Get all posts
 */
@@ -237,6 +242,36 @@ exports.get_post = function (req, res, next) {
 		return res.json(post[0]);
 	});
 }
+
+/*
+Like a post
+*/
+exports.post_like_post = function (req, res, next) {
+	User.findById(req.user.id).then(profile => {
+		console.log(req.params.postId)
+		Post.findOne({_id: req.params.postId})
+			.then(post => {
+				if (post.likes.filter(like => like.toString() === req.user.id).length > 0) {
+					// Get remove index
+					const removeIndex = post.likes
+						.map(item => item.toString())
+						.indexOf(req.user.id);
+
+					// Splice out of array
+					post.likes.splice(removeIndex, 1);
+					// Save
+					post.save().then(post => res.json(post));
+				} else {
+					// Add user id to likes array
+					post.likes.unshift(req.user.id);
+					post.save().then(post => res.json(post));
+				}
+			})
+			.catch(err => res.status(404).json({ postnotfound: 'No post found' }));
+	})
+	.catch(err => res.status(404).json({ usernotfound: 'No user found' }));
+}
+
 
 /*
 Create a Post

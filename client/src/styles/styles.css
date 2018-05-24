@@ -586,6 +586,14 @@ aside i {
 	-webkit-text-stroke-color: #A7A7A7;
 }
 
+.liked{
+	color:#F16667 !important;
+}
+.liked i{
+	-webkit-text-fill-color: #F16667 !important;
+	-webkit-text-stroke-color: #F16667 !important;
+}
+
 .post.detail:hover {
 	background-color: white;
 }

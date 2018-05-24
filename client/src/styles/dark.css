@@ -183,6 +183,14 @@ html.dark #root {
 	-webkit-text-stroke-color: #A7A7A7;
 }
 
+.dark .liked{
+	color:#4D9FB4 !important;
+}
+.dark .liked i{
+	-webkit-text-fill-color: #4D9FB4 !important;
+	-webkit-text-stroke-color: #4D9FB4 !important;
+}
+
 .dark .post.detail:hover {
 	background-color: #303030;
 }

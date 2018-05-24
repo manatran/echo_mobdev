@@ -15,11 +15,13 @@ class PostDetail extends Component {
 
 		this.state = {
 			post: undefined,
-			content: ''
+			content: '',
+			comments: 0
 		}
 		this.onChange = this.onChange.bind(this)
 		this.onSubmit = this.onSubmit.bind(this)
 		this.deletePost = this.deletePost.bind(this)
+		this.likePost = this.likePost.bind(this)
 	}
 
 	onChange(e) {
@@ -27,7 +29,7 @@ class PostDetail extends Component {
 	}
 
 	deletePost() {
-		fetch(`/api/v1/posts/${this.props.postId}`,{
+		fetch(`/api/v1/posts/${this.props.postId}`, {
 			method: 'DELETE',
 			headers: {
 				'content-type': 'application/json',
@@ -35,6 +37,18 @@ class PostDetail extends Component {
 			}
 		})
 			.then(this.props.history.push('/'))
+			.catch(err => console.log(err));
+	}
+	
+	likePost(){
+		fetch(`/api/v1/posts/like/${this.props.postId}`, {
+			method: 'PATCH',
+			headers: {
+				'content-type': 'application/json',
+				Authorization: store.getState().auth.user.token
+			}
+		})
+			.then(window.location = window.location)
 			.catch(err => console.log(err));
 	}
 
@@ -50,9 +64,13 @@ class PostDetail extends Component {
 	}
 
 	componentDidMount() {
-		fetch(`/api/v1/posts/${this.props.postId}`, {headers: {Authorization: store.getState().auth.user.token}})
+		fetch(`/api/v1/posts/${this.props.postId}`, { headers: { Authorization: store.getState().auth.user.token } })
 			.then(response => response.json())
 			.then(item => this.setState({ post: item }));
+
+		fetch(`/api/v1/comments/${this.props.postId}`, { headers: { Authorization: store.getState().auth.user.token } })
+			.then(response => response.json())
+			.then(item => this.setState({ comments: item.length }));
 	}
 
 	render() {
@@ -129,8 +147,10 @@ class PostDetail extends Component {
 								</p>
 							</div>
 							<div className="actions">
-								<span className="likes"><i className="fa fa-heart"></i>{this.state.post.likes.length}</span>
-								<span className="comments"><i className="fa fa-comments"></i>250</span>
+								<span onClick={this.likePost} className={`likes ${this.state.post.likes.indexOf(store.getState().auth.user.user._id) > -1
+									? 'liked'
+									: ''}`}><i className="fa fa-heart"></i>{this.state.post.likes.length}</span>
+								<span className="comments"><i className="fa fa-comments"></i>{this.state.comments}</span>
 								<span className="share"><i className="fa fa-share"></i>share</span>
 							</div>
 						</div>
