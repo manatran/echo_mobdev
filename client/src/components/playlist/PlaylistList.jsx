@@ -33,7 +33,7 @@ class PlaylistList extends Component {
 		})
 			.then(response => response.json())
 			.then(item => {
-				this.props.history.push(`/playlist/${item._id}`)
+				this.props.history.push(`/playlist/edit/${item._id}`)
 			})
 			.catch(err => console.log(err));
 	}

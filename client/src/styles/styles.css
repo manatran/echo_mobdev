@@ -470,6 +470,7 @@ aside i {
 	padding: 0 8px;
 	color: #333;
 	cursor: pointer;
+	margin-top: 8px;
 }
 
 .options i {
@@ -836,9 +837,9 @@ form button {
 }
 
 .playlist-header .content {
-	margin-top: 16px;
 	z-index: 10;
 	color: black;
+	padding: 24px;
 }
 
 .playlist-header:before {
@@ -857,7 +858,7 @@ form button {
 	width: 94px;
 	border-radius: 50%;
 	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
-	margin: 16px;
+	margin: 16px 0 8px;
 }
 
 .playlist-header a {
@@ -931,6 +932,10 @@ form button {
 }
 .new-playlist i{
 	margin-right: 16px;
+}
+.delete {
+	cursor: pointer;
+	color:#F16667;
 }
 
 

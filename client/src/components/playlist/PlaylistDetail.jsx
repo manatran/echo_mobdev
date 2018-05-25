@@ -16,7 +16,7 @@ class PlaylistDetail extends Component {
 	}
 
 	componentWillMount() {
-		fetch(`/api/v1/playlists/detail/${this.props.playlistId}`, {headers: {Authorization: store.getState().auth.user.token}})
+		fetch(`/api/v1/playlists/detail/${this.props.playlistId}`, { headers: { Authorization: store.getState().auth.user.token } })
 			.then(response => response.json())
 			.then(item => this.setState({ playlist: item }));
 	}
@@ -25,7 +25,7 @@ class PlaylistDetail extends Component {
 		if (this.state.playlist) {
 			return (
 				<div>
-					<section className="playlist-header" style={{ backgroundImage: `url(${this.state.playlist.image })` }}>
+					<section className="playlist-header round-top" style={{ backgroundImage: `url(${this.state.playlist.image})` }}>
 						<div className="content">
 							<img src={this.state.playlist.image} alt={this.state.playlist.title} />
 							<h2>{this.state.playlist.title}</h2>
@@ -51,7 +51,9 @@ class PlaylistDetail extends Component {
 									</div>
 								</a>
 							))
-							: <p>There are no songs in the playlist.</p>
+							: <section className="light">
+								<p>There are no songs in the playlist yet. Find songs on the Music page to add.</p>
+							</section>
 						}
 					</section>
 				</div>

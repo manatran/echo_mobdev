@@ -21,6 +21,7 @@ class PlaylistEdit extends Component {
 		}
 		this.onChange = this.onChange.bind(this)
 		this.onSubmit = this.onSubmit.bind(this)
+		this.deletePlaylist = this.deletePlaylist.bind(this)
 	}
 
 	onChange(e) {
@@ -74,6 +75,14 @@ class PlaylistEdit extends Component {
 		});
 	}
 
+	deletePlaylist(){
+		fetch(`/api/v1/playlists/${this.props.playlistId}`, { method: 'DELETE', headers: { Authorization: store.getState().auth.user.token } })
+			.then(response => response.json())
+			.then(playlist => {
+				this.props.history.push('/playlists')
+			})
+	}
+
 	componentWillMount() {
 		fetch(`/api/v1/playlists/detail/${this.props.playlistId}`, { headers: { Authorization: store.getState().auth.user.token } })
 			.then(response => response.json())
@@ -119,6 +128,7 @@ class PlaylistEdit extends Component {
 
 							<input type="submit" value="Save changes" />
 						</form>
+						<span onClick={this.deletePlaylist} className="delete">Delete playlist</span>
 					</section>
 				</div>
 			)
