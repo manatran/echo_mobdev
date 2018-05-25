@@ -35,7 +35,6 @@ exports.get_playlists = function (req, res, next) {
 			$group: {
 				_id: "$_id",
 				author: { $first: "$author" },
-				likes: { $first: "$likes" },
 				title: { $first: "$title" },
 				image: { $first: "$image" },
 				songs: {
@@ -95,7 +94,6 @@ exports.get_playlist = function (req, res, next) {
 			$group: {
 				_id: "$_id",
 				author: { $first: "$author" },
-				likes: { $first: "$likes" },
 				title: { $first: "$title" },
 				image: { $first: "$image" },
 				songs: {
@@ -163,7 +161,6 @@ exports.get_playlist_by_id = function (req, res, next) {
 			$group: {
 				_id: "$_id",
 				author: { $first: "$author" },
-				likes: { $first: "$likes" },
 				title: { $first: "$title" },
 				image: { $first: "$image" },
 				description: { $first: "$description" },
@@ -185,7 +182,6 @@ exports.get_playlist_by_id = function (req, res, next) {
 			$project: {
 				"_id": 1,
 				"author": { "$arrayElemAt": ['$author', 0] },
-				"likes": 1,
 				"title": 1,
 				"image": 1,
 				"description": 1,
@@ -223,10 +219,10 @@ exports.playlist_add_song = function (req, res, next) {
 	Playlist.findOne({ _id: req.params.playlistId })
 		.then(playlist => {
 			if (playlist.songs.filter(song => song.toString() === req.body.song).length > 0) {
-				res.json({error: 'Playlist already contains song'})
+				res.json({ error: 'Playlist already contains song' })
 			} else {
-				// Add user id to likes array
-				playlist.likes.unshift(req.user.id);
+				// Add song to songs array
+				playlist.songs.unshift(req.body.song);
 				playlist.save().then(playlist => res.json(playlist));
 			}
 		})
@@ -249,7 +245,7 @@ exports.playlist_remove_song = function (req, res, next) {
 				// Save
 				playlist.save().then(playlist => res.json(playlist));
 			} else {
-				res.json({error: 'Playlist does not contain this song'})
+				res.json({ error: 'Playlist does not contain this song' })
 			}
 		})
 		.catch(err => res.status(404).json({ playlistnotfound: 'No playlist found' }));

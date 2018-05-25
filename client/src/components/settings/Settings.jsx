@@ -46,8 +46,10 @@ class Settings extends Component {
 		})
 			.then(response => response.json())
 			.then((user) => {
-				localStorage.setItem('mobdev2_auth', JSON.stringify(user))
-				store.dispatch(setCurrentUser(user))
+				let newUser = store.getState().auth.user;
+				newUser.user = user;
+				localStorage.setItem('mobdev2_auth', JSON.stringify(newUser))
+				store.dispatch(setCurrentUser({user: newUser}))
 				window.location = `/profile/${this.state.user._id}`
 			})
 	}

@@ -7,7 +7,6 @@ const PlaylistSchema = new Schema(
 		title: { type: String, required: true, max: 128 },
 		description: { type: String },
 		author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-		likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 		image: { type: String, required: true, max: 128 },
 		songs: [{ type: String, ref: 'Song' }],
 		created_at: { type: Date, default: Date.now },

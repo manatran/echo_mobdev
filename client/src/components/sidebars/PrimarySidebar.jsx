@@ -1,23 +1,13 @@
 import React, { Component } from 'react';
 import store from '../../store';
+import Stats from './Stats';
 
 class PrimarySidebar extends Component {
 
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			stats: undefined
-		}
-	}
-	componentWillMount() {
-		fetch(`/api/v1/user/stats/${store.getState().auth.user.user._id}`, { headers: { Authorization: store.getState().auth.user.token } })
-			.then(response => response.json())
-			.then(item => this.setState({ stats: item }));
-	}
 
 	render() {
-		if (this.state.stats && store.getState().auth.isAuthenticated) {
+
+		if (store.getState().auth.isAuthenticated) {
 			return (
 				<aside className="sidebar">
 					<section className="header" style={{ backgroundImage: `url(${store.getState().auth.user.user.banner || 'https://tse2.mm.bing.net/th?id=OIP.KlkdXEtiARSSjWVEYlQtJwHaFB&pid=Api'} )` }}>
@@ -29,12 +19,7 @@ class PrimarySidebar extends Component {
 							<a href={`/profile/${store.getState().auth.user.user.id}`}>{store.getState().auth.user.user.username}</a>
 						</h2>
 						<p className="description">{store.getState().auth.user.user.bio}</p>
-						<div className="stats">
-							<span className="posts">
-								<em>{this.state.stats.posts}</em> Posts</span>
-							<span className="comments">
-								<em>{this.state.stats.comments}</em> Comments</span>
-						</div>
+						<Stats />
 						<a className="action-btn" href={`/settings`}>edit profile</a>
 					</section>
 				</aside>

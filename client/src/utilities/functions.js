@@ -10,7 +10,7 @@ const utils = {
 		datetime = typeof datetime !== 'undefined' ? datetime : "2014-01-01 01:02:03.123456";
 
 		datetime = new Date(datetime).getTime();
-		var now = new Date().getTime();
+		var now = new Date().getTime()
 
 		if (isNaN(datetime)) {
 			return "";
