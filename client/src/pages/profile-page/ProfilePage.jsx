@@ -7,10 +7,7 @@ Components
 import ProfileDetail from '../../components/profile-detail/ProfileDetail';
 
 class PostPage extends Component {
-  constructor(props) {
-    super(props);
-	}
-	
+
 	componentDidMount() {
 		if(!store.getState().auth.isAuthenticated){
 			this.props.history.push('/login')

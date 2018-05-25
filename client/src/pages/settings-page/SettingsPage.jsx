@@ -5,9 +5,6 @@ import store from '../../store';
 import Settings from '../../components/settings/Settings';
 
 class SettingsPage extends Component {
-	constructor(props) {
-		super(props);
-	}
 
 	componentDidMount() {
 		if(!store.getState().auth.isAuthenticated){

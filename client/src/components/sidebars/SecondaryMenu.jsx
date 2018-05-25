@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { toggleNightmode } from '../../actions/nightmodeActions';
 import store from '../../store';
@@ -33,7 +32,7 @@ class SecondaryMenu extends Component {
 							<i className="fa fa-play"></i>Playlists</a>
 					</li>
 				</ul>
-				<a href="#" className="nightmode" onClick={this.handleToggleNightmode}>
+				<a className="nightmode" onClick={this.handleToggleNightmode}>
 					<i className="fa fa-moon"></i>Toggle Night Mode</a>
 				<ul className="secondary-links">
 					<li>

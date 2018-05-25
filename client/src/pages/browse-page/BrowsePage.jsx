@@ -5,9 +5,6 @@ import store from '../../store';
 import Browse from '../../components/browse/Browse';
 
 class BrowsePage extends Component {
-	constructor(props) {
-		super(props);
-	}
 
 	componentDidMount() {
 		if(!store.getState().auth.isAuthenticated){

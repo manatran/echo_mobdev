@@ -4,9 +4,6 @@ import { connect } from 'react-redux';
 import { createSubcomment } from '../../actions/commentActions';
 import store from '../../store';
 
-import utils from '../../utilities/functions';
-import Spinner from '../spinner/Spinner';
-
 class SubcommentForm extends Component {
 
 	constructor(props) {

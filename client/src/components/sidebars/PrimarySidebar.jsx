@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import store from '../../store';
 
 class PrimarySidebar extends Component {
@@ -19,10 +18,9 @@ class PrimarySidebar extends Component {
 
 	render() {
 		if (this.state.stats && store.getState().auth.isAuthenticated) {
-			const { classes } = this.props;
 			return (
 				<aside className="sidebar">
-					<section className="header" style={{ backgroundImage: 'url(' + store.getState().auth.user.user.banner || 'https://tse2.mm.bing.net/th?id=OIP.KlkdXEtiARSSjWVEYlQtJwHaFB&pid=Api' + ')' }}>
+					<section className="header" style={{ backgroundImage: `url(${store.getState().auth.user.user.banner || 'https://tse2.mm.bing.net/th?id=OIP.KlkdXEtiARSSjWVEYlQtJwHaFB&pid=Api'} )` }}>
 					</section>
 					<section className="user card round-bottom">
 						<img src={store.getState().auth.user.user.picture} alt="User" />

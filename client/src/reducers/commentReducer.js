@@ -1,5 +1,4 @@
 import { FETCH_COMMENTS, CREATE_COMMENT, CREATE_SUBCOMMENT } from '../constants';
-import { stat } from 'fs';
 
 const initialState = {
 	comments: [],

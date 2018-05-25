@@ -20,11 +20,6 @@ import './styles/breakpoints.css';
 import './styles/dark.css';
 
 /*
-Configuration
-*/
-import config from './config.json';
-
-/*
 State management via Redux
 */
 import store from './store';
@@ -32,7 +27,7 @@ import store from './store';
 /*
 Auth state
 */
-import { SET_CURRENT_USER, TOGGLE_NIGHTMODE, ADD_NIGHTMODE, REMOVE_NIGHTMODE } from './constants';
+import { SET_CURRENT_USER } from './constants';
 const auth = localStorage.getItem('mobdev2_auth');
 if (auth) {
 	store.dispatch({ type: SET_CURRENT_USER, payload: JSON.parse(auth) });

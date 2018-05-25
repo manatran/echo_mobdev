@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import store from '../../store';
-
-import utils from '../../utilities/functions';
 import Spinner from '../spinner/Spinner';
 
 class PlaylistDetail extends Component {
@@ -34,7 +30,7 @@ class PlaylistDetail extends Component {
 					</section>
 					<section className="card playlist round-bottom">
 						<p>{this.state.playlist.description}</p>
-						{(this.state.playlist.author._id == store.getState().auth.user.user._id) && <a href={`/playlist/edit/${this.state.playlist._id}`} className="action-btn">edit playlist</a>}
+						{(this.state.playlist.author._id === store.getState().auth.user.user._id) && <a href={`/playlist/edit/${this.state.playlist._id}`} className="action-btn">edit playlist</a>}
 					</section>
 
 					<section className="card playlists">

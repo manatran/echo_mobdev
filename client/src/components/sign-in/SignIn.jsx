@@ -54,11 +54,9 @@ class SignIn extends Component {
 	}
 
 	render() {
-		
-    const { errors } = this.state;
 		return (
 			<section className="card login">
-				<img src="/logo.png" />
+				<img src="/logo.png" alt="Logo" />
 				Let It Resonate
 
 				<form onSubmit={this.onSubmit}>

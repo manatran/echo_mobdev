@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 class Spinner extends Component {
-
-	constructor(props) {
-		super(props);
-	}
 
 	render() {
 		return (
@@ -19,4 +14,5 @@ class Spinner extends Component {
 		)
 	}
 }
+
 export default Spinner;

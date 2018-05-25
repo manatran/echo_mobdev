@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchPosts } from '../../actions/postActions';
-import store from '../../store';
 
 import utils from '../../utilities/functions';
 import Spinner from '../spinner/Spinner';
@@ -44,7 +43,7 @@ class PostsList extends Component {
 											<i className="fab fa-spotify"></i>
 										</div>
 									</div>
-									: <div className="post-thumbnail" style={{ backgroundImage: 'url(https://api.adorable.io/avatars/128/${element.title}.png)' }}>
+									: <div className="post-thumbnail" style={{ backgroundImage: `url(https://api.adorable.io/avatars/128/${element.title}.png)` }}>
 										<div className="overlay round-left">
 											<i className="fab fa-spotify"></i>
 										</div>
@@ -53,12 +52,12 @@ class PostsList extends Component {
 
 								</a>
 								: <a className="thumbnail-link" href={`https://open.spotify.com/track/${element.content.spotify_id}`} target="_blank">{(element.content && element.content.images)
-									? <div className="post-thumbnail" style={{ backgroundImage: 'url(' + element.content.images[0].url + ')' }}>
+									? <div className="post-thumbnail" style={{ backgroundImage: `url(${element.content.images[0].url})` }}>
 										<div className="overlay round-left">
 											<i className="fab fa-spotify"></i>
 										</div>
 									</div>
-									: <div className="post-thumbnail" style={{ backgroundImage: 'url(https://api.adorable.io/avatars/128/${element.title}.png)' }}>
+									: <div className="post-thumbnail" style={{ backgroundImage: `url(https://api.adorable.io/avatars/128/${element.title}.png)` }}>
 										<div className="overlay round-left">
 											<i className="fab fa-spotify"></i>
 										</div>
@@ -79,7 +78,7 @@ class PostsList extends Component {
 													case 'album':
 														return <i className="fas fa-dot-circle" />
 													default:
-														null
+														return null
 												}
 											})()}
 											{element.content.title}
@@ -105,7 +104,7 @@ class PostsList extends Component {
 					))}
 					<section className="light" style={{ paddingBottom: 16 + 'px' }}>
 						<p>That's it, no more posts! You could always create more if you want.</p>
-						<a href="#" id="scroll-top">Back to top <i className="fas fa-level-up-alt"></i></a>
+						<a id="scroll-top">Back to top <i className="fas fa-level-up-alt"></i></a>
 					</section>
 				</div>
 			);

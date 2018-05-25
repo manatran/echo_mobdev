@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import utils from '../../utilities/functions';
 import store from '../../store';
 import Spinner from '../spinner/Spinner'
 
@@ -114,7 +113,7 @@ class PlaylistEdit extends Component {
 								<div>
 									<div>
 										<p>{this.state.uploadedFile && this.state.uploadedFile.name}</p>
-										<img className="image-preview" src={this.state.image} />
+										<img className="image-preview" src={this.state.image} alt={this.state.image} />
 									</div>
 								</div>
 								<Dropzone

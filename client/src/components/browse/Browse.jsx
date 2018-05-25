@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import store from '../../store';
-import utils from '../../utilities/functions'
 
 class Browse extends Component {
 	constructor(props) {

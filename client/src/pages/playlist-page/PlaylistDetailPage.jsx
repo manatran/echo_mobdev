@@ -5,14 +5,11 @@ import store from '../../store';
 import PlaylistDetail from '../../components/playlist/PlaylistDetail';
 
 class PlaylistDetailPage extends Component {
-	constructor(props) {
-		super(props);
-	}
+
 	componentDidMount() {
 		if (!store.getState().auth.isAuthenticated) {
 			this.props.history.push('/login')
 		}
-
 	}
 
 	render() {

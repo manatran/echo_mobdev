@@ -80,12 +80,12 @@ class PostDetail extends Component {
 					<section className="card post detail">
 						{(this.state.post.type !== 'song')
 							? <a className="thumbnail-link" href={`https://open.spotify.com/${this.state.post.type}/${this.state.post.content.spotify_id}`} target="_blank">{(this.state.post.content && this.state.post.content.images)
-								? <div className="post-thumbnail" style={{ backgroundImage: 'url(' + this.state.post.content.images[0].url + ')' }}>
+								? <div className="post-thumbnail" style={{ backgroundImage: `url(${this.state.post.content.images[0].url})` }}>
 									<div className="overlay round-left">
 										<i className="fab fa-spotify"></i>
 									</div>
 								</div>
-								: <div className="post-thumbnail" style={{ backgroundImage: 'url(https://api.adorable.io/avatars/128/${this.state.post.title}.png)' }}>
+								: <div className="post-thumbnail" style={{ backgroundImage: `url(https://api.adorable.io/avatars/128/${this.state.post.title}.png)` }}>
 									<div className="overlay round-left">
 										<i className="fab fa-spotify"></i>
 									</div>
@@ -94,12 +94,12 @@ class PostDetail extends Component {
 
 							</a>
 							: <a className="thumbnail-link" href={`https://open.spotify.com/track/${this.state.post.content.spotify_id}`} target="_blank">{(this.state.post.content && this.state.post.content.images)
-								? <div className="post-thumbnail" style={{ backgroundImage: 'url(' + this.state.post.content.images[0].url + ')' }}>
+								? <div className="post-thumbnail" style={{ backgroundImage: `url(${this.state.post.content.images[0].url})` }}>
 									<div className="overlay round-left">
 										<i className="fab fa-spotify"></i>
 									</div>
 								</div>
-								: <div className="post-thumbnail" style={{ backgroundImage: 'url(https://api.adorable.io/avatars/128/${this.state.post.title}.png)' }}>
+								: <div className="post-thumbnail" style={{ backgroundImage: `url(https://api.adorable.io/avatars/128/${this.state.post.title}.png)` }}>
 									<div className="overlay round-left">
 										<i className="fab fa-spotify"></i>
 									</div>
@@ -108,7 +108,7 @@ class PostDetail extends Component {
 							</a>}
 						<div className="post-body">
 							<div className="post-info">
-								{(store.getState().auth.user.user.isAdmin || this.state.post.author._id == store.getState().auth.user.user._id)
+								{(store.getState().auth.user.user.isAdmin || this.state.post.author._id === store.getState().auth.user.user._id)
 									? <div className="options">
 										<label>
 											<i className="fas fa-ellipsis-v" />
@@ -130,7 +130,7 @@ class PostDetail extends Component {
 											case 'album':
 												return <i className="fas fa-dot-circle" />
 											default:
-												null
+												return null
 										}
 									})()}
 									{this.state.post.content.title}

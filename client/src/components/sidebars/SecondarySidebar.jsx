@@ -6,7 +6,6 @@ class SecondarySidebar extends Component {
 
 	render() {
 		if (store.getState().auth.isAuthenticated) {
-			const { classes } = this.props;
 			return (
 				<aside className="sidebar">
 					<section className="card links">

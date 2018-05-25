@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import utils from '../../utilities/functions';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { toggleNightmode } from '../../actions/nightmodeActions';
 import { setCurrentUser } from '../../actions/authActions';
 import store from '../../store';
-import Spinner from '../spinner/Spinner'
 
 import Dropzone from 'react-dropzone';
 import request from 'superagent';
@@ -109,11 +106,11 @@ class Settings extends Component {
 							<div>
 								{this.state.picture === ''
 									? <div>
-										<img className="image-preview" src={store.getState().auth.user.user.picture} />
+										<img className="image-preview" src={store.getState().auth.user.user.picture} alt="Old" />
 									</div>
 									: <div>
 										<p>{this.state.uploadedFile.name}</p>
-										<img className="image-preview" src={this.state.picture} />
+										<img className="image-preview" src={this.state.picture} alt="New"/>
 									</div>}
 							</div>
 							<Dropzone
@@ -127,7 +124,7 @@ class Settings extends Component {
 
 						<input type="submit" value="Save changes" />
 					</form>
-					<a href="#" className="nightmode" onClick={this.handleToggleNightmode}>
+					<a className="nightmode" onClick={this.handleToggleNightmode}>
 						<i className="fa fa-moon"></i>Toggle Night Mode</a>
 				</section>
 			</div>

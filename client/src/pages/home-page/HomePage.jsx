@@ -10,9 +10,7 @@ Component styles
 import './HomePage.css';
 
 class HomePage extends Component {
-  constructor(props) {
-    super(props);
-	}
+
 	componentDidMount() {
 		if(!store.getState().auth.isAuthenticated){
 			this.props.history.push('/login')

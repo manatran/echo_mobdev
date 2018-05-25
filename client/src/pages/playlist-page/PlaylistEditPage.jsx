@@ -5,9 +5,7 @@ import store from '../../store';
 import PlaylistEdit from '../../components/playlist/PlaylistEdit';
 
 class PlaylistEditPage extends Component {
-	constructor(props) {
-		super(props);
-	}
+
 	componentDidMount() {
 		if (!store.getState().auth.isAuthenticated) {
 			this.props.history.push('/login')

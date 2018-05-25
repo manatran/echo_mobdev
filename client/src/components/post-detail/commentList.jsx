@@ -72,7 +72,7 @@ class CommentList extends Component {
 						? this.props.comments.map((comment, i) => (
 							<section className="card comment-thread" key={comment._id}>
 								<div className="comment">
-									{(store.getState().auth.user.user.isAdmin || comment.author._id == store.getState().auth.user.user._id)
+									{(store.getState().auth.user.user.isAdmin || comment.author._id === store.getState().auth.user.user._id)
 										? <div className="options">
 											<label>
 												<i className="fas fa-ellipsis-v" />
@@ -93,7 +93,7 @@ class CommentList extends Component {
 									<p>{comment.deleted_at ? '[DELETED]' : comment.content}</p>
 									<div className="actions">
 										<span className="likes"><i className="fa fa-heart"></i>{comment.likes.length}</span>
-										<span className="comments"><i className="fa fa-comments"></i>{comment.subcomments && comment.subcomments.length || 0}</span>
+										<span className="comments"><i className="fa fa-comments"></i>{(comment.subcomments && comment.subcomments.length) || 0}</span>
 									</div>
 									<SubcommentForm parentId={comment._id} />
 								</div>
@@ -101,7 +101,7 @@ class CommentList extends Component {
 									<div className="subcomment-thread">
 										{comment.subcomments.map((subcomment, i) => (
 											<div className="subcomment" key={subcomment._id}>
-												{(store.getState().auth.user.user.isAdmin || subcomment.author._id == store.getState().auth.user.user._id)
+												{(store.getState().auth.user.user.isAdmin || subcomment.author._id === store.getState().auth.user.user._id)
 													? <div className="options">
 														<label>
 															<i className="fas fa-ellipsis-v" />

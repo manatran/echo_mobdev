@@ -7,9 +7,6 @@ Components
 import PostDetail from '../../components/post-detail/PostDetail';
 
 class PostPage extends Component {
-  constructor(props) {
-    super(props);
-	}
 	
 	componentDidMount() {
 		if(!store.getState().auth.isAuthenticated){

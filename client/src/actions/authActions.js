@@ -1,7 +1,6 @@
 import { GET_ERRORS, SET_CURRENT_USER } from '../constants';
 import axios from 'axios';
 import utils from '../utilities/functions';
-import jwt_decode from 'jwt-decode';
 
 // Register User
 export const registerUser = (userData, history) => dispatch => {

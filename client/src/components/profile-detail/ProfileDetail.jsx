@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import store from '../../store';
-
-import utils from '../../utilities/functions';
 import Spinner from '../spinner/Spinner';
 
 class ProfileDetail extends Component {
@@ -44,7 +40,7 @@ class ProfileDetail extends Component {
 						</div>
 						<h2>{this.state.profile.isAdmin && <i title="admin" className="fas fa-crown" />}{this.state.profile.username}</h2>
 						<p className="description">{this.state.profile.bio}</p>
-						{(this.state.profile._id == store.getState().auth.user.user._id) &&
+						{(this.state.profile._id === store.getState().auth.user.user._id) &&
 							<a className="action-btn" href={`/settings`}>edit profile</a>
 						}
 					</section>

@@ -7,19 +7,20 @@ const utils = {
 		return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 	},
 	getTimeDifference: function (datetime) {
-		var datetime = typeof datetime !== 'undefined' ? datetime : "2014-01-01 01:02:03.123456";
+		datetime = typeof datetime !== 'undefined' ? datetime : "2014-01-01 01:02:03.123456";
 
-		var datetime = new Date(datetime).getTime();
+		datetime = new Date(datetime).getTime();
 		var now = new Date().getTime();
 
 		if (isNaN(datetime)) {
 			return "";
 		}
 
+		var milisec_diff = "";
 		if (datetime < now) {
-			var milisec_diff = now - datetime;
+			milisec_diff = now - datetime;
 		} else {
-			var milisec_diff = datetime - now;
+			milisec_diff = datetime - now;
 		}
 
 		var days = Math.floor(milisec_diff / 1000 / 60 / (60 * 24));

@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import store from '../../store';
 
-import utils from '../../utilities/functions';
-import Spinner from '../spinner/Spinner';
-
 class Music extends Component {
 
 	constructor(props) {
@@ -57,9 +54,9 @@ class Music extends Component {
 					albums.classList.add('hidden')
 					songs.classList.add('hidden')
 
-					if (tabs[i].innerHTML.toLowerCase() == 'artists') artists.classList.remove('hidden')
-					if (tabs[i].innerHTML.toLowerCase() == 'albums') albums.classList.remove('hidden')
-					if (tabs[i].innerHTML.toLowerCase() == 'songs') songs.classList.remove('hidden')
+					if (tabs[i].innerHTML.toLowerCase() === 'artists') artists.classList.remove('hidden')
+					if (tabs[i].innerHTML.toLowerCase() === 'albums') albums.classList.remove('hidden')
+					if (tabs[i].innerHTML.toLowerCase() === 'songs') songs.classList.remove('hidden')
 				})
 			}
 		}
@@ -91,9 +88,9 @@ class Music extends Component {
 
 				<section className="card round-top tabs subtabs">
 					<div>
-						<a className="active" href="#">Artists</a>
-						<a href="#">Albums</a>
-						<a href="#">Songs</a>
+						<a className="active">Artists</a>
+						<a>Albums</a>
+						<a>Songs</a>
 					</div>
 				</section>
 
@@ -162,7 +159,7 @@ class Music extends Component {
 
 				<section className="light" style={{ paddingBottom: 16 + 'px' }}>
 					<p>That's it, no more content! Use the search feature to find more.</p>
-					<a href="#" id="scroll-top">Back to top <i className="fas fa-level-up-alt"></i></a>
+					<a id="scroll-top">Back to top <i className="fas fa-level-up-alt"></i></a>
 				</section>
 
 			</div>
