@@ -53,7 +53,7 @@ class Main extends Component {
           <Route path='/settings' component={SettingsPage}/>
           <Route path="/music" component={MusicPage}/>
           <Route exact path='/messages' component={MessagePage}/>
-          <Route exact path='/messages/:conversationId' component={MessageDetailPage}/>
+          <Route exact path='/messages/:id' component={MessageDetailPage}/>
           <Route path='/privacy-policy' component={PrivacyPolicyPage}/>
 					<Redirect from="/login" to="/signin" />
           <Route path='/signin' component={SignInPage}/>

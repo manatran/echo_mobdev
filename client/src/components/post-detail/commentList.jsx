@@ -68,6 +68,7 @@ class CommentList extends Component {
 				Authorization: store.getState().auth.user.token
 			}
 		})
+			.then(response => response.json())
 			.then(window.location = window.location)
 			.catch(err => console.log(err));
 	}
@@ -79,6 +80,7 @@ class CommentList extends Component {
 				Authorization: store.getState().auth.user.token
 			}
 		})
+			.then(response => response.json())
 			.then(window.location = window.location)
 			.catch(err => console.log(err));
 	}

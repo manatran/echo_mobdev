@@ -37,8 +37,7 @@ exports.get_chat = function (req, res, next) {
 Create a Chat
 */
 exports.chat_create_chat = function (req, res, next) {
-	console.log(req.body.type)
-	if (!req.body || !req.body.title || !req.members) {
+	if (!req.body.title || !req.body.members) {
 		return errorHandler.handleAPIError(400, `Chat must have a title, members`, next);
 	}
 

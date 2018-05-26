@@ -16,7 +16,7 @@ class MessageDetailPagge extends Component {
   render() {
     return (
       <main>
-        <MessageDetail />
+        <MessageDetail chatId={this.props.match.params.id} />
       </main>
     )
   }
