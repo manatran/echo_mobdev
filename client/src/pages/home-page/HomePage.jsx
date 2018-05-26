@@ -4,11 +4,6 @@ import store from '../../store';
 /* Comoponents */
 import PostsList from '../../components/posts-list/PostsList';
 
-/*
-Component styles
-*/
-import './HomePage.css';
-
 class HomePage extends Component {
 
 	componentDidMount() {

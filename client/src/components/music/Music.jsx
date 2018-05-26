@@ -8,22 +8,27 @@ class Music extends Component {
 		this.state = {
 			songs: '',
 			albums: '',
-			artists: ''
+			artists: '',
+			playlists: ''
 		}
 	}
 
 	componentWillMount() {
-		fetch(`/api/v1/songs`, {headers: {Authorization: store.getState().auth.user.token}})
+		fetch(`/api/v1/songs`, { headers: { Authorization: store.getState().auth.user.token } })
 			.then(response => response.json())
 			.then(item => this.setState({ songs: item }));
 
-		fetch(`/api/v1/albums`, {headers: {Authorization: store.getState().auth.user.token}})
+		fetch(`/api/v1/albums`, { headers: { Authorization: store.getState().auth.user.token } })
 			.then(response => response.json())
 			.then(item => this.setState({ albums: item }));
 
-		fetch(`/api/v1/artists`, {headers: {Authorization: store.getState().auth.user.token}})
+		fetch(`/api/v1/artists`, { headers: { Authorization: store.getState().auth.user.token } })
 			.then(response => response.json())
 			.then(item => this.setState({ artists: item }));
+
+			fetch(`/api/v1/playlists/${store.getState().auth.user.user._id}`, { headers: { Authorization: store.getState().auth.user.token } })
+			.then(response => response.json())
+			.then(item => this.setState({ playlists: item }));
 	}
 
 	componentDidMount() {
@@ -62,6 +67,25 @@ class Music extends Component {
 		}
 	}
 
+	addSong(playlistId, songId){
+		const body = {
+			song: songId
+		}
+		fetch(`/api/v1/playlists/addsong/${playlistId}`, {
+			method: 'PATCH',
+			headers: {
+				'content-type': 'application/json',
+				Authorization: store.getState().auth.user.token
+			},
+			body: JSON.stringify(body)
+		})
+			.then(response => response.json())
+			.then((post) => {
+				this.props.history.push(`/playlist/${playlistId}`)
+			})
+			.catch(err => console.log(err))
+	}
+
 	onClick(id, type) {
 		let newPost = {
 			content: id,
@@ -80,6 +104,7 @@ class Music extends Component {
 			.then((post) => {
 				this.props.history.push(`/post/${post._id}`)
 			})
+			.catch(err => console.log(err))
 	}
 
 	render() {
@@ -120,16 +145,30 @@ class Music extends Component {
 					{this.state.songs.length > 0
 						? <div>
 							{this.state.songs.map((song, i) => (
-								<span onClick={() => this.onClick(song.spotify_id, 'song')} key={song.spotify_id}>
+								<span key={song.spotify_id}>
 									<div className="playlist-item" >
 										{song.album && song.album.images[0]
 											? <img src={song.album.images[0].url} alt="Thumbnail" />
 											: <img src={`https://api.adorable.io/avatars/64/${song.title}.png`} alt="Thumbnail" />
 										}
-										<div>
+										<div onClick={() => this.onClick(song.spotify_id, 'song')} >
 											<h3>{song.title}</h3>
 											<p>{song.artist_name}</p>
 										</div>
+										<span className="options">
+											<label>
+												<i className="fas fa-plus" />
+												<input type="checkbox" name="options" value="toggle" />
+												<div className="option-list card">
+													<p>Add song to playlist</p>
+													{this.state.playlists.map((playlist, i) => (
+														<p key={playlist._id} onClick={() => this.addSong(playlist._id, song.spotify_id)}>{playlist.title}</p>
+													))
+													}
+												</div>
+											</label>
+
+										</span>
 									</div>
 								</span>
 							))}

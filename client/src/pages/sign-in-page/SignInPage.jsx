@@ -5,11 +5,6 @@ Components
 */
 import SignIn from '../../components/sign-in/SignIn';
 
-/*
-Component styles
-*/
-import './SignInPage.css';
-
 class SignInPage extends Component {
   render() {
     return (

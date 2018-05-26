@@ -10,10 +10,12 @@
 	color: white;
 }
 
-*{
+* {
 	transition: 0.1s;
 }
-em, i{
+
+em,
+i {
 	transition: none;
 }
 
@@ -256,7 +258,7 @@ aside .header {
 	color: #6D6D6D;
 }
 
-.stats{
+.stats {
 	font-size: 14px;
 }
 
@@ -472,6 +474,7 @@ aside i {
 	color: #333;
 	cursor: pointer;
 	margin-top: 8px;
+	position: relative;
 }
 
 .options i {
@@ -488,18 +491,30 @@ aside i {
 }
 
 .options .option-list {
+	z-index: 10;
 	font-weight: 500;
 	user-select: none;
 	display: none;
 	cursor: pointer;
 	text-transform: uppercase;
 	top: 32px;
-	left: 8px;
+	right: 20px;
 	background-color: #DDD;
 	padding: 12px;
 	box-sizing: border-box;
-	position: relative;
+	position: absolute;
 	box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+.playlist-item .option-list p {
+	width: auto;
+	font-size: 14px;
+}
+
+.option-list p:first-of-type {
+	font-style: italic;
+	text-transform: capitalize;
+	margin-bottom: 8px;
 }
 
 .option-list::before {
@@ -588,10 +603,11 @@ aside i {
 	-webkit-text-stroke-color: #A7A7A7;
 }
 
-.liked{
-	color:#F16667 !important;
+.liked {
+	color: #F16667 !important;
 }
-.liked i{
+
+.liked i {
 	-webkit-text-fill-color: #F16667 !important;
 	-webkit-text-stroke-color: #F16667 !important;
 }
@@ -712,9 +728,9 @@ form button {
 	border: solid 1.5px #A7A7A7;
 }
 
-.kep-login-facebook.metro{
-	width:100%;
-	padding:10px;
+.kep-login-facebook.metro {
+	width: 100%;
+	padding: 10px;
 	font-size: 14px;
 	margin-top: 16px;
 }
@@ -741,8 +757,8 @@ form button {
 }
 
 .settings .image-preview {
-	width:128px;
-	height:128px;
+	width: 128px;
+	height: 128px;
 	border-radius: 50%;
 }
 
@@ -796,6 +812,21 @@ form button {
 	align-items: center;
 	margin: 16px 0;
 	cursor: pointer;
+}
+
+.playlist-item div {
+	flex: 1;
+}
+
+.playlist-item a {
+	display: flex;
+	flex-direction: row;
+	flex: 1;
+}
+
+.playlist-item i {
+	color: #A7A7A7;
+	padding-right: 16px;
 }
 
 .playlist-item p,
@@ -923,22 +954,23 @@ form button {
 	padding: 16px;
 }
 
-.new-playlist{
-	color:#4D9FB4;
-	padding:16px 0;
-	margin:8px 0 16px;
+.new-playlist {
+	color: #4D9FB4;
+	padding: 16px 0;
+	margin: 8px 0 16px;
 	cursor: pointer;
 	border-top: solid 1px #F2F2F2;
 	border-bottom: solid 1px #F2F2F2;
 }
-.new-playlist i{
+
+.new-playlist i {
 	margin-right: 16px;
 }
+
 .delete {
 	cursor: pointer;
-	color:#F16667;
+	color: #F16667;
 }
-
 
 .spinner {
 	margin: 100px auto;

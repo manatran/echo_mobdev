@@ -273,6 +273,9 @@ html.dark #root {
 .dark .playlist-item {
 	color: #eee;
 }
+.dark .playlist-item i{
+	color:#6D6D6D;
+}
 
 .dark .settings textarea {
 	background-color: #202020;
