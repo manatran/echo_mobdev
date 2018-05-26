@@ -51,6 +51,7 @@ router.get('/comments', auth.authenticateJwt(), commentController.get_comments);
 router.get('/comments/:postId', auth.authenticateJwt(), commentController.get_comments_by_post);
 router.post('/comments', auth.authenticateJwt(), commentController.comment_create_comment);
 router.put('/comments/:commentId', auth.authenticateJwt(), commentController.comment_update_put);
+router.patch('/comments/like/:commentId', auth.authenticateJwt(), commentController.comment_like_comment);
 router.delete('/comments/:commentId', auth.authenticateJwt(), commentController.comment_delete_delete);
 router.patch('/comments/:commentId/softdelete', auth.authenticateJwt(), commentController.comment_softdelete_patch);
 router.patch('/comments/:commentId/softundelete', auth.authenticateJwt(), commentController.comment_softundelete_patch);
@@ -59,6 +60,7 @@ router.get('/subcomments', auth.authenticateJwt(), subcommentController.get_subc
 router.get('/subcomments/:parentId', auth.authenticateJwt(), subcommentController.get_subcomments_by_parent);
 router.post('/subcomments', auth.authenticateJwt(), subcommentController.subcomment_create_subcomment);
 router.put('/subcomments/:subcommentId', auth.authenticateJwt(), subcommentController.subcomment_update_put);
+router.patch('/subcomments/like/:subcommentId', auth.authenticateJwt(), subcommentController.subcomment_like_subcomment);
 router.delete('/subcomments/:subcommentId', auth.authenticateJwt(), subcommentController.subcomment_delete_delete);
 router.patch('/subcomments/:subcommentId/softdelete', auth.authenticateJwt(), subcommentController.subcomment_softdelete_patch);
 router.patch('/subcomments/:subcommentId/softundelete', auth.authenticateJwt(), subcommentController.subcomment_softundelete_patch);

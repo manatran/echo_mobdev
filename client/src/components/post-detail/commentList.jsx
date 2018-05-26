@@ -20,6 +20,7 @@ class CommentList extends Component {
 		}
 		this.onChange = this.onChange.bind(this)
 		this.onSubmit = this.onSubmit.bind(this)
+		this.likeComment = this.likeComment.bind(this)
 	}
 
 	onChange(e) {
@@ -50,6 +51,28 @@ class CommentList extends Component {
 	}
 	restoreComment(commentId, type) {
 		fetch(`/api/v1/${type}/${commentId}/softundelete`, {
+			method: 'PATCH',
+			headers: {
+				'content-type': 'application/json',
+				Authorization: store.getState().auth.user.token
+			}
+		})
+			.then(window.location = window.location)
+			.catch(err => console.log(err));
+	}
+	likeComment(commentId){
+		fetch(`/api/v1/comments/like/${commentId}`, {
+			method: 'PATCH',
+			headers: {
+				'content-type': 'application/json',
+				Authorization: store.getState().auth.user.token
+			}
+		})
+			.then(window.location = window.location)
+			.catch(err => console.log(err));
+	}
+	likeSubcomment(subcommentId){
+		fetch(`/api/v1/subcomments/like/${subcommentId}`, {
 			method: 'PATCH',
 			headers: {
 				'content-type': 'application/json',
@@ -92,7 +115,9 @@ class CommentList extends Component {
 									</h2>
 									<p>{comment.deleted_at ? '[DELETED]' : comment.content}</p>
 									<div className="actions">
-										<span className="likes"><i className="fa fa-heart"></i>{comment.likes.length}</span>
+										<span onClick={() => this.likeComment(comment._id)} className={`likes ${comment.likes.indexOf(store.getState().auth.user.user._id) > -1
+										? 'liked'
+										: ''}`}><i className="fa fa-heart"></i>{comment.likes.length}</span>
 										<span className="comments"><i className="fa fa-comments"></i>{(comment.subcomments && comment.subcomments.length) || 0}</span>
 									</div>
 									<SubcommentForm parentId={comment._id} />
@@ -122,7 +147,9 @@ class CommentList extends Component {
 												</h2>
 												<p>{subcomment.deleted_at ? '[DELETED]' : subcomment.content}</p>
 												<div className="actions">
-													<span className="likes"><i className="fa fa-heart"></i>{subcomment.likes.length}</span>
+												<span onClick={() => this.likeSubcomment(subcomment._id)} className={`likes ${subcomment.likes.indexOf(store.getState().auth.user.user._id) > -1
+									? 'liked'
+									: ''}`}><i className="fa fa-heart"></i>{subcomment.likes.length}</span>
 												</div>
 											</div>
 										))}

@@ -1,6 +1,7 @@
 const async = require('async');
 
 const Comment = require('../models/comment');
+const User = require('../models/user');
 const errorHandler = require('../utilities/errorHandler');
 
 /*
@@ -107,6 +108,34 @@ exports.comment_delete_delete = function (req, res, next) {
 			}
 			return errorHandler.handleAPIError(500, `Could not delete comment with id: ${id}`, next);
 		});
+}
+
+/*
+Like a comment
+*/
+exports.comment_like_comment = function (req, res, next) {
+	User.findById(req.user.id).then(profile => {
+		Comment.findOne({_id: req.params.commentId})
+			.then(comment => {
+				if (comment.likes.filter(like => like.toString() === req.user.id).length > 0) {
+					// Get remove index
+					const removeIndex = comment.likes
+						.map(item => item.toString())
+						.indexOf(req.user.id);
+
+					// Splice out of array
+					comment.likes.splice(removeIndex, 1);
+					// Save
+					comment.save().then(comment => res.json(comment));
+				} else {
+					// Add user id to likes array
+					comment.likes.unshift(req.user.id);
+					comment.save().then(comment => res.json(comment));
+				}
+			})
+			.catch(err => res.status(404).json({ commentnotfound: 'No comment found' }));
+	})
+	.catch(err => res.status(404).json({ usernotfound: 'No user found' }));
 }
 
 /*

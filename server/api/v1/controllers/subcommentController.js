@@ -1,6 +1,7 @@
 const async = require('async');
 
 const Subcomment = require('../models/subcomment');
+const User = require('../models/user');
 const errorHandler = require('../utilities/errorHandler');
 
 /*
@@ -74,6 +75,34 @@ exports.subcomment_update_put = function (req, res, next) {
 			}
 			return errorHandler.handleAPIError(500, `Could not update subcomment with id: ${id}`, next);
 		});
+}
+
+/*
+Like a comment
+*/
+exports.subcomment_like_subcomment = function (req, res, next) {
+	User.findById(req.user.id).then(profile => {
+		Subcomment.findOne({_id: req.params.subcommentId})
+			.then(subcomment => {
+				if (subcomment.likes.filter(like => like.toString() === req.user.id).length > 0) {
+					// Get remove index
+					const removeIndex = subcomment.likes
+						.map(item => item.toString())
+						.indexOf(req.user.id);
+
+					// Splice out of array
+					subcomment.likes.splice(removeIndex, 1);
+					// Save
+					subcomment.save().then(subcomment => res.json(subcomment));
+				} else {
+					// Add user id to likes array
+					subcomment.likes.unshift(req.user.id);
+					subcomment.save().then(subcomment => res.json(subcomment));
+				}
+			})
+			.catch(err => res.status(404).json({ subcommentnotfound: 'No subcomment found' }));
+	})
+	.catch(err => res.status(404).json({ usernotfound: 'No user found' }));
 }
 
 /*
