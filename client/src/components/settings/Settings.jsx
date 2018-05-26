@@ -49,7 +49,7 @@ class Settings extends Component {
 				let newUser = store.getState().auth.user;
 				newUser.user = user;
 				localStorage.setItem('mobdev2_auth', JSON.stringify(newUser))
-				store.dispatch(setCurrentUser({user: newUser}))
+				store.dispatch(setCurrentUser({ user: newUser }))
 				window.location = `/profile/${this.state.user._id}`
 			})
 	}
@@ -112,7 +112,7 @@ class Settings extends Component {
 									</div>
 									: <div>
 										<p>{this.state.uploadedFile.name}</p>
-										<img className="image-preview" src={this.state.picture} alt="New"/>
+										<img className="image-preview" src={this.state.picture} alt="New" />
 									</div>}
 							</div>
 							<Dropzone
