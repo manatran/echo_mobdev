@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const MessageSchema = new Schema(
 	{
-		author: { type: String, max: 128, required: true },
+		author: { type: String, ref:'User', max: 128, required: true },
 		conversation: { type: mongoose.Schema.Types.ObjectId, ref: 'Chat', required: true },
 		content: { type: String, max: 512, required: true },
 		created_at: { type: Date, default: Date.now },

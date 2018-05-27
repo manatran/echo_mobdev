@@ -9,9 +9,46 @@ class MessageDetail extends Component {
 
 		this.state = {
 			chat: undefined,
-			messages: []
+			messages: [],
+			message: ''
 		}
+		this.onChange = this.onChange.bind(this)
+		this.onSubmit = this.onSubmit.bind(this)
 	}
+
+	onChange(e) {
+		this.setState({ [e.target.name]: e.target.value })
+	}
+
+	onSubmit(e) {
+		e.preventDefault()
+		const body = {
+			author: store.getState().auth.user.user._id,
+			content: this.state.message,
+			conversation: this.props.chatId
+		}
+		if (this.state.message) {
+			fetch(`/api/v1/messages/`,
+				{
+					method: 'POST',
+					headers: {
+						'content-type': 'application/json',
+						Authorization: store.getState().auth.user.token
+					},
+					body: JSON.stringify(body)
+				})
+				.then(response => response.json())
+				.then((message) => {
+					this.componentWillMount();
+					this.setState(prevState => ({
+						messages: [...prevState.messages, message]
+					}))
+					document.querySelector('.msg-form input[type=text]').value = '';
+				})
+		}
+
+	}
+
 
 	componentWillMount() {
 		fetch(`/api/v1/chats/${this.props.chatId}`, { headers: { Authorization: store.getState().auth.user.token } })
@@ -19,13 +56,12 @@ class MessageDetail extends Component {
 			.then((chat) => {
 				this.setState({ chat: chat })
 			})
-			.catch(err => window.location = "/messages")
+
 		fetch(`/api/v1/messages/${this.props.chatId}`, { headers: { Authorization: store.getState().auth.user.token } })
 			.then(response => response.json())
 			.then((messages) => {
 				this.setState({ messages: messages })
 			})
-			.catch(err => window.location = "/messages")
 	}
 
 	componentDidUpdate() {
@@ -53,43 +89,27 @@ class MessageDetail extends Component {
 					</section>
 					<section className="card msg-body no-radius">
 						<div className="msg-container">
-							<div className="sent-msg">
-								<p>First msg</p>
-							</div>
-							<div className="received-msg">
-								<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-								<span className="meta"><span className="author">simodecl</span>8h ago</span>
-							</div>
-							<div className="sent-msg">
-								<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-							</div>
-							<div className="received-msg">
-								<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-								<span className="meta"><span className="author">simodecl</span>8h ago</span>
-							</div>
-							<div className="sent-msg">
-								<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-							</div>
-							<div className="received-msg">
-								<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-								<span className="meta"><span className="author">simodecl</span>8h ago</span>
-							</div>
-							<div className="received-msg">
-								<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-								<span className="meta"><span className="author">simodecl</span>8h ago</span>
-							</div>
-							<div className="sent-msg">
-								<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-							</div>
-							<div className="received-msg">
-								<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-								<span className="meta"><span className="author">simodecl</span>8h ago</span>
-							</div>
+
+							{this.state.messages.length > 0
+								? this.state.messages.map((message, i) => (
+									message.author._id === store.getState().auth.user.user._id || message.author === store.getState().auth.user.user._id
+										? <div className="sent-msg" key={message._id}>
+											<p>{message.content}</p>
+										</div>
+
+										: <div className="received-msg" key={message._id}>
+											<p>{message.content}</p>
+											<span className="meta"><span className="author">{message.author.username}</span>{utils.getTimeDifference(message.created_at)}</span>
+										</div>
+								))
+								: <section className="light">No messages found.</section>
+							}
+
 						</div>
 					</section>
 					<section className="card msg-footer round-bottom">
-						<form className="msg-form">
-							<input type="text" placeholder="Type your text here..." />
+						<form className="msg-form" onSubmit={this.onSubmit} autoComplete="off">
+							<input name="message" onChange={this.onChange} type="text" placeholder="Type your text here..." />
 							<label className="fas fa-paper-plane msg-send">
 								<input type="submit" />
 							</label>

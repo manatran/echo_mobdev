@@ -23,12 +23,9 @@ Get a certain message
 */
 exports.get_messages_by_chatId = function (req, res, next) {
 	const id = req.params.chatId;
-	const query = Message.findBy({'conversation': id});
+	const query = Message.find({'conversation': id}).populate('author', { username: 1, _id: 1, picture: 1});
 	query.exec((err, message) => {
 		if (err) return errorHandler.handleAPIError(500, `Could not get the message with id: ${id}`, next);
-		if (!message) {
-			return errorHandler.handleAPIError(404, `Message not found with id: ${id}`, next);
-		}
 		return res.json(message);
 	});
 }
@@ -38,7 +35,7 @@ Create a Message
 */
 exports.message_create_message = function (req, res, next) {
 	console.log(req.body.type)
-	if (!req.body || !req.body.conversation_id || !req.body.author || !req.body.content) {
+	if (!req.body || !req.body.conversation || !req.body.author || !req.body.content) {
 		return errorHandler.handleAPIError(400, `Message must have a conversation, author, content`, next);
 	}
 
@@ -53,7 +50,7 @@ exports.message_create_message = function (req, res, next) {
 Update a Message
 */
 exports.message_update_put = function (req, res, next) {
-	if (!req.body || !req.body.conversation_id || !req.body.author || !req.body.content) {
+	if (!req.body || !req.body.conversation || !req.body.author || !req.body.content) {
 		return errorHandler.handleAPIError(400, `Message must have a conversation, author, content`, next);
 	}
 

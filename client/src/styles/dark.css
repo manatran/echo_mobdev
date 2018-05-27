@@ -296,6 +296,25 @@ html.dark #root {
 	border-bottom: solid 1px #202020;
 }
 
+.dark .msg-body{
+	background-color: #202020;
+}
+.dark .received-msg{
+	background-color: #376F7F;
+}
+.dark .received-msg p{
+	color:white;
+}
+.dark .sent-msg{
+	background-color: #6D6D6D;
+}
+.dark .sent-msg p{
+	color:white;
+}
+.dark .msg-form input[type=text]{
+	color:white;
+}
+
 
 .dark .spinner>div {
 	background-color: #4D9FB4;

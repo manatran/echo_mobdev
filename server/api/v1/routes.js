@@ -86,13 +86,13 @@ router.delete('/chats/:chatId', auth.authenticateJwt(), chatController.chat_dele
 router.patch('/chats/:chatId/softdelete', auth.authenticateJwt(), chatController.chat_softdelete_patch);
 router.patch('/chats/:chatId/softundelete', auth.authenticateJwt(), chatController.chat_softundelete_patch);
 
-router.get('/messages', auth.authenticateJwt(), chatController.get_chats);
-router.get('/messages/:chatId', auth.authenticateJwt(), chatController.get_chat);
-router.post('/messages', auth.authenticateJwt(), chatController.chat_create_chat);
-router.put('/messages/:messageId', auth.authenticateJwt(), chatController.chat_update_put);
-router.delete('/messages/:messageId', auth.authenticateJwt(), chatController.chat_delete_delete);
-router.patch('/messages/:messageId/softdelete', auth.authenticateJwt(), chatController.chat_softdelete_patch);
-router.patch('/messages/:messageId/softundelete', auth.authenticateJwt(), chatController.chat_softundelete_patch);
+router.get('/messages', auth.authenticateJwt(), messageController.get_messages);
+router.get('/messages/:chatId', auth.authenticateJwt(), messageController.get_messages_by_chatId);
+router.post('/messages', auth.authenticateJwt(), messageController.message_create_message);
+router.put('/messages/:messageId', auth.authenticateJwt(), messageController.message_update_put);
+router.delete('/messages/:messageId', auth.authenticateJwt(), messageController.message_delete_delete);
+router.patch('/messages/:messageId/softdelete', auth.authenticateJwt(), messageController.message_softdelete_patch);
+router.patch('/messages/:messageId/softundelete', auth.authenticateJwt(), messageController.message_softundelete_patch);
 
 router.get('/posts', auth.authenticateJwt(), postController.get_posts);
 router.get('/posts/:postId', auth.authenticateJwt(), postController.get_post);
