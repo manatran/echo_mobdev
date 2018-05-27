@@ -468,20 +468,23 @@ aside i {
 	font-size: .75em;
 }
 
-.profile .info{
+.profile .info {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
 }
-.profile .info .light{
-	min-width:25%;
+
+.profile .info .light {
+	min-width: 25%;
 	cursor: pointer;
+	text-align: right;
 }
-.profile .info i{
+
+.profile .info .light i {
 	margin-left: 8px;
 	font-size: 20px;
-	color:#4D9FB4;
+	color: #4D9FB4;
 }
 
 .options {
@@ -1020,10 +1023,13 @@ form button {
 
 .msg-header {
 	padding: 8px 16px;
+	margin: 0;
+}
+
+.msg-header a {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	margin: 0;
 }
 
 .msg-header img {
@@ -1038,7 +1044,8 @@ form button {
 	background-color: #F2F2F2;
 	overflow: auto;
 }
-.msg-body .msg-container{
+
+.msg-body .msg-container {
 	padding: 16px;
 	min-height: 94%;
 	display: flex;
@@ -1074,14 +1081,16 @@ form button {
 	align-self: flex-start;
 	margin-top: 8px;
 }
-.received-msg .meta{
+
+.received-msg .meta {
 	font-size: 14px;
 	display: inline-block;
 	margin-top: 8px;
 	font-weight: 300;
 	opacity: .75;
 }
-.received-msg .meta .author{
+
+.received-msg .meta .author {
 	margin-right: 8px;
 	font-weight: 700;
 }

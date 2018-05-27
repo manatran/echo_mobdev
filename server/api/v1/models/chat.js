@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 
 const ChatSchema = new Schema(
 	{
-		title: { type: String, max: 128, required: true },
 		members: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }],
 		created_at: { type: Date, default: Date.now },
 		updated_at: { type: Date, default: Date.now },

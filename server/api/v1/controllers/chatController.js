@@ -23,7 +23,7 @@ Get all chats
 */
 exports.get_chats_by_user = function (req, res, next) {
 	const id = req.params.userId;
-	const query = Chat.find({members: id}).populate('members');
+	const query = Chat.find({ members: id }).populate('members');
 	query.sort({ created_at: -1 });
 	query.exec((err, chats) => {
 		if (err) return errorHandler.handleAPIError(500, err.message || 'Some error occurred while retrieving chats', next);
@@ -53,29 +53,37 @@ exports.get_chat = function (req, res, next) {
 Create a Chat
 */
 exports.chat_create_chat = function (req, res, next) {
-	if (!req.body.title || !req.body.members) {
-		return errorHandler.handleAPIError(400, `Chat must have a title, members`, next);
+	if (!req.body || !req.body.members) {
+		return errorHandler.handleAPIError(400, `Chat must have members`, next);
 	}
 
-	const chat = new Chat(req.body);
-	chat.save((err, chat) => {
-		if (err) return errorHandler.handleAPIError(500, `Could not save the new chat`, next);
-		res.status(201).json(chat);
-	});
+	const query = Chat.findOne({ members: {$in: req.body.members} })
+		.exec((err, chat) => {
+			if (err) return errorHandler.handleAPIError(400, err, next);
+			if (chat) {
+				return res.json(chat)
+			}
+			else {
+				const newChat = new Chat(req.body);
+				newChat.save((err, chat) => {
+					if (err) return errorHandler.handleAPIError(500, `Could not save the new chat`, next);
+					res.status(201).json(newChat);
+				});
+			}
+		})
 }
 
 /*
 Update a Chat
 */
 exports.chat_update_put = function (req, res, next) {
-	if (!req.body || !req.body.title || !req.members) {
-		return errorHandler.handleAPIError(400, `Chat must have a title, members`, next);
+	if (!req.body || !req.members) {
+		return errorHandler.handleAPIError(400, `Chat must have members`, next);
 	}
 
 	const id = req.params.chatId;
 
 	Chat.findByIdAndUpdate(id, {
-		title: req.body.title,
 		members: req.body.members,
 	}, { new: true })
 		.then(chat => {

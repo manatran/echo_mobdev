@@ -11,6 +11,26 @@ class ProfileDetail extends Component {
 			playlists: [],
 			stats: undefined
 		}
+		this.createChat = this.createChat.bind(this)
+	}
+
+	createChat() {
+		const body = {
+			members: [
+				this.state.profile._id,
+				store.getState().auth.user.user._id
+			]
+		}
+		fetch(`/api/v1/chats/`, {
+			method: 'POST',
+			headers: {
+				'content-type': 'application/json',
+				Authorization: store.getState().auth.user.token
+			},
+			body: JSON.stringify(body)
+		})
+			.then(response => response.json())
+			.then(res => window.location = `/messages/${res._id}`);
 	}
 
 	componentWillMount() {

@@ -84,8 +84,10 @@ class MessageDetail extends Component {
 			return (
 				<div>
 					<section className="card msg-header round-top">
+					<a href={`/profile/${this.state.chat.members.filter(this.getCorrespondent)[0]._id}`}>
 						<img src={this.state.chat.members.filter(this.getCorrespondent)[0].picture} alt="Thumbnail" />
 						<h2>{this.state.chat.members.filter(this.getCorrespondent)[0].username}</h2>
+						</a>
 					</section>
 					<section className="card msg-body no-radius">
 						<div className="msg-container">
