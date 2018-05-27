@@ -79,6 +79,7 @@ router.patch('/playlists/:playlistId/softundelete', auth.authenticateJwt(), play
 
 router.get('/chats', auth.authenticateJwt(), chatController.get_chats);
 router.get('/chats/:chatId', auth.authenticateJwt(), chatController.get_chat);
+router.get('/chats/user/:userId', auth.authenticateJwt(), chatController.get_chats_by_user);
 router.post('/chats', auth.authenticateJwt(), chatController.chat_create_chat);
 router.put('/chats/:chatId', auth.authenticateJwt(), chatController.chat_update_put);
 router.delete('/chats/:chatId', auth.authenticateJwt(), chatController.chat_delete_delete);

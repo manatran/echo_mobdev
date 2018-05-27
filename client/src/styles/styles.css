@@ -6,7 +6,7 @@
 }
 
 ::selection {
-	background-color: #F16667;
+	background-color: #4D9FB4;
 	color: white;
 }
 
@@ -364,13 +364,13 @@ aside i {
 .thumbnail-link {
 	display: block;
 	height: 100%;
-	width: 33%;
+	width: 150px;
 }
 
 .post-thumbnail {
 	position: relative;
 	border-radius: 8px 0 0 8px;
-	width: 100%;
+	width: 150px;
 	height: 150px;
 	background-position: center;
 	background-size: cover;
@@ -470,16 +470,19 @@ aside i {
 
 .options {
 	float: right;
-	padding: 0 8px;
 	color: #333;
 	cursor: pointer;
-	margin-top: 8px;
+	margin: 8px;
 	position: relative;
+}
+
+.options label {
+	padding: 8px;
+	cursor: pointer;
 }
 
 .options i {
 	float: right;
-	cursor: pointer;
 }
 
 .options input[type=checkbox] {
@@ -498,12 +501,17 @@ aside i {
 	cursor: pointer;
 	text-transform: uppercase;
 	top: 32px;
-	right: 20px;
+	right: 12px;
 	background-color: #DDD;
 	padding: 12px;
 	box-sizing: border-box;
 	position: absolute;
 	box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+.post.detail .options .option-list,
+.comment-thread .options .option-list {
+	right: -8px;
 }
 
 .playlist-item .option-list p {
@@ -617,7 +625,6 @@ aside i {
 }
 
 .post.detail .post-body {
-	width: 67%;
 	height: 150px;
 }
 
@@ -970,6 +977,123 @@ form button {
 .delete {
 	cursor: pointer;
 	color: #F16667;
+}
+
+.conversation-list {
+	padding: 16px;
+}
+
+.conversation {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	border-bottom: solid 1px #F2F2F2;
+	padding: 8px 0;
+}
+
+.conversation img {
+	margin-right: 16px;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+}
+
+.conversation:last-of-type {
+	border-bottom: none;
+}
+
+.msg-header {
+	padding: 8px 16px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin: 0;
+}
+
+.msg-header img {
+	height: 32px;
+	width: 32px;
+	border-radius: 50%;
+	margin-right: 8px;
+}
+
+.msg-body {
+	height: calc(100vh - 232px);
+	background-color: #F2F2F2;
+	overflow: auto;
+}
+.msg-body .msg-container{
+	padding: 16px;
+	min-height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+}
+
+.sent-msg,
+.received-msg {
+	box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+.sent-msg p,
+.received-msg p {
+	padding: 0;
+}
+
+.sent-msg {
+	background-color: white;
+	padding: 16px;
+	border-radius: 16px 16px 0 16px;
+	width: 75%;
+	align-self: flex-end;
+	margin-top: 8px;
+}
+
+.received-msg {
+	color: white;
+	background-color: #4D9FB4;
+	padding: 16px;
+	border-radius: 16px 16px 16px 0;
+	width: 75%;
+	margin-top: 8px;
+}
+.received-msg .meta{
+	font-size: 14px;
+	display: inline-block;
+	margin-top: 8px;
+	font-weight: 300;
+	opacity: .75;
+}
+.received-msg .meta .author{
+	margin-right: 8px;
+	font-weight: 700;
+}
+
+.msg-footer {
+	padding: 16px;
+}
+
+.msg-form {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.msg-form input[type=text] {
+	width: 90%;
+	border: none;
+	outline: none;
+}
+
+.msg-form input[type=submit] {
+	display: none;
+}
+
+.msg-send {
+	cursor: pointer;
+	color: #4D9FB4;
+	padding: 0 8px;
 }
 
 .spinner {

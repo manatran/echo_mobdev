@@ -7,7 +7,23 @@ const errorHandler = require('../utilities/errorHandler');
 Get all chats
 */
 exports.get_chats = function (req, res, next) {
-	const query = Chat.find();
+	const query = Chat.find().populate('members');
+	query.sort({ created_at: -1 });
+	query.exec((err, chats) => {
+		if (err) return errorHandler.handleAPIError(500, err.message || 'Some error occurred while retrieving chats', next);
+		if (!chats) {
+			return errorHandler.handleAPIError(404, `Chats not found`, next);
+		}
+		return res.json(chats);
+	});
+}
+
+/*
+Get all chats
+*/
+exports.get_chats_by_user = function (req, res, next) {
+	const id = req.params.userId;
+	const query = Chat.find({members: id}).populate('members');
 	query.sort({ created_at: -1 });
 	query.exec((err, chats) => {
 		if (err) return errorHandler.handleAPIError(500, err.message || 'Some error occurred while retrieving chats', next);
@@ -23,7 +39,7 @@ Get a certain chat
 */
 exports.get_chat = function (req, res, next) {
 	const id = req.params.chatId;
-	const query = Chat.findById(id);
+	const query = Chat.findById(id).populate('members');
 	query.exec((err, chat) => {
 		if (err) return errorHandler.handleAPIError(500, `Could not get the chat with id: ${id}`, next);
 		if (!chat) {
