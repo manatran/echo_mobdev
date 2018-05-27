@@ -38,8 +38,17 @@ class ProfileDetail extends Component {
 							<img src={this.state.profile.picture} alt={this.state.profile.username} />
 							<span className="comments"><em>{this.state.stats.comments}</em> Comments</span>
 						</div>
-						<h2>{this.state.profile.isAdmin && <i title="admin" className="fas fa-crown" />}{this.state.profile.username}</h2>
-						<p className="description">{this.state.profile.bio}</p>
+						<section className="info">
+							<div>
+								<h2>{this.state.profile.isAdmin && <i title="admin" className="fas fa-crown" />}{this.state.profile.username}</h2>
+								<p className="description">{this.state.profile.bio}</p>
+							</div>
+							{this.state.profile._id !== store.getState().auth.user.user._id &&
+								<div className="light" onClick={this.createChat}>
+									Send a message
+								<i className="fas fa-comments"></i>
+								</div>}
+						</section>
 						{(this.state.profile._id === store.getState().auth.user.user._id) &&
 							<a className="action-btn" href={`/settings`}>edit profile</a>
 						}
@@ -67,7 +76,7 @@ class ProfileDetail extends Component {
 							: <p>No playlists yet!</p>
 						}
 					</section>
-				</div>
+				</div >
 			);
 		} else {
 			return (

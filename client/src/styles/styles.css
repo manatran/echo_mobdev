@@ -468,6 +468,22 @@ aside i {
 	font-size: .75em;
 }
 
+.profile .info{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+.profile .info .light{
+	min-width:25%;
+	cursor: pointer;
+}
+.profile .info i{
+	margin-left: 8px;
+	font-size: 20px;
+	color:#4D9FB4;
+}
+
 .options {
 	float: right;
 	color: #333;
