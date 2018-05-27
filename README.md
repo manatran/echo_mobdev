@@ -1,6 +1,6 @@
 # Echo  |  Let it resonate
 
-## Node.js RESTful API with React and React Native
+## Node.js RESTful API with React
 
 This project was created for the Mobile Development II course, and is part of the New Media Development curriculum at Artevelde University College, Ghent.
 
@@ -18,7 +18,7 @@ This project was created for the Mobile Development II course, and is part of th
 
 ### Client
 
-- React.js / React Native
+- React.js
 	- Redux
 
 ## Installation and setup
@@ -41,7 +41,7 @@ Install the dependencies
 yarn c-install
 ```
 
-Run the both Node.js server and React.js frontend in development mode
+Run the both Node.js server and React.js frontend concurrently in development mode
 
 ```
 yarn c-start-dev
