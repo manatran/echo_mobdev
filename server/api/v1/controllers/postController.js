@@ -249,7 +249,7 @@ Like a post
 exports.post_like_post = function (req, res, next) {
 	User.findById(req.user.id).then(profile => {
 		console.log(req.params.postId)
-		Post.findOne({_id: req.params.postId})
+		Post.findOne({ _id: req.params.postId })
 			.then(post => {
 				if (post.likes.filter(like => like.toString() === req.user.id).length > 0) {
 					// Get remove index
@@ -269,7 +269,7 @@ exports.post_like_post = function (req, res, next) {
 			})
 			.catch(err => res.status(404).json({ postnotfound: 'No post found' }));
 	})
-	.catch(err => res.status(404).json({ usernotfound: 'No user found' }));
+		.catch(err => res.status(404).json({ usernotfound: 'No user found' }));
 }
 
 
@@ -277,16 +277,23 @@ exports.post_like_post = function (req, res, next) {
 Create a Post
 */
 exports.post_create_post = function (req, res, next) {
-	console.log(req.body.type)
 	if (!req.body || !req.body.type || !req.body.author || !req.body.content) {
 		return errorHandler.handleAPIError(400, `Post must have a type, content, author`, next);
 	}
-
-	const post = new Post(req.body);
-	post.save((err, post) => {
-		if (err) return errorHandler.handleAPIError(500, `Could not save the new post`, next);
-		res.status(201).json(post);
-	});
+	const query = Post.findOne({ content: req.body.content })
+		.exec((err, post) => {
+			if (err) return errorHandler.handleAPIError(400, err, next);
+			if (post) {
+				return res.json(post)
+			}
+			else {
+				const post = new Post(req.body);
+				post.save((err, post) => {
+					if (err) return errorHandler.handleAPIError(500, `Could not save the new post`, next);
+					res.status(201).json(post);
+				});
+			}
+		})
 }
 
 /*
