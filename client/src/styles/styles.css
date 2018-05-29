@@ -39,6 +39,10 @@ ul {
 	list-style-type: none;
 }
 
+.error{
+	color:#F44 !important;
+}
+
 .card {
 	margin-bottom: 8px;
 	border-radius: 8px;

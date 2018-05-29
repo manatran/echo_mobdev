@@ -12,7 +12,7 @@ class SignIn extends Component {
 		this.state = {
 			email: '',
 			password: '',
-			errors: {}
+			errors: ''
 		};
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
@@ -60,6 +60,7 @@ class SignIn extends Component {
 				Let It Resonate
 
 				<form onSubmit={this.onSubmit}>
+				<p className="error light">{this.state.errors}</p>
 					<label>
 						<i className="fas fa-envelope"></i>
 						<input
