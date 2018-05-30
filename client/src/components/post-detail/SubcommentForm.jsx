@@ -27,8 +27,10 @@ class SubcommentForm extends Component {
 			content: this.state.content,
 			author: store.getState().auth.user.user.id
 		}
-		this.props.createSubcomment(subcomment)
-		window.location.reload()
+		if (this.state.content) {
+			this.props.createSubcomment(subcomment)
+			window.location.reload()
+		}
 	}
 
 	render() {

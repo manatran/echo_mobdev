@@ -30,7 +30,8 @@ class SignUp extends Component {
 		const newUser = {
 			email: this.state.email,
 			username: this.state.username,
-			password: this.state.password
+			password: this.state.password,
+			errors: ''
 		};
 
 		this.props.registerUser(newUser, this.props.history);

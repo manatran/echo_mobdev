@@ -9,7 +9,8 @@ export const fetchPosts = () => dispatch => {
 				type: FETCH_POSTS,
 				payload: posts
 			})
-		});
+		})
+		.catch(err => console.log(err));
 }
 
 export function createPost({ title, synopsis, body, category }, history) {

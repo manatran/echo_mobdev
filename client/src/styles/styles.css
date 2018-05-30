@@ -703,13 +703,8 @@ form button {
 
 .subcomment-form textarea {
 	padding: 8px;
-	min-height: 40px;
-	height: 40px;
+	min-height: 64px;
 	transition: .1s;
-}
-
-.subcomment-form textarea:focus {
-	height: 80px;
 }
 
 .card.login,
