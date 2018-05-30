@@ -57,7 +57,7 @@ exports.chat_create_chat = function (req, res, next) {
 		return errorHandler.handleAPIError(400, `Chat must have members`, next);
 	}
 
-	const query = Chat.findOne({ members: {$in: req.body.members} })
+	const query = Chat.findOne({ members: {$all: req.body.members} })
 		.exec((err, chat) => {
 			if (err) return errorHandler.handleAPIError(400, err, next);
 			if (chat) {

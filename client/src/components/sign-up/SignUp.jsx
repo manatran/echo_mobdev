@@ -13,7 +13,7 @@ class SignUp extends Component {
 			email: '',
 			password: '',
 			password2: '',
-			errors: {}
+			errors: ''
 		};
 
 		this.onChange = this.onChange.bind(this);
@@ -43,6 +43,7 @@ class SignUp extends Component {
 				<img src="/logo.png" alt="Logo" />
 				Let It Resonate
 				<form noValidate onSubmit={this.onSubmit}>
+				<p className="error light">{this.state.errors}</p>
 					<label>
 						<i className="fas fa-envelope"></i>
 						<input
