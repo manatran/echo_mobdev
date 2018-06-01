@@ -54,7 +54,11 @@ class MessageDetail extends Component {
 		fetch(`/api/v1/chats/${this.props.chatId}`, { headers: { Authorization: store.getState().auth.user.token } })
 			.then(response => response.json())
 			.then((chat) => {
-				this.setState({ chat: chat })
+				if (utils.contains(chat.members, store.getState().auth.user.user._id)) {
+					this.setState({ chat: chat })
+				} else {
+					window.location = "/messages";
+				}
 			})
 
 		fetch(`/api/v1/messages/${this.props.chatId}`, { headers: { Authorization: store.getState().auth.user.token } })
@@ -84,9 +88,9 @@ class MessageDetail extends Component {
 			return (
 				<div>
 					<section className="card msg-header round-top">
-					<a href={`/profile/${this.state.chat.members.filter(this.getCorrespondent)[0]._id}`}>
-						<img src={this.state.chat.members.filter(this.getCorrespondent)[0].picture} alt="Thumbnail" />
-						<h2>{this.state.chat.members.filter(this.getCorrespondent)[0].username}</h2>
+						<a href={`/profile/${this.state.chat.members.filter(this.getCorrespondent)[0]._id}`}>
+							<img src={this.state.chat.members.filter(this.getCorrespondent)[0].picture} alt="Thumbnail" />
+							<h2>{this.state.chat.members.filter(this.getCorrespondent)[0].username}</h2>
 						</a>
 					</section>
 					<section className="card msg-body no-radius">

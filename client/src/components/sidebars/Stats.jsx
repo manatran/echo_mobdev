@@ -11,7 +11,7 @@ class Stats extends Component {
 		}
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		fetch(`/api/v1/user/stats/${store.getState().auth.user.user._id}`, { headers: { Authorization: store.getState().auth.user.token } })
 			.then(response => response.json())
 			.then(item => this.setState({ stats: item }));

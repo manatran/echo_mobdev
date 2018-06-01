@@ -65,9 +65,19 @@ const utils = {
 		reverse = !reverse ? 1 : -1;
 
 		return function (a, b) {
+			// eslint-disable-next-line
 			return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
 		}
-	}		
+	},
+	contains: function (a, id) {
+		var i = a.length;
+		while (i--) {
+			if (a[i]._id === id) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
 
 export default utils;
