@@ -48,13 +48,10 @@ exports.searchArtist = function (req, res, next) {
 						const query = Artist.findOne({ 'spotify_id': artist.spotify_id }).exec((err, artistResult) => {
 							if (err) return errorHandler.handleAPIError(500, `Could not get the artist with id: ${artist.spotify_id}`, next);
 							if (!artistResult) {
-								request({
-									method: 'POST',
-									uri: 'https://localhost:8080/api/v1/artists',
-									rejectUnauthorized: false,
-									body: artist,
-									json: true
-								})
+								const newArtist = new Artist(artist);
+								newArtist.save((err, artist) => {
+									if (err) return errorHandler.handleAPIError(500, `Could not save the new artist`, next);
+								});
 							}
 						});
 					}
@@ -97,13 +94,10 @@ exports.searchAlbum = function (req, res, next) {
 						const query = Album.findOne({ 'spotify_id': album.spotify_id }).exec((err, albumResult) => {
 							if (err) return errorHandler.handleAPIError(500, `Could not get the album with id: ${album.spotify_id}`, next);
 							if (!albumResult) {
-								request({
-									method: 'POST',
-									uri: 'https://localhost:8080/api/v1/albums',
-									rejectUnauthorized: false,
-									body: album,
-									json: true
-								})
+								const newAlbum = new Album(album);
+								newAlbum.save((err, album) => {
+									if (err) return errorHandler.handleAPIError(500, `Could not save the new album`, next);
+								});
 							}
 						});
 					}
@@ -156,13 +150,10 @@ exports.searchSong = function (req, res, next) {
 						const query = Song.findOne({ 'spotify_id': song.spotify_id }).exec((err, songResult) => {
 							if (err) return errorHandler.handleAPIError(500, `Could not get the song with id: ${song.spotify_id}`, next);
 							if (!songResult) {
-								request({
-									method: 'POST',
-									uri: 'https://localhost:8080/api/v1/songs',
-									rejectUnauthorized: false,
-									body: song,
-									json: true
-								})
+								const newSong = new Song(song);
+								newSong.save((err, song) => {
+									if (err) return errorHandler.handleAPIError(500, `Could not save the new song`, next);
+								});
 							}
 						});
 					}

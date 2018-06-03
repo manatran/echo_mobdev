@@ -9,7 +9,7 @@ class Music extends Component {
 			songs: '',
 			albums: '',
 			artists: '',
-			playlists: ''
+			playlists: []
 		}
 	}
 
