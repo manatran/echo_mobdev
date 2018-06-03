@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import store from '../../store';
+import utils from '../../utilities/functions';
 
 class Music extends Component {
 
@@ -16,17 +17,19 @@ class Music extends Component {
 	componentWillMount() {
 		fetch(`/api/v1/songs`, { headers: { Authorization: store.getState().auth.user.token } })
 			.then(response => response.json())
-			.then(item => this.setState({ songs: item }));
+			.then(item => this.setState({ songs: item.sort(utils.sort_by('title', false, function (a) { return a.toUpperCase() })) }));
 
 		fetch(`/api/v1/albums`, { headers: { Authorization: store.getState().auth.user.token } })
 			.then(response => response.json())
-			.then(item => this.setState({ albums: item }));
+			.then(item => {
+				this.setState({ albums: item.sort(utils.sort_by('title', false, function (a) { return a.toUpperCase() })) })
+			});
 
 		fetch(`/api/v1/artists`, { headers: { Authorization: store.getState().auth.user.token } })
 			.then(response => response.json())
-			.then(item => this.setState({ artists: item }));
+			.then(item => this.setState({ artists: item.sort(utils.sort_by('title', false, function (a) { return a.toUpperCase() })) }));
 
-			fetch(`/api/v1/playlists/${store.getState().auth.user.user._id}`, { headers: { Authorization: store.getState().auth.user.token } })
+		fetch(`/api/v1/playlists/${store.getState().auth.user.user._id}`, { headers: { Authorization: store.getState().auth.user.token } })
 			.then(response => response.json())
 			.then(item => this.setState({ playlists: item }));
 	}
@@ -67,7 +70,7 @@ class Music extends Component {
 		}
 	}
 
-	addSong(playlistId, songId){
+	addSong(playlistId, songId) {
 		const body = {
 			song: songId
 		}
