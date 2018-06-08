@@ -32,13 +32,14 @@ class PostsList extends Component {
 	render() {
 	
 		if (this.props.posts) {
+			console.log(this.props.posts)
 			return (
 				<div>
 					{this.props.posts.map((element, index) => (
 						<section className="card post" key={element._id}>
 							{(element.type !== 'song')
 								? <a className="thumbnail-link" href={`https://open.spotify.com/${element.type}/${element.content.spotify_id}`} target="_blank">{(element.content && element.content.images)
-									? <div className="post-thumbnail" style={{ backgroundImage: 'url(' + element.content.images[0].url + ')' }}>
+									? <div className="post-thumbnail" style={{ backgroundImage: `url(${element.content.images.length > 0 ? element.content.images[0].url : 'https://api.adorable.io/avatars/128/notfound.png'})` }}>
 										<div className="overlay round-left">
 											<i className="fab fa-spotify"></i>
 										</div>
