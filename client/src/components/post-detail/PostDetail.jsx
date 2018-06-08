@@ -80,7 +80,7 @@ class PostDetail extends Component {
 					<section className="card post detail">
 						{(this.state.post.type !== 'song')
 							? <a className="thumbnail-link" href={`https://open.spotify.com/${this.state.post.type}/${this.state.post.content.spotify_id}`} target="_blank">{(this.state.post.content && this.state.post.content.images)
-								? <div className="post-thumbnail" style={{ backgroundImage: `url(${this.state.post.content.images[0].url})` }}>
+								? <div className="post-thumbnail" style={{ backgroundImage: `url(${this.state.post.content.images.length > 0 ? this.state.post.content.images[0].url : 'https://api.adorable.io/avatars/128/notfound.png'})` }}>
 									<div className="overlay round-left">
 										<i className="fab fa-spotify"></i>
 									</div>

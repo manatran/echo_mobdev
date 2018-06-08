@@ -32,7 +32,6 @@ class PostsList extends Component {
 	render() {
 	
 		if (this.props.posts) {
-			console.log(this.props.posts)
 			return (
 				<div>
 					{this.props.posts.map((element, index) => (
