@@ -49,7 +49,7 @@ yarn c-start-dev
 
 ## Contributors
 
-* **Manaus Transez** - [Website](http://manaus.transez.be/)
+* **Manaus Transez** - [Website](http://manatran.github.io/)
 
 
 ## License
